@@ -76,7 +76,7 @@ export const Services = () => {
             <div className="relative">
               <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">02 — Mentoria Sigma</div>
               <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">
-                Aprenda a escalar como{" "}
+                Aprenda a fazer sozinho como um{" "}
                 <span className="text-gradient-primary">profissional.</span>
               </h3>
               <p className="mt-4 text-muted-foreground">

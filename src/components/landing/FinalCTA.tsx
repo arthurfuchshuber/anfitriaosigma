@@ -6,23 +6,23 @@ export const FinalCTA = () => {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="container">
-        <div className="relative max-w-5xl mx-auto rounded-[2rem] overflow-hidden p-10 md:p-16 text-center reveal">
-          {/* Background */}
-          <div className="absolute inset-0 bg-gradient-primary" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(316_100%_70%/0.45),transparent_60%)]" />
-          <div className="absolute inset-0 noise opacity-50" />
+        <div className="relative max-w-5xl mx-auto rounded-[2rem] overflow-hidden p-10 md:p-16 text-center reveal gradient-border">
+          {/* Background — gelo fosco na tonalidade da marca */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-secondary/10 to-primary/10 backdrop-blur-xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.18),transparent_60%)]" />
+          <div className="absolute inset-0 noise opacity-30" />
 
           <div className="relative">
-            <div className="inline-flex items-center gap-2 bg-black/30 backdrop-blur rounded-full px-4 py-1.5 text-xs font-medium text-primary-foreground mb-7">
-              <Clock className="size-3.5" />
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground mb-7">
+              <Clock className="size-3.5 text-primary" />
               Vagas limitadas para novos imóveis este mês
             </div>
 
-            <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tight text-primary-foreground leading-[1.05]">
+            <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
               Seu imóvel pode estar{" "}
-              <span className="italic">rendendo mais.</span>
+              <span className="text-gradient-primary italic">rendendo mais.</span>
             </h2>
-            <p className="mt-6 text-base md:text-lg text-primary-foreground/90 max-w-xl mx-auto">
+            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
               Análise gratuita e sem compromisso. Em até 24h você sabe quanto
               seu imóvel pode gerar.
             </p>
@@ -31,7 +31,7 @@ export const FinalCTA = () => {
               <Button
                 size="lg"
                 onClick={() => openWhatsApp("analise")}
-                className="group bg-background text-foreground hover:bg-background/90 rounded-full h-14 px-8 text-base font-semibold shadow-2xl"
+                className="group bg-gradient-primary hover:opacity-95 text-primary-foreground rounded-full h-14 px-8 text-base font-semibold shadow-glow"
               >
                 Quero uma análise gratuita
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -40,13 +40,13 @@ export const FinalCTA = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => openWhatsApp("mentoria")}
-                className="bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 rounded-full h-14 px-8 text-base font-semibold"
+                className="bg-transparent border-border hover:bg-surface text-foreground rounded-full h-14 px-8 text-base font-semibold"
               >
                 Quero a mentoria
               </Button>
             </div>
 
-            <p className="mt-6 text-xs text-primary-foreground/70">
+            <p className="mt-6 text-xs text-muted-foreground">
               Resposta em até 1h em horário comercial · Atendimento humano
             </p>
           </div>
