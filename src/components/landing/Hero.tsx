@@ -18,9 +18,9 @@ export const Hero = () => {
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight animate-fade-in-up">
+            <h1 className="font-display text-[2.6rem] sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
-              <span className="text-gradient-primary">máquina de renda.</span>
+              <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
@@ -94,10 +94,10 @@ export const Hero = () => {
                   <div className="absolute inset-0 flex items-end p-6">
                     <div className="flex -space-x-4">
                       <div className="size-24 md:size-28 rounded-full bg-gradient-to-br from-primary/60 to-secondary border-2 border-background shadow-glow-sm flex items-center justify-center font-display text-2xl font-bold">
-                        EM
+                        AT
                       </div>
                       <div className="size-24 md:size-28 rounded-full bg-gradient-to-br from-secondary to-primary/60 border-2 border-background shadow-glow-sm flex items-center justify-center font-display text-2xl font-bold">
-                        AS
+                        JT
                       </div>
                     </div>
                   </div>
