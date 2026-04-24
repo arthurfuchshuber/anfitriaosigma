@@ -38,7 +38,7 @@ export const RevenueCompare = () => {
             <TrendingUp className="size-3.5 text-primary" />
             Comparativo de receita
           </div>
-          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+          <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight">
             O que você ganha em <span className="text-gradient-primary">1 mês,</span>{" "}
             pode render em <span className="text-gradient-primary">poucos dias.</span>
           </h2>

@@ -100,11 +100,6 @@ export const Founders = () => {
                 Brasil — Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba —
                 de studios urbanos a casas de alto padrão.
               </p>
-              <p>
-                O Sigma combina operação impecável, precificação inteligente e
-                experiência premium para o hóspede, entregando ao proprietário o
-                que mais importa: <span className="text-foreground font-medium">tranquilidade e lucro real</span>.
-              </p>
             </div>
 
             <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
