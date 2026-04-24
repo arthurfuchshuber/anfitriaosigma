@@ -1,9 +1,8 @@
 const years = [
-  { y: "2023", h: 18, current: false, projected: false },
-  { y: "2024", h: 28, current: false, projected: false },
-  { y: "2025", h: 92, current: true, projected: false },
-  { y: "2026", h: 78, current: false, projected: true },
-  { y: "2027", h: 54, current: false, projected: true },
+  { y: "2023", h: 22, current: false, projected: false },
+  { y: "2024", h: 42, current: false, projected: false },
+  { y: "2025", h: 78, current: true, projected: false },
+  { y: "2026", h: 96, current: false, projected: true },
 ];
 
 export const Founders = () => {
@@ -20,11 +19,11 @@ export const Founders = () => {
                   Receita anual gerida
                 </div>
                 <div className="text-[11px] glass rounded-full px-2.5 py-1 text-muted-foreground">
-                  Imóveis Sigma
+                  Stúdio 35m² · Foz do Iguaçu
                 </div>
               </div>
               <div className="text-sm text-muted-foreground mb-6">
-                Crescimento composto + projeção 2026/2027
+                Crescimento composto + projeção 2026
               </div>
 
               {/* Chart */}
@@ -42,7 +41,7 @@ export const Founders = () => {
                       <div
                         className={`w-full rounded-t-xl transition-all duration-700 ${
                           b.projected
-                            ? "border-2 border-primary/70 bg-primary/10 shadow-glow-sm"
+                            ? "bg-gradient-to-t from-primary/40 to-primary/70 border border-primary/60 shadow-glow-sm"
                             : "bg-gradient-to-t from-secondary to-primary shadow-glow-sm"
                         }`}
                         style={{ height: `${b.h}%` }}
@@ -73,15 +72,15 @@ export const Founders = () => {
               <div className="mt-7 pt-6 border-t border-border/60 grid grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                    <span className="size-1.5 rounded-full border border-primary" />
-                    Projetado
+                    <span className="size-1.5 rounded-full bg-primary/60" />
+                    Projeção 2026
                   </div>
-                  <div className="font-display text-xl md:text-2xl font-bold mt-1">R$ 38M+</div>
+                  <div className="font-display text-xl md:text-2xl font-bold mt-1">R$ 18M+</div>
                 </div>
                 <div className="text-right">
                   <div className="text-[11px] text-muted-foreground">Total acumulado (BRL)</div>
                   <div className="font-display text-xl md:text-2xl font-bold mt-1 text-gradient-primary">
-                    R$ 71.317.876
+                    R$ 42.180.500
                   </div>
                 </div>
               </div>
@@ -92,8 +91,8 @@ export const Founders = () => {
           <div className="reveal order-1 lg:order-2">
             <div className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Quem está por trás</div>
             <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-              Criamos o Anfitrião Sigma para transformar imóveis em{" "}
-              <span className="text-gradient-primary">ativos lucrativos.</span>
+              O Anfitrião Sigma nasceu para transformar imóveis em{" "}
+              <span className="text-gradient-primary">ativos rentáveis.</span>
             </h2>
             <div className="mt-7 space-y-5 text-muted-foreground leading-relaxed">
               <p>
