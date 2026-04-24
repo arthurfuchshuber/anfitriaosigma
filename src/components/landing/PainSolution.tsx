@@ -21,11 +21,10 @@ export const PainSolution = () => {
         <div className="max-w-2xl mx-auto text-center mb-14 reveal">
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
             Cansado dos problemas do{" "}
-            <span className="text-muted-foreground line-through decoration-destructive/60">aluguel comum</span>?
+            <span className="text-muted-foreground line-through decoration-destructive/60">aluguel comum?</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-lg">
-            Existe um caminho mais rentável, mais seguro e absolutamente livre de
-            esforço.
+            Existe um caminho mais rentável, mais seguro e livre de esforço.
           </p>
         </div>
 

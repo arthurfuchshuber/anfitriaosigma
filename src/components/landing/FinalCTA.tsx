@@ -19,12 +19,12 @@ export const FinalCTA = () => {
             </div>
 
             <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tight text-primary-foreground leading-[1.05]">
-              Seu imóvel pode estar <br className="hidden md:block" />
-              rendendo <span className="italic">muito</span> mais.
+              Seu imóvel pode estar{" "}
+              <span className="italic">rendendo mais.</span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-primary-foreground/90 max-w-xl mx-auto">
-              Análise gratuita, personalizada e sem compromisso. Em 24h você
-              sabe exatamente quanto seu imóvel pode gerar.
+              Análise gratuita e sem compromisso. Em até 24h você sabe quanto
+              seu imóvel pode gerar.
             </p>
 
             <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">

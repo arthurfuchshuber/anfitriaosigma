@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "Em quais regiões vocês atuam?",
-    a: "Atendemos principalmente Santa Catarina (Florianópolis, Balneário Camboriú, Itapema, Bombinhas e região), com expansão para outras praças premium do Brasil. Consulte sua cidade no contato.",
+    a: "Atuamos atualmente em Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba — gerindo studios, apartamentos e casas. Consulte sua cidade no contato para avaliarmos seu imóvel.",
   },
   {
     q: "Quanto tempo até meu imóvel começar a faturar?",

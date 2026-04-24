@@ -20,17 +20,17 @@ export const Hero = () => {
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
-              <span className="text-gradient-primary">máquina de renda</span> —
-              sem esforço.
+              <span className="text-gradient-primary">máquina de renda</span>{" "}
+              — sem esforço.
             </h1>
 
             <p
               className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
-              Nós cuidamos de tudo. Você só acompanha os lucros. Gestão
-              completa, precificação inteligente e estratégia validada para
-              anfitriões que pensam grande.
+              Cuidamos da operação completa — você acompanha os resultados.
+              Studios, apartamentos e casas geridos com estratégia validada em
+              Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.
             </p>
 
             <div
@@ -61,7 +61,7 @@ export const Hero = () => {
               style={{ animationDelay: "360ms" }}
             >
               {[
-                { v: "+300%", l: "Receita média" },
+                { v: "+150%", l: "Receita média" },
                 { v: "100+", l: "Imóveis geridos" },
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
@@ -86,7 +86,7 @@ export const Hero = () => {
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs text-primary">
                     <Star className="size-3 fill-primary" />
-                    Top 1% anfitriões
+                    Top performance
                   </span>
                 </div>
 
