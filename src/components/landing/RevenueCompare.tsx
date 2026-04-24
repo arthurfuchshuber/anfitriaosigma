@@ -27,7 +27,7 @@ export const RevenueCompare = () => {
   const [valor, setValor] = useState<string>("3500");
   const projetado = useMemo(() => {
     const n = Number(valor.replace(/\D/g, "")) || 0;
-    return Math.round(n * 3.1);
+    return Math.round(n * 2.5);
   }, [valor]);
 
   return (
@@ -39,12 +39,12 @@ export const RevenueCompare = () => {
             Comparativo de receita
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-            O que você ganha em <span className="text-gradient-primary">1 mês</span>,
-            pode ganhar em <span className="text-gradient-primary">poucos dias</span>.
+            O que você ganha em <span className="text-gradient-primary">1 mês,</span>{" "}
+            pode render em <span className="text-gradient-primary">poucos dias.</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-lg">
-            Compare lado a lado: aluguel tradicional vs. estratégia de temporada
-            executada por especialistas.
+            Compare lado a lado: aluguel tradicional e estratégia de temporada
+            operada por nós.
           </p>
         </div>
 
@@ -163,7 +163,7 @@ export const RevenueCompare = () => {
                 </div>
               </div>
               <p className="text-[11px] text-muted-foreground mt-3">
-                * Estimativa baseada em multiplicador médio de 3x observado em imóveis geridos. Resultados variam por localização, tipo e estratégia.
+                * Estimativa baseada em multiplicador médio de 2,5x observado em imóveis geridos. Resultados variam por localização, tipo e estratégia.
               </p>
             </div>
           </div>
