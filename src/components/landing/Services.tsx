@@ -30,7 +30,7 @@ export const Services = () => {
           </div>
           <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
             Escolha como quer{" "}
-            <span className="text-gradient-primary">multiplicar sua receita</span>.
+            <span className="text-gradient-primary">aumentar sua receita.</span>
           </h2>
         </div>
 
@@ -41,12 +41,12 @@ export const Services = () => {
             <div className="relative">
               <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">01 — Gestão completa</div>
               <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">
-                Você não faz nada. <br />
+                Você não faz nada.{" "}
                 <span className="text-gradient-primary">Nós fazemos tudo.</span>
               </h3>
               <p className="mt-4 text-muted-foreground">
-                Do clique nas fotos ao depósito mensal na sua conta. Operamos
-                seu imóvel como um hotel boutique.
+                Do anúncio ao repasse mensal na sua conta. Operamos seu imóvel
+                — studio, apartamento ou casa — com padrão hoteleiro.
               </p>
 
               <ul className="mt-7 space-y-3">
@@ -76,10 +76,11 @@ export const Services = () => {
             <div className="relative">
               <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">02 — Mentoria Sigma</div>
               <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">
-                Aprenda a escalar como um <span className="text-gradient-primary">profissional</span>.
+                Aprenda a escalar como{" "}
+                <span className="text-gradient-primary">profissional.</span>
               </h3>
               <p className="mt-4 text-muted-foreground">
-                Para anfitriões que querem dominar o jogo. Estratégia,
+                Para anfitriões que querem dominar o jogo: estratégia,
                 automação e crescimento previsível.
               </p>
 

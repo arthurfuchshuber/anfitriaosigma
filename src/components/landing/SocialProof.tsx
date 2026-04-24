@@ -2,35 +2,35 @@ import { useEffect, useRef, useState } from "react";
 import { Star, Quote } from "lucide-react";
 
 const stats = [
-  { v: 300, suffix: "%", l: "Aumento médio de receita" },
+  { v: 150, suffix: "%", l: "Aumento médio de receita" },
   { v: 100, suffix: "+", l: "Imóveis sob gestão" },
-  { v: 98, suffix: "%", l: "Taxa de ocupação" },
+  { v: 92, suffix: "%", l: "Taxa média de ocupação" },
   { v: 4.9, suffix: "★", l: "Avaliação dos hóspedes", decimal: true },
 ];
 
 const cases = [
-  { local: "Apto 45m² · Balneário Camboriú", before: "R$ 2.800", after: "R$ 9.400", lift: "+235%" },
-  { local: "Cobertura · Florianópolis", before: "R$ 6.500", after: "R$ 21.300", lift: "+227%" },
-  { local: "Studio · Itapema", before: "R$ 1.900", after: "R$ 6.800", lift: "+258%" },
+  { local: "Studio · Balneário Camboriú", before: "R$ 2.800", after: "R$ 7.200", lift: "+157%" },
+  { local: "Casa 3 quartos · Gramado", before: "R$ 6.500", after: "R$ 16.400", lift: "+152%" },
+  { local: "Apto · Foz do Iguaçu", before: "R$ 1.900", after: "R$ 5.100", lift: "+168%" },
 ];
 
 const depoimentos = [
   {
     name: "Rafael Mendonça",
-    role: "Investidor · Florianópolis",
-    text: "Em 4 meses minha receita triplicou. Eu literalmente não fiz nada além de receber os depósitos. Nível absurdo de profissionalismo.",
+    role: "Proprietário · Curitiba",
+    text: "Em poucos meses minha receita praticamente dobrou. Não precisei me envolver na operação — apenas acompanho os relatórios e o repasse mensal.",
     initials: "RM",
   },
   {
     name: "Camila Albuquerque",
     role: "Proprietária · Balneário Camboriú",
-    text: "Saí de um aluguel de R$ 3.200 fixo para uma média de R$ 9.800/mês. A operação é impecável e os hóspedes amam o imóvel.",
+    text: "Saí de um aluguel de R$ 3.200 fixo para uma média de R$ 7.800/mês. A operação é impecável e os hóspedes amam o imóvel.",
     initials: "CA",
   },
   {
     name: "Lucas Heinen",
-    role: "Aluno da Mentoria",
-    text: "A mentoria me deu clareza sobre pricing e posicionamento. Em 90 dias dobrei meu faturamento e estruturei meu segundo imóvel.",
+    role: "Aluno da Mentoria · Foz do Iguaçu",
+    text: "A mentoria me deu clareza sobre pricing e posicionamento. Em 90 dias estruturei o segundo imóvel com método.",
     initials: "LH",
   },
 ];
@@ -90,7 +90,7 @@ export const SocialProof = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="text-center mb-10 reveal">
             <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-              Resultados <span className="text-gradient-primary">reais</span>, não promessas.
+              Resultados <span className="text-gradient-primary">reais,</span> não promessas.
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
