@@ -20,8 +20,7 @@ export const Hero = () => {
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
-              <span className="text-gradient-primary">máquina de renda</span>{" "}
-              — sem esforço.
+              <span className="text-gradient-primary">máquina de renda.</span>
             </h1>
 
             <p
@@ -114,7 +113,7 @@ export const Hero = () => {
                   </div>
                   <div className="glass rounded-xl p-4">
                     <div className="text-xs text-muted-foreground">Atendimento</div>
-                    <div className="font-semibold mt-1">Concierge 24/7</div>
+                    <div className="font-semibold mt-1">Personalizado por perfil de hóspede</div>
                   </div>
                 </div>
               </div>

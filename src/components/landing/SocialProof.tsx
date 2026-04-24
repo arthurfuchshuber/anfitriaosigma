@@ -9,17 +9,17 @@ const stats = [
 ];
 
 const cases = [
-  { local: "Studio · Balneário Camboriú", before: "R$ 2.800", after: "R$ 7.200", lift: "+157%" },
-  { local: "Casa 3 quartos · Gramado", before: "R$ 6.500", after: "R$ 16.400", lift: "+152%" },
-  { local: "Apto · Foz do Iguaçu", before: "R$ 1.900", after: "R$ 5.100", lift: "+168%" },
+  { local: "Suíte 12m² · Balneário Camboriú", before: "R$ 2.800", after: "R$ 7.200", lift: "+157%" },
+  { local: "Casa 3 quartos · Foz do Iguaçu", before: "R$ 6.500", after: "R$ 16.400", lift: "+152%" },
+  { local: "Stúdio 35m² · Foz do Iguaçu", before: "R$ 1.900", after: "R$ 5.100", lift: "+168%" },
 ];
 
 const depoimentos = [
   {
-    name: "Rafael Mendonça",
-    role: "Proprietário · Curitiba",
-    text: "Em poucos meses minha receita praticamente dobrou. Não precisei me envolver na operação — apenas acompanho os relatórios e o repasse mensal.",
-    initials: "RM",
+    name: "Patrícia Regina",
+    role: "Proprietária · Foz do Iguaçu",
+    text: "Pessoal, eu realmente nunca vi nada parecido com este valor que vocês reservaram para este período. Estou impressionada com o resultado.",
+    initials: "PR",
   },
   {
     name: "Camila Albuquerque",
@@ -90,7 +90,7 @@ export const SocialProof = () => {
         <div className="mt-20 max-w-5xl mx-auto">
           <div className="text-center mb-10 reveal">
             <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
-              Resultados <span className="text-gradient-primary">reais,</span> não promessas.
+              Resultados <span className="text-gradient-primary">reais.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
