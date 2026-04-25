@@ -4,7 +4,7 @@ import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
   return (
-    <section id="top" className="relative pt-20 md:pt-16 lg:pt-20 pb-12 md:pb-16 overflow-hidden">
+    <section id="top" className="relative pt-20 md:pt-16 lg:pt-20 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-center">
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
@@ -24,7 +24,7 @@ export const Hero = () => {
             </h1>
 
             <p
-              className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-in-up"
+              className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
@@ -75,7 +75,7 @@ export const Hero = () => {
           </div>
 
           {/* Card dos fundadores */}
-          <div className="lg:col-span-5 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+          <div className="lg:col-span-5 lg:mt-12 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-primary opacity-20 blur-3xl rounded-3xl" />
               <div className="relative glass-strong rounded-3xl p-6 md:p-8 gradient-border overflow-hidden noise">
