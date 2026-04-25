@@ -15,29 +15,20 @@ export const Hero = () => {
       <div className="container relative w-full">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
           {/* Texto */}
-          <div
-            className="lg:col-span-7 flex flex-col"
-            style={{ gap: "clamp(1.25rem, 2.2vw, 2rem)" }}
-          >
+          <div className="lg:col-span-7 flex flex-col gap-6 lg:gap-8">
             <div className="inline-flex self-start items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
               <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
             </div>
 
-            <h1
-              className="font-display font-bold leading-[1.15] tracking-tight animate-fade-in-up"
-              style={{ fontSize: "clamp(1.75rem, 4.2vw, 3.25rem)" }}
-            >
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] font-bold leading-[1.15] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
-              style={{
-                animationDelay: "120ms",
-                fontSize: "clamp(1rem, 1.35vw, 1.25rem)",
-              }}
+              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
+              style={{ animationDelay: "120ms" }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
               Studios, apartamentos e casas geridos com estratégia validada em
