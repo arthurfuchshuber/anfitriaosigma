@@ -15,7 +15,7 @@ export const FinalCTA = () => {
           <div className="relative">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground mb-7">
               <Clock className="size-3.5 text-primary" />
-              Vagas limitadas para novos imóveis este mês
+              Vagas limitadas para novos imóveis
             </div>
 
             <h2 className="font-display text-2xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">

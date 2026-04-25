@@ -112,7 +112,7 @@ export const Hero = () => {
                 <div className="mt-6 grid grid-cols-2 gap-4">
                   <div className="glass rounded-xl p-4">
                     <div className="text-xs text-muted-foreground">Especialistas em</div>
-                    <div className="font-semibold mt-1">Hospedagem premium</div>
+                    <div className="font-semibold mt-1">Hospedagem premium padrão hotelaria</div>
                   </div>
                   <div className="glass rounded-xl p-4">
                     <div className="text-xs text-muted-foreground">Atendimento</div>

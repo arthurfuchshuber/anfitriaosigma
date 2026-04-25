@@ -16,9 +16,9 @@ export const Founders = () => {
             <div className="relative rounded-3xl gradient-border bg-surface p-7 md:p-9 noise overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                  Receita anual gerida
+                  Receita Anual
                 </div>
-                <div className="text-[11px] glass rounded-full px-2.5 py-1 text-muted-foreground">
+                <div className="text-[11px] glass rounded-full px-3 py-1 text-muted-foreground whitespace-nowrap">
                   Stúdio 35m² · Foz do Iguaçu
                 </div>
               </div>
@@ -78,7 +78,7 @@ export const Founders = () => {
                   <div className="font-display text-xl md:text-2xl font-bold mt-1">R$ 18M+</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[11px] text-muted-foreground">Total acumulado (BRL)</div>
+                  <div className="text-[11px] text-muted-foreground">Total acumulado (BRL) até 5 de maio de 2026</div>
                   <div className="font-display text-xl md:text-2xl font-bold mt-1 text-gradient-primary">
                     R$ 42.180.500
                   </div>
@@ -104,8 +104,8 @@ export const Founders = () => {
 
             <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
               <div className="rounded-2xl border border-border bg-surface p-5">
-                <div className="font-display text-2xl md:text-3xl font-bold text-gradient">4 cidades</div>
-                <div className="text-xs text-muted-foreground mt-1">Foz, Gramado, BC e Curitiba</div>
+                <div className="font-display text-2xl md:text-3xl font-bold text-gradient">3 Estados</div>
+                <div className="text-xs text-muted-foreground mt-1">SC, PR e RS</div>
               </div>
               <div className="rounded-2xl border border-border bg-surface p-5">
                 <div className="font-display text-2xl md:text-3xl font-bold text-gradient">100+</div>

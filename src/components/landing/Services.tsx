@@ -29,7 +29,7 @@ export const Services = () => {
             Dois caminhos. Um destino.
           </div>
           <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight">
-            Escolha como quer{" "}
+            Escolha como você deseja{" "}
             <span className="text-gradient-primary">aumentar sua receita.</span>
           </h2>
         </div>
@@ -39,7 +39,7 @@ export const Services = () => {
           <div className="group relative rounded-3xl bg-surface border border-border p-8 md:p-10 transition-all duration-500 hover:border-primary/40 hover:shadow-elegant reveal overflow-hidden">
             <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <div className="relative">
-              <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">01 — Gestão completa</div>
+              <div className="text-xs uppercase tracking-[0.2em] text-foreground mb-3">01 — Gestão completa</div>
               <h3 className="font-display text-xl md:text-4xl font-bold leading-tight">
                 Você não faz nada.{" "}
                 <span className="text-gradient-primary">Nós fazemos tudo.</span>
@@ -74,9 +74,9 @@ export const Services = () => {
           <div className="group relative rounded-3xl bg-surface border border-border p-8 md:p-10 transition-all duration-500 hover:border-primary/40 hover:shadow-elegant reveal overflow-hidden">
             <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <div className="relative">
-              <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">02 — Mentoria Sigma</div>
+              <div className="text-xs uppercase tracking-[0.2em] text-foreground mb-3">02 — Mentoria Sigma</div>
               <h3 className="font-display text-xl md:text-4xl font-bold leading-tight">
-                Aprenda a fazer sozinho como um{" "}
+                Ou aprenda a fazer sozinho como um{" "}
                 <span className="text-gradient-primary">profissional.</span>
               </h3>
               <p className="mt-4 text-muted-foreground">
