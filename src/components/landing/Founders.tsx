@@ -90,7 +90,7 @@ export const Founders = () => {
           {/* Texto */}
           <div className="reveal order-1 lg:order-2">
             <div className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Quem está por trás</div>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+            <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight leading-tight">
               O Anfitrião Sigma nasceu para transformar imóveis em{" "}
               <span className="text-gradient-primary">ativos rentáveis.</span>
             </h2>
