@@ -19,7 +19,7 @@ export const PainSolution = () => {
     <section className="py-24 md:py-32 relative">
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-14 reveal">
-          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+          <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight">
             Cansado dos problemas do{" "}
             <span className="text-muted-foreground line-through decoration-destructive/60">aluguel comum?</span>
           </h2>
