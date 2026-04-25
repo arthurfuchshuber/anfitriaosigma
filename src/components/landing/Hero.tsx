@@ -4,28 +4,40 @@ import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
   return (
-    <section id="top" className="relative pt-20 md:pt-16 lg:pt-20 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-center">
+    <section
+      id="top"
+      className="relative pt-20 md:pt-16 lg:pt-24 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-start"
+    >
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="container relative">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="container relative w-full">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
           {/* Texto */}
-          <div className="lg:col-span-7 space-y-5 lg:space-y-4">
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
+          <div
+            className="lg:col-span-7 flex flex-col"
+            style={{ gap: "clamp(1.25rem, 2.2vw, 2rem)" }}
+          >
+            <div className="inline-flex self-start items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
               <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[2.75rem] xl:text-5xl font-bold leading-[1.15] tracking-tight animate-fade-in-up">
+            <h1
+              className="font-display font-bold leading-[1.15] tracking-tight animate-fade-in-up"
+              style={{ fontSize: "clamp(1.75rem, 4.2vw, 3.25rem)" }}
+            >
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
-              style={{ animationDelay: "120ms" }}
+              className="text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
+              style={{
+                animationDelay: "120ms",
+                fontSize: "clamp(1rem, 1.35vw, 1.25rem)",
+              }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
               Studios, apartamentos e casas geridos com estratégia validada em
@@ -33,7 +45,7 @@ export const Hero = () => {
             </p>
 
             <div
-              className="flex flex-col sm:flex-row gap-3 pt-2 animate-fade-in-up"
+              className="flex flex-col sm:flex-row gap-3 animate-fade-in-up"
               style={{ animationDelay: "240ms" }}
             >
               <Button
@@ -56,7 +68,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 pt-4 lg:pt-3 max-w-lg animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 max-w-lg animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
@@ -65,7 +77,10 @@ export const Hero = () => {
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
                 <div key={s.l} className="text-left">
-                  <div className="font-display text-2xl md:text-3xl font-bold text-gradient">
+                  <div
+                    className="font-display font-bold text-gradient"
+                    style={{ fontSize: "clamp(1.5rem, 2.2vw, 2rem)" }}
+                  >
                     {s.v}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
@@ -75,7 +90,7 @@ export const Hero = () => {
           </div>
 
           {/* Card dos fundadores */}
-          <div className="lg:col-span-5 lg:mt-12 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+          <div className="lg:col-span-5 lg:mt-2 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-primary opacity-20 blur-3xl rounded-3xl" />
               <div className="relative glass-strong rounded-3xl p-6 md:p-8 gradient-border overflow-hidden noise">
