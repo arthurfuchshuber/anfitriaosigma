@@ -40,7 +40,7 @@ export const Services = () => {
             <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <div className="relative">
               <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">01 — Gestão completa</div>
-              <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">
+              <h3 className="font-display text-xl md:text-4xl font-bold leading-tight">
                 Você não faz nada.{" "}
                 <span className="text-gradient-primary">Nós fazemos tudo.</span>
               </h3>
@@ -75,7 +75,7 @@ export const Services = () => {
             <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <div className="relative">
               <div className="text-xs uppercase tracking-[0.2em] text-primary mb-3">02 — Mentoria Sigma</div>
-              <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">
+              <h3 className="font-display text-xl md:text-4xl font-bold leading-tight">
                 Aprenda a fazer sozinho como um{" "}
                 <span className="text-gradient-primary">profissional.</span>
               </h3>
