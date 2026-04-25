@@ -1,19 +1,60 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [sectionHeight, setSectionHeight] = useState<number | null>(null);
+
+  useLayoutEffect(() => {
+    const compute = () => {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      const content = contentRef.current;
+      if (!content) return;
+
+      if (!isDesktop) {
+        setScale(1);
+        setSectionHeight(null);
+        return;
+      }
+
+      // Measure natural height at scale=1
+      const navOffset = 96; // espaço pro navbar
+      const viewport = window.innerHeight - navOffset;
+      // Reset before measuring
+      content.style.transform = "scale(1)";
+      const natural = content.scrollHeight;
+
+      const next = natural > viewport ? Math.max(0.6, viewport / natural) : 1;
+      setScale(next);
+      setSectionHeight(natural * next + navOffset);
+    };
+
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative pt-24 md:pt-24 lg:pt-28 pb-16 md:pb-20 overflow-hidden"
+      style={sectionHeight ? { minHeight: `${sectionHeight}px` } : undefined}
     >
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container relative">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div
+          ref={contentRef}
+          className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center lg:origin-top"
+          style={{ transform: `scale(${scale})` }}
+        >
           {/* Texto */}
           <div className="lg:col-span-7 space-y-6 lg:space-y-5">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
