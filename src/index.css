@@ -186,3 +186,32 @@
 .pulse-glow {
   animation: pulseGlow 2.5s ease-in-out infinite;
 }
+
+/* Shimmer / espelhado */
+@keyframes shimmer {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    hsl(0 0% 100% / 0.18) 45%,
+    hsl(316 100% 75% / 0.35) 50%,
+    hsl(0 0% 100% / 0.18) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: shimmer 3s ease-in-out infinite;
+}
