@@ -65,7 +65,7 @@ function Counter({ to, suffix = "", decimal = false }: { to: number; suffix?: st
 
   const display = decimal ? val.toFixed(1) : Math.round(val).toString();
   return (
-    <span ref={ref} className="font-display text-4xl md:text-5xl font-bold text-gradient">
+    <span ref={ref} className="font-display text-2xl md:text-5xl font-bold text-gradient">
       {display}
       <span className="text-primary">{suffix}</span>
     </span>
