@@ -6,17 +6,17 @@ export const Hero = () => {
   return (
     <section
       id="top"
-      className="relative pt-20 md:pt-24 lg:pt-36 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-start"
+      className="relative pt-28 md:pt-24 lg:pt-36 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-start"
     >
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container relative w-full">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
+        <div className="grid lg:grid-cols-12 gap-16 md:gap-20 lg:gap-10 items-start">
           {/* Texto */}
-          <div className="lg:col-span-7 flex flex-col gap-8 md:gap-10 lg:gap-12">
-            <div className="shimmer inline-flex self-start items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
+          <div className="lg:col-span-7 flex flex-col gap-8 md:gap-10 lg:gap-12 items-center text-center lg:items-start lg:text-left">
+            <div className="shimmer inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in lg:self-start">
               <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
             </div>
@@ -59,7 +59,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 max-w-lg animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 max-w-lg w-full animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
@@ -67,7 +67,7 @@ export const Hero = () => {
                 { v: "100+", l: "Imóveis geridos" },
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
-                <div key={s.l} className="text-left">
+                <div key={s.l} className="text-center lg:text-left">
                   <div className="font-display text-2xl md:text-3xl lg:text-[2rem] font-bold text-gradient">
                     {s.v}
                   </div>
