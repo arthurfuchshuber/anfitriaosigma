@@ -1,74 +1,30 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
-import { useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-  const [sectionHeight, setSectionHeight] = useState<number | null>(null);
-
-  useLayoutEffect(() => {
-    const compute = () => {
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-      const content = contentRef.current;
-      if (!content) return;
-
-      if (!isDesktop) {
-        setScale(1);
-        setSectionHeight(null);
-        return;
-      }
-
-      // Measure natural height at scale=1
-      const navOffset = 96; // espaço pro navbar
-      const viewport = window.innerHeight - navOffset;
-      // Reset before measuring
-      content.style.transform = "scale(1)";
-      const natural = content.scrollHeight;
-
-      const next = natural > viewport ? Math.max(0.6, viewport / natural) : 1;
-      setScale(next);
-      setSectionHeight(natural * next + navOffset);
-    };
-
-    compute();
-    window.addEventListener("resize", compute);
-    return () => window.removeEventListener("resize", compute);
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      id="top"
-      className="relative pt-24 md:pt-24 lg:pt-28 pb-16 md:pb-20 overflow-hidden"
-      style={sectionHeight ? { minHeight: `${sectionHeight}px` } : undefined}
-    >
+    <section id="top" className="relative pt-24 md:pt-24 lg:pt-28 pb-16 md:pb-20 overflow-hidden">
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container relative">
-        <div
-          ref={contentRef}
-          className="grid lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-center lg:origin-top"
-          style={{ transform: `scale(${scale})` }}
-        >
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Texto */}
-          <div className="lg:col-span-7 space-y-6 lg:space-y-6">
-            <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-sm lg:text-base font-medium text-muted-foreground animate-fade-in">
-              <Sparkles className="size-4 text-primary" />
+          <div className="lg:col-span-7 space-y-7">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
+              <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.75rem] xl:text-[4.5rem] font-bold leading-[1.05] tracking-tight animate-fade-in-up">
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[2.75rem] xl:text-5xl font-bold leading-[1.15] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-lg md:text-xl lg:text-[1.35rem] text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
+              className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
@@ -83,7 +39,7 @@ export const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => openWhatsApp("gestao")}
-                className="group bg-gradient-primary hover:opacity-95 text-primary-foreground shadow-glow rounded-full px-8 h-14 text-base lg:text-lg font-semibold pulse-glow"
+                className="group bg-gradient-primary hover:opacity-95 text-primary-foreground shadow-glow rounded-full px-7 h-12 text-base font-semibold pulse-glow"
               >
                 Quero maximizar meu imóvel
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -92,7 +48,7 @@ export const Hero = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => openWhatsApp("mentoria")}
-                className="border-border bg-transparent hover:bg-surface text-foreground rounded-full px-8 h-14 text-base lg:text-lg font-semibold"
+                className="border-border bg-transparent hover:bg-surface text-foreground rounded-full px-7 h-12 text-base font-semibold"
               >
                 Quero aprender a faturar
               </Button>
@@ -100,7 +56,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 pt-8 lg:pt-6 max-w-xl animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 pt-8 max-w-lg animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
@@ -109,10 +65,10 @@ export const Hero = () => {
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
                 <div key={s.l} className="text-left">
-                  <div className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-gradient">
+                  <div className="font-display text-2xl md:text-3xl font-bold text-gradient">
                     {s.v}
                   </div>
-                  <div className="text-xs lg:text-sm text-muted-foreground mt-1">{s.l}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
                 </div>
               ))}
             </div>
