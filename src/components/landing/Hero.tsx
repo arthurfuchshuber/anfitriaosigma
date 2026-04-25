@@ -1,16 +1,51 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useLayoutEffect(() => {
+    const compute = () => {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      const inner = innerRef.current;
+      const section = sectionRef.current;
+      if (!inner || !section) return;
+      if (!isDesktop) {
+        setScale(1);
+        return;
+      }
+      // Reset before measuring
+      inner.style.transform = "scale(1)";
+      const available = section.clientHeight - 32; // small breathing room
+      const needed = inner.scrollHeight;
+      const next = needed > available ? Math.max(0.6, available / needed) : 1;
+      setScale(next);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+
   return (
-    <section id="top" className="relative pt-24 md:pt-24 lg:pt-24 pb-16 md:pb-20 overflow-hidden lg:min-h-screen lg:flex lg:items-center">
+    <section
+      ref={sectionRef}
+      id="top"
+      className="relative pt-24 md:pt-24 lg:pt-0 pb-16 md:pb-20 lg:pb-0 overflow-hidden lg:h-screen lg:flex lg:items-center"
+    >
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container relative w-full">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div
+          ref={innerRef}
+          className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center lg:origin-top"
+          style={{ transform: `scale(${scale})` }}
+        >
           {/* Texto */}
           <div className="lg:col-span-7 space-y-6 lg:space-y-5">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
