@@ -104,11 +104,11 @@ export const Founders = () => {
 
             <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
               <div className="rounded-2xl border border-border bg-surface p-5">
-                <div className="font-display text-3xl font-bold text-gradient">4 cidades</div>
+                <div className="font-display text-2xl md:text-3xl font-bold text-gradient">4 cidades</div>
                 <div className="text-xs text-muted-foreground mt-1">Foz, Gramado, BC e Curitiba</div>
               </div>
               <div className="rounded-2xl border border-border bg-surface p-5">
-                <div className="font-display text-3xl font-bold text-gradient">100+</div>
+                <div className="font-display text-2xl md:text-3xl font-bold text-gradient">100+</div>
                 <div className="text-xs text-muted-foreground mt-1">Imóveis sob gestão</div>
               </div>
             </div>
