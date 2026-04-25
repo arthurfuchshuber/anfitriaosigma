@@ -78,7 +78,11 @@ export const Founders = () => {
                   <div className="font-display text-xl md:text-2xl font-bold mt-1">R$ 18M+</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[11px] text-muted-foreground">Total acumulado (BRL) até 5 de maio de 2026</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    Total acumulado (BRL)
+                    <br />
+                    até 5 de maio de 2026
+                  </div>
                   <div className="font-display text-xl md:text-2xl font-bold mt-1 text-gradient-primary">
                     R$ 42.180.500
                   </div>
@@ -88,11 +92,11 @@ export const Founders = () => {
           </div>
 
           {/* Texto */}
-          <div className="reveal order-1 lg:order-2">
+          <div className="reveal order-1 lg:order-2 text-center lg:text-left">
             <div className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Quem está por trás</div>
             <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight leading-tight">
               O Anfitrião Sigma nasceu para transformar imóveis em{" "}
-              <span className="text-gradient-primary">ativos rentáveis.</span>
+              <span className="text-gradient-primary">ativos altamente rentáveis.</span>
             </h2>
             <div className="mt-7 space-y-5 text-muted-foreground leading-relaxed">
               <p>
@@ -102,7 +106,7 @@ export const Founders = () => {
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
+            <div className="mt-8 grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
               <div className="rounded-2xl border border-border bg-surface p-5">
                 <div className="font-display text-2xl md:text-3xl font-bold text-gradient">3 Estados</div>
                 <div className="text-xs text-muted-foreground mt-1">SC, PR e RS</div>

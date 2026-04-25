@@ -47,7 +47,9 @@ export const FinalCTA = () => {
             </div>
 
             <p className="mt-6 text-xs text-muted-foreground">
-              Resposta em até 1h em horário comercial · Atendimento humano
+              Resposta em até 1h em horário comercial
+              <br />
+              Atendimento humano
             </p>
           </div>
         </div>

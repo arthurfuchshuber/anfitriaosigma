@@ -15,7 +15,7 @@ export const Footer = () => {
                 Anfitrião <span className="text-gradient-primary">Sigma</span>
               </span>
             </a>
-            <p className="mt-4 text-sm text-muted-foreground max-w-xs">
+            <p className="mt-4 text-sm text-muted-foreground">
               Maximização de receita para imóveis em plataformas de hospedagem.
               Operação premium, lucro real.
             </p>
