@@ -4,7 +4,7 @@ import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
   return (
-    <section id="top" className="relative pt-32 md:pt-40 pb-20 md:pb-28 overflow-hidden">
+    <section id="top" className="relative pt-24 md:pt-24 lg:pt-28 pb-16 md:pb-20 overflow-hidden">
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
