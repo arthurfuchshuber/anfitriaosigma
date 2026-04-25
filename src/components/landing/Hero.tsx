@@ -21,13 +21,13 @@ export const Hero = () => {
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] font-bold leading-[1.15] tracking-tight animate-fade-in-up">
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] font-bold leading-[1.22] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
+              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-[1.75] animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
