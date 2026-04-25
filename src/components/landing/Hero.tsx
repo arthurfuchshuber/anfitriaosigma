@@ -52,17 +52,17 @@ export const Hero = () => {
       <div className="container relative">
         <div
           ref={contentRef}
-          className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center lg:origin-top"
+          className="grid lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-center lg:origin-top"
           style={{ transform: `scale(${scale})` }}
         >
           {/* Texto */}
-          <div className="lg:col-span-7 space-y-6 lg:space-y-5">
-            <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
-              <Sparkles className="size-3.5 text-primary" />
+          <div className="lg:col-span-7 space-y-6 lg:space-y-6">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-sm lg:text-base font-medium text-muted-foreground animate-fade-in">
+              <Sparkles className="size-4 text-primary" />
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] xl:text-6xl font-bold leading-[1.1] tracking-tight animate-fade-in-up">
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.75rem] xl:text-[4.5rem] font-bold leading-[1.05] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
