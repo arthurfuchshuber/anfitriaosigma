@@ -62,13 +62,13 @@ export const Hero = () => {
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[2.75rem] xl:text-5xl font-bold leading-[1.15] tracking-tight animate-fade-in-up">
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] xl:text-6xl font-bold leading-[1.1] tracking-tight animate-fade-in-up">
               Transforme seu imóvel em uma{" "}
               <span className="text-gradient-primary">máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed animate-fade-in-up"
+              className="text-lg md:text-xl lg:text-[1.35rem] text-muted-foreground max-w-2xl leading-relaxed animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
               Cuidamos da operação completa — você acompanha os resultados.
@@ -83,7 +83,7 @@ export const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => openWhatsApp("gestao")}
-                className="group bg-gradient-primary hover:opacity-95 text-primary-foreground shadow-glow rounded-full px-7 h-12 text-base font-semibold pulse-glow"
+                className="group bg-gradient-primary hover:opacity-95 text-primary-foreground shadow-glow rounded-full px-8 h-14 text-base lg:text-lg font-semibold pulse-glow"
               >
                 Quero maximizar meu imóvel
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -92,7 +92,7 @@ export const Hero = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => openWhatsApp("mentoria")}
-                className="border-border bg-transparent hover:bg-surface text-foreground rounded-full px-7 h-12 text-base font-semibold"
+                className="border-border bg-transparent hover:bg-surface text-foreground rounded-full px-8 h-14 text-base lg:text-lg font-semibold"
               >
                 Quero aprender a faturar
               </Button>
@@ -100,7 +100,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 pt-8 lg:pt-4 max-w-lg animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 pt-8 lg:pt-6 max-w-xl animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
@@ -109,10 +109,10 @@ export const Hero = () => {
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
                 <div key={s.l} className="text-left">
-                  <div className="font-display text-2xl md:text-3xl font-bold text-gradient">
+                  <div className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-gradient">
                     {s.v}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+                  <div className="text-xs lg:text-sm text-muted-foreground mt-1">{s.l}</div>
                 </div>
               ))}
             </div>
