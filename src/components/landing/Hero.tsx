@@ -21,18 +21,18 @@ export const Hero = () => {
               Maximização de receita em hospedagem
             </div>
 
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] font-bold leading-none tracking-tight animate-fade-in-up flex flex-col gap-3 lg:gap-4">
-              <span>Transforme seu imóvel em</span>
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-[2.6rem] lg:text-[3.25rem] font-bold leading-[1.25] lg:leading-[1.15] tracking-tight animate-fade-in-up">
+              Transforme seu imóvel em{" "}
               <span className="text-gradient-primary">uma máquina real de receita.</span>
             </h1>
 
             <p
-              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-normal animate-fade-in-up flex flex-col gap-2 lg:gap-3"
+              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-[1.8] animate-fade-in-up"
               style={{ animationDelay: "120ms" }}
             >
-              <span>Cuidamos da operação completa — você acompanha os resultados.</span>
-              <span>Studios, apartamentos e casas geridos com estratégia validada em</span>
-              <span>Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.</span>
+              Cuidamos da operação completa — você acompanha os resultados.
+              Studios, apartamentos e casas geridos com estratégia validada em
+              Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.
             </p>
 
             <div
