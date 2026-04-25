@@ -4,7 +4,7 @@ import { openWhatsApp } from "@/lib/whatsapp";
 
 export const Hero = () => {
   return (
-    <section id="top" className="relative pt-24 md:pt-24 lg:pt-28 pb-16 md:pb-20 overflow-hidden">
+    <section id="top" className="relative pt-20 md:pt-16 lg:pt-20 pb-12 md:pb-16 overflow-hidden">
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[800px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
@@ -12,7 +12,7 @@ export const Hero = () => {
       <div className="container relative">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Texto */}
-          <div className="lg:col-span-7 space-y-7">
+          <div className="lg:col-span-7 space-y-5 lg:space-y-4">
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
               <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
@@ -56,7 +56,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 pt-8 max-w-lg animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 pt-4 lg:pt-3 max-w-lg animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
