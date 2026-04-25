@@ -56,7 +56,7 @@ export const Hero = () => {
 
             {/* Mini stats */}
             <div
-              className="grid grid-cols-3 gap-4 pt-8 max-w-lg animate-fade-in-up"
+              className="grid grid-cols-3 gap-4 pt-8 lg:pt-4 max-w-lg animate-fade-in-up"
               style={{ animationDelay: "360ms" }}
             >
               {[
