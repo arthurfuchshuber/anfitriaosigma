@@ -18,7 +18,7 @@ export const FinalCTA = () => {
               Vagas limitadas para novos imóveis este mês
             </div>
 
-            <h2 className="font-display text-3xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
+            <h2 className="font-display text-2xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
               Seu imóvel pode estar{" "}
               <span className="text-gradient-primary italic">rendendo mais.</span>
             </h2>
