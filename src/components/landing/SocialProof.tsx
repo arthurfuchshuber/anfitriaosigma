@@ -17,19 +17,22 @@ const cases = [
 const depoimentos = [
   {
     name: "Patrícia Regina",
-    role: "Proprietária · Foz do Iguaçu",
+    role: "Proprietária",
+    location: "Foz do Iguaçu",
     text: "Pessoal, eu realmente nunca vi nada parecido com este valor que vocês reservaram para este período. Estou impressionada com o resultado.",
     initials: "PR",
   },
   {
     name: "Camila Albuquerque",
-    role: "Proprietária · Balneário Camboriú",
+    role: "Proprietária",
+    location: "Balneário Camboriú",
     text: "Saí de um aluguel de R$ 3.200 fixo para uma média de R$ 7.800/mês. A operação é impecável e os hóspedes amam o imóvel.",
     initials: "CA",
   },
   {
     name: "Lucas Heinen",
-    role: "Aluno da Mentoria · Foz do Iguaçu",
+    role: "Aluno da Mentoria",
+    location: "Foz do Iguaçu",
     text: "A mentoria me deu clareza sobre pricing e posicionamento. Em 90 dias estruturei o segundo imóvel com método.",
     initials: "LH",
   },
@@ -129,6 +132,7 @@ export const SocialProof = () => {
                   <div>
                     <div className="font-semibold text-sm">{d.name}</div>
                     <div className="text-xs text-muted-foreground">{d.role}</div>
+                    <div className="text-xs text-muted-foreground">{d.location}</div>
                   </div>
                   <div className="ml-auto flex gap-0.5 text-primary">
                     {Array.from({ length: 5 }).map((_, i) => (

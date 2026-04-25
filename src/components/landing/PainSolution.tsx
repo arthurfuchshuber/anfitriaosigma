@@ -20,7 +20,7 @@ export const PainSolution = () => {
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-14 reveal">
           <h2 className="font-display text-2xl md:text-5xl font-bold tracking-tight">
-            Cansado dos problemas do{" "}
+            Está cansado dos problemas do{" "}
             <span className="text-muted-foreground line-through decoration-destructive/60">aluguel comum?</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-lg">
