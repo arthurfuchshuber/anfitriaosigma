@@ -6,7 +6,7 @@ export const Hero = () => {
   return (
     <section
       id="top"
-      className="relative pt-20 md:pt-16 lg:pt-24 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-start"
+      className="relative pt-20 md:pt-24 lg:pt-36 pb-12 md:pb-16 overflow-hidden lg:min-h-screen lg:flex lg:items-start"
     >
       {/* Background glows */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
