@@ -15,7 +15,7 @@ export const Hero = () => {
       <div className="container relative w-full">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
           {/* Texto */}
-          <div className="lg:col-span-7 flex flex-col gap-6 lg:gap-8">
+          <div className="lg:col-span-7 flex flex-col gap-7 md:gap-8 lg:gap-10">
             <div className="inline-flex self-start items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground animate-fade-in">
               <Sparkles className="size-3.5 text-primary" />
               Maximização de receita em hospedagem
