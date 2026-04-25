@@ -68,10 +68,7 @@ export const Hero = () => {
                 { v: "4.9★", l: "Avaliação hóspedes" },
               ].map((s) => (
                 <div key={s.l} className="text-left">
-                  <div
-                    className="font-display font-bold text-gradient"
-                    style={{ fontSize: "clamp(1.5rem, 2.2vw, 2rem)" }}
-                  >
+                  <div className="font-display text-2xl md:text-3xl lg:text-[2rem] font-bold text-gradient">
                     {s.v}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
