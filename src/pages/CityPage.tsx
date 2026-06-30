@@ -1,5 +1,5 @@
 import { ArrowRight, MapPin, MessageCircle, CheckCircle2, Star } from "lucide-react";
-import { Helmet, Link } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { Link as RouterLink } from "react-router-dom";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
