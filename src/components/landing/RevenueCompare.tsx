@@ -130,13 +130,18 @@ export const RevenueCompare = () => {
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
                     R$
                   </span>
+                  <label htmlFor="valor-aluguel" className="sr-only">
+                    Valor do aluguel atual em reais
+                  </label>
                   <Input
+                    id="valor-aluguel"
                     type="text"
                     inputMode="numeric"
                     value={valor}
                     onChange={(e) => setValor(e.target.value)}
                     className="h-14 pl-10 text-lg bg-background border-border rounded-2xl"
                     placeholder="3.500"
+                    aria-label="Valor do aluguel atual em reais"
                   />
                 </div>
                 <Button
