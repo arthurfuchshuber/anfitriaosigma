@@ -29,6 +29,7 @@ export const CITIES: Record<string, CityContent> = {
       role: "Studio 35m²",
     },
     neighborhoods: ["Centro", "Vila Yolanda", "Jardim Iguaçu", "Região das Cataratas", "Vila A", "Próximo ao shopping"],
+    metaDescription: "Anfitrião profissional em Foz do Iguaçu (PR): gestão de Airbnb com hospedagem padrão hotelaria, +150% de receita e atendimento humano.",
   },
   gramado: {
     slug: "gramado",
@@ -58,6 +59,7 @@ export const CITIES: Record<string, CityContent> = {
       role: "Casa 3 dormitórios",
     },
     neighborhoods: ["Centro de Gramado", "Bavária", "Avenida das Hortênsias", "Planalto", "Próximo ao Mini Mundo", "Várzea Grande"],
+    metaDescription: "Anfitrião profissional em Gramado (RS): gestão de Airbnb para Natal Luz, inverno e feriados, com hospedagem padrão hotelaria.",
   },
   "balneario-camboriu": {
     slug: "balneario-camboriu",
@@ -87,6 +89,7 @@ export const CITIES: Record<string, CityContent> = {
       role: "Studio 38m²",
     },
     neighborhoods: ["Barra Sul", "Centro", "Avenida Atlântica", "Praia Central", "Pioneiros", "Praia Brava"],
+    metaDescription: "Anfitrião profissional em Balneário Camboriú (SC): gestão de Airbnb frente-mar com hospedagem padrão hotelaria e receita maximizada.",
   },
   curitiba: {
     slug: "curitiba",
@@ -116,5 +119,6 @@ export const CITIES: Record<string, CityContent> = {
       role: "Apartamento 1 dormitório",
     },
     neighborhoods: ["Centro", "Batel", "Água Verde", "Centro Cívico", "Champagnat", "Próximo aos hospitais"],
+    metaDescription: "Anfitrião profissional em Curitiba (PR): gestão de Airbnb para hóspedes corporativos e médicos, com hospedagem padrão hotelaria.",
   },
 };
