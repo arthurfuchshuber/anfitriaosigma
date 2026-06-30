@@ -1,0 +1,13 @@
+# Anfitrião Sigma
+
+> Gestão completa e mentoria premium para anfitriões de imóveis em plataformas de hospedagem (Airbnb, Booking). Maximização de receita com operação padrão hotelaria em Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.
+
+A Anfitrião Sigma transforma imóveis em ativos altamente rentáveis. Oferece dois caminhos: Gestão Completa (operação 360º do imóvel) e Mentoria Sigma (formação para anfitriões que querem operar sozinhos como profissionais).
+
+## Pages
+
+- [Home](/): Visão geral dos serviços, comparativo de receita, depoimentos, FAQ e contato.
+
+## Optional
+
+- [WhatsApp](https://wa.me/5547996759381): Atendimento humano e análise gratuita do imóvel.
