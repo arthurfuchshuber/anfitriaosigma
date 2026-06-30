@@ -19,6 +19,7 @@ export type CityContent = {
   stats: { v: string; l: string }[];
   testimonial: { quote: string; author: string; role: string };
   neighborhoods: string[];
+  metaDescription: string;
 };
 
 type Props = { content: CityContent };
@@ -26,7 +27,7 @@ type Props = { content: CityContent };
 export const CityPage = ({ content }: Props) => {
   const url = `https://anfitriaosigma.com.br/gestao-airbnb-${content.slug}`;
   const title = `Gestão de Airbnb em ${content.city} (${content.stateAbbr}) | Anfitrião Sigma`;
-  const description = `Anfitrião profissional em ${content.city}: gestão completa de Airbnb e temporada com hospedagem premium, +150% de receita média e atendimento humano. Análise gratuita.`;
+  const description = content.metaDescription;
 
   const jsonLd = {
     "@context": "https://schema.org",
