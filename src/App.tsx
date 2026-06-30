@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { CityPage } from "./pages/CityPage.tsx";
+import { CITIES } from "./data/cities";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          {Object.values(CITIES).map((c) => (
+            <Route
+              key={c.slug}
+              path={`/gestao-airbnb-${c.slug}`}
+              element={<CityPage content={c} />}
+            />
+          ))}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
