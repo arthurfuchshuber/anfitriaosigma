@@ -53,7 +53,13 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="inline-flex items-center gap-2 hover:text-primary transition-colors">
+                <a
+                  href="https://instagram.com/anfitriaosigma"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="@anfitriaosigma"
+                  className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                >
                   <Instagram className="size-4" />
                   @anfitriaosigma
                 </a>
