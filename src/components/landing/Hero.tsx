@@ -1,7 +1,7 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { openWhatsApp } from "@/lib/whatsapp";
-import fundadoresAsset from "@/assets/fundadores.png.asset.json";
+import fundadoresAsset from "@/assets/fundadores-transp.png.asset.json";
 
 export const Hero = () => {
   return (
@@ -94,16 +94,23 @@ export const Hero = () => {
                 </div>
 
                 {/* Fundadores */}
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-background">
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative glass border border-white/10">
+                  {/* Fundo gelo fosco em degradê */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.12] via-primary/[0.10] to-secondary/[0.18]" />
+                  <div className="absolute -top-1/4 left-1/2 -translate-x-1/2 w-[120%] aspect-square rounded-full bg-primary/25 blur-3xl" />
+                  <div className="absolute -bottom-1/3 -left-1/4 w-[90%] aspect-square rounded-full bg-secondary/30 blur-3xl" />
+                  <div className="absolute inset-0 backdrop-blur-2xl" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-white/5" />
                   <img
                     src={fundadoresAsset.url}
                     alt="Fundadores da Anfitrião Sigma: gestão e operação completa de hospedagem"
                     loading="eager"
                     decoding="async"
-                    className="absolute inset-0 size-full object-cover object-top"
+                    className="absolute inset-0 size-full object-contain object-bottom drop-shadow-[0_25px_45px_hsl(var(--background)/0.9)]"
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+                  <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent pointer-events-none" />
                 </div>
+
 
                 <div className="mt-6 grid grid-cols-2 gap-4">
                   <div className="glass rounded-xl p-4">
