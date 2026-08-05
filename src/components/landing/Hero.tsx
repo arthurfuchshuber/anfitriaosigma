@@ -92,21 +92,16 @@ export const Hero = () => {
                   </span>
                 </div>
 
-                {/* Placeholder dos cofundadores — substituir pelas fotos reais */}
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-gradient-to-br from-secondary/40 via-background to-primary/20">
-                  <div className="absolute inset-0 flex items-end p-6">
-                    <div className="flex -space-x-4">
-                      <div className="size-24 md:size-28 rounded-full bg-gradient-to-br from-primary/60 to-secondary border-2 border-background shadow-glow-sm flex items-center justify-center font-display text-2xl font-bold">
-                        AT
-                      </div>
-                      <div className="size-24 md:size-28 rounded-full bg-gradient-to-br from-secondary to-primary/60 border-2 border-background shadow-glow-sm flex items-center justify-center font-display text-2xl font-bold">
-                        JT
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute top-4 right-4 glass rounded-full px-3 py-1 text-[11px]">
-                    Foto dos fundadores
-                  </div>
+                {/* Fundadores */}
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-background">
+                  <img
+                    src={fundadoresAsset.url}
+                    alt="Fundadores da Anfitrião Sigma: gestão e operação completa de hospedagem"
+                    loading="eager"
+                    decoding="async"
+                    className="absolute inset-0 size-full object-cover object-top"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none" />
                 </div>
 
                 <div className="mt-6 grid grid-cols-2 gap-4">
