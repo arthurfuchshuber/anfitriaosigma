@@ -81,7 +81,7 @@ export const Hero = () => {
           {/* Card dos fundadores */}
           <div className="lg:col-span-5 lg:mt-2 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-primary opacity-20 blur-3xl rounded-3xl" />
+              <div className="absolute -inset-4 bg-gradient-primary opacity-[0.08] blur-3xl rounded-3xl" />
               <div className="relative glass-strong rounded-3xl p-6 md:p-8 gradient-border overflow-hidden noise">
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
@@ -94,16 +94,24 @@ export const Hero = () => {
                 </div>
 
                 {/* Fundadores */}
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-background border border-white/10">
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative border border-white/5">
                   <img
                     src={fundadoresAsset.url}
                     alt="Fundadores da Anfitrião Sigma: gestão e operação completa de hospedagem"
                     loading="eager"
                     decoding="async"
-                    className="absolute inset-0 size-full object-cover object-top"
+                    className="absolute inset-0 size-full object-cover object-top opacity-95"
+                    style={{
+                      filter: "saturate(0.6) brightness(1.06) contrast(0.92)",
+                      WebkitMaskImage:
+                        "radial-gradient(120% 100% at 50% 35%, #000 45%, transparent 100%)",
+                      maskImage:
+                        "radial-gradient(120% 100% at 50% 35%, #000 45%, transparent 100%)",
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-card/30 pointer-events-none" />
                 </div>
+
 
 
 
