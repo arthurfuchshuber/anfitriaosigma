@@ -100,16 +100,19 @@ export const Hero = () => {
                     alt="Fundadores da Anfitrião Sigma: gestão e operação completa de hospedagem"
                     loading="eager"
                     decoding="async"
-                    className="absolute inset-0 size-full object-cover object-top opacity-95"
+                    className="absolute inset-0 size-full object-cover object-top opacity-80"
                     style={{
-                      filter: "saturate(0.6) brightness(1.06) contrast(0.92)",
+                      filter: "saturate(0.32) brightness(0.68) contrast(0.95)",
                       WebkitMaskImage:
-                        "radial-gradient(120% 100% at 50% 35%, #000 45%, transparent 100%)",
+                        "radial-gradient(115% 95% at 50% 32%, #000 35%, transparent 100%)",
                       maskImage:
-                        "radial-gradient(120% 100% at 50% 35%, #000 45%, transparent 100%)",
+                        "radial-gradient(115% 95% at 50% 32%, #000 35%, transparent 100%)",
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-card/30 pointer-events-none" />
+                  {/* Harmoniza o tom com o fundo da página */}
+                  <div className="absolute inset-0 bg-background/45 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/40 pointer-events-none" />
+
                 </div>
 
 
