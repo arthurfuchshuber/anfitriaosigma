@@ -1,7 +1,7 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { openWhatsApp } from "@/lib/whatsapp";
-import fundadoresAsset from "@/assets/fundadores-transp.png.asset.json";
+import fundadoresAsset from "@/assets/fundadores-brand.png.asset.json";
 
 export const Hero = () => {
   return (
