@@ -94,26 +94,26 @@ export const Hero = () => {
                 </div>
 
                 {/* Fundadores */}
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative border border-white/5">
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative border border-primary/25 bg-gradient-to-b from-primary/15 via-primary/5 to-transparent">
                   <img
                     src={fundadoresAsset.url}
                     alt="Fundadores da Anfitrião Sigma: gestão e operação completa de hospedagem"
                     loading="eager"
                     decoding="async"
-                    className="absolute inset-0 size-full object-cover object-top opacity-80"
+                    className="absolute inset-0 size-full object-cover object-top opacity-95"
                     style={{
-                      filter: "saturate(0.32) brightness(0.68) contrast(0.95)",
+                      filter: "saturate(0.45) brightness(1.35) contrast(0.9)",
                       WebkitMaskImage:
-                        "radial-gradient(115% 95% at 50% 32%, #000 35%, transparent 100%)",
+                        "radial-gradient(120% 100% at 50% 32%, #000 40%, transparent 100%)",
                       maskImage:
-                        "radial-gradient(115% 95% at 50% 32%, #000 35%, transparent 100%)",
+                        "radial-gradient(120% 100% at 50% 32%, #000 40%, transparent 100%)",
                     }}
                   />
-                  {/* Harmoniza o tom com o fundo da página */}
-                  <div className="absolute inset-0 bg-background/45 pointer-events-none" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/40 pointer-events-none" />
-
+                  {/* Vidro fosco claro no tom da borda da página */}
+                  <div className="absolute inset-0 bg-primary/10 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/15 via-transparent to-white/5 pointer-events-none" />
                 </div>
+
 
 
 
