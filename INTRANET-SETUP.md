@@ -8,8 +8,9 @@ Banco, login e e-mails ficam 100% no **Supabase** (sem planilhas).
 2. No projeto/hospedagem defina:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_PUBLISHABLE_KEY`  (modelo em `.env.example`)
-3. **SQL Editor**: rode, em ordem, os 5 arquivos de `supabase/migrations/`:
-   `…01_schema.sql` → `…02_engine.sql` → `…03_rpc.sql` → `…04_rls.sql` → `…05_pending.sql` (cadastro pendente / campos obrigatórios).
+3. **SQL Editor**: rode, em ordem, os 7 arquivos de `supabase/migrations/`:
+   `…01_schema.sql` → `…02_engine.sql` → `…03_rpc.sql` → `…04_rls.sql` → `…05_pending.sql` (cadastro pendente) → `…06_grants.sql` (permissões da API de dados; no Lovable Cloud sem isso o app não lê nenhuma tabela) → `…07_pj_flow.sql` (fluxo PJ sem repetição, contato de referência com endereço).
+   No Lovable Cloud a gravação direta em `storage.buckets` é recusada: crie os buckets **avatars** (público) e **invoices** (privado) pela ferramenta de Storage (o arquivo 04 já ignora o erro e segue).
    (Ou `supabase db push` com a CLI.) O arquivo 04 agenda a validação automática diária via `pg_cron`; se a extensão não existir, ative em *Database → Extensions* e agende `select public.run_validation();` 1×/dia.
 4. **Authentication → Providers → Google**: ative, informe Client ID/Secret do Google Cloud.
    - *Redirect URL* do Google Cloud: `https://SEU-PROJETO.supabase.co/auth/v1/callback`
@@ -55,3 +56,10 @@ Login Google → **/intranet/areas** → ao clicar numa área sem permissão: *S
 - Quem é obrigatório vive na tabela `required_fields` (coluna `since` = desde quando). Gestor liga/desliga em **Cadastros → Campos obrigatórios**; ao ligar, quem estiver com o campo vazio é bloqueado no próximo acesso. "Lembrar" envia aviso interno.
 - **Novo campo no futuro**: (1) coluna no banco, (2) `insert into required_fields …`, (3) um item em `src/lib/intranet/cadastro.ts` e um `case` em `field_value()` na migration. A pendência reaparece sozinha para todos.
 - CNPJ: dígitos validados no banco e situação ATIVA confirmada na Receita (edge function `cnpj-lookup`); CNPJ baixado/inapto é recusado. Se a Receita estiver fora do ar, salva como "sem confirmação". CPF: só dígitos (a Receita não permite consultar a situação do CPF gratuitamente).
+
+### 8.1 Fluxo PF / PJ (v2)
+- A página é **uma lista só, sem abas**. PF/PJ escolhe-se no 1º item (Identificação).
+- **Gestor/admin PJ**: o banco espelha (só onde a empresa está vazia) CNPJ, razão social, fantasia, inscrição municipal, banco/agência/conta e os dados do responsável legal (nome, CPF, nascimento, celular) para `company_info` — função `sync_company_from_manager` (migration 07). Por isso a empresa NÃO pergunta de novo; sobram só regime tributário, endereço e contato da empresa.
+- **Representante legal (PJ)**: CPF, RG, e-mail pessoal, celular e endereço completo — com a chavezinha **"Usar os dados da empresa"** (copia telefone/e-mail e endereço da etapa da empresa).
+- **Contato de referência**: nome completo, relacionamento, telefone e endereço (todos obrigatórios, exceto complemento).
+- **Inscrição municipal** não é obrigatória (PF/PJ nem empresa).

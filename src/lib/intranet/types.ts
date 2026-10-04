@@ -6,7 +6,7 @@ export interface Profile {
   phone: string | null; whatsapp: string | null; birth_date: string | null; personal_email: string | null;
   address: Record<string, string>; job_title: string | null; seniority: string | null; manager_id: string | null;
   regime: "clt" | "pj" | null; start_date: string | null; end_date: string | null; active: boolean;
-  google_login: boolean; emergency_name: string | null; emergency_relation: string | null; emergency_phone: string | null; notes: string | null;
+  google_login: boolean; emergency_name: string | null; emergency_relation: string | null; emergency_address?: Record<string, string> | null; emergency_phone: string | null; notes: string | null;
 }
 
 export interface Product { id: string; name: string; recurring: boolean; active: boolean; sort: number }

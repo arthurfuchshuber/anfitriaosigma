@@ -38,7 +38,7 @@ export const FieldRenderer = ({ f, ctx }: { f: FieldDef; ctx: FieldCtx }) => {
     case "phone": return <PhoneInput {...base} />;
     case "email": return <EmailInput {...base} />;
     case "cep": return <CepInput {...base} onAddress={(a) => {
-      const pre = f.key === "u_cep" ? "u_" : "c_";
+      const pre = f.key.replace(/cep$/, "");
       ctx.set({ [`${pre}street`]: a.rua, [`${pre}neighborhood`]: a.bairro, [`${pre}city`]: a.cidade, [`${pre}uf`]: a.uf });
     }} />;
     case "uf": return <UfSelect {...base} />;

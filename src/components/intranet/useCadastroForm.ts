@@ -74,11 +74,12 @@ export function useCadastroForm(scope: Scope, enabled = true) {
     if (Object.keys(errs).length) { setErrors(errs); throw new Error("Corrija os campos destacados."); }
     const status = cnpj.state === "active" ? "ATIVA" : cnpj.state === "unavailable" ? "unverified" : null;
     const merged = { profile: {} as Record<string, unknown>, sensitive: {} as Record<string, string | null>, company: { ...extraCompany } as Record<string, unknown> };
-    const base = { address: { ...(profile?.address ?? {}) } as Record<string, string>, addr: { ...(comp.data?.addr ?? {}) } as Record<string, string> };
+    const base = { address: { ...(profile?.address ?? {}) } as Record<string, string>, addr: { ...(comp.data?.addr ?? {}) } as Record<string, string>, eaddr: { ...(profile?.emergency_address ?? {}) } as Record<string, string> };
     for (const g of groups) {
       const p = planSave(g, values, doc, base, status);
       Object.assign(merged.profile, p.profile); Object.assign(merged.sensitive, p.sensitive); Object.assign(merged.company, p.company);
       if (p.profile.address) base.address = p.profile.address as Record<string, string>;
+      if (p.profile.emergency_address) base.eaddr = p.profile.emergency_address as Record<string, string>;
       if (p.company.addr) base.addr = p.company.addr as Record<string, string>;
     }
     if (scope === "user") {

@@ -87,8 +87,12 @@
 /* barra superior flutuante (igual à da landing) */
 .ix-top { position: sticky; top: 14px; z-index: 50; margin: 14px auto 0; width: min(1320px, 100% - 24px); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 12px 10px 20px; border-radius: 999px; background: rgba(255,255,255,.78); backdrop-filter: blur(20px) saturate(1.5); border: 1px solid rgba(67,17,113,.1); box-shadow: 0 20px 50px -28px rgba(67,17,113,.35); }
 @media (max-width: 767px) { .ix-top { border-radius: 15px; padding: 8px 8px 8px 14px; top: 10px; } }
-.ix-nav { display: flex; gap: 6px; align-items: center; overflow-x: auto; scrollbar-width: none; }
-.ix-nav a { padding: 9px 14px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: #5f5870; white-space: nowrap; }
+/* Menu: cabe na barra (flex 1 + min-width 0), rola sem cortar item nas bordas (regra anti-corte: padding 6px + scroll-padding) */
+.ix-nav { flex: 1 1 auto; min-width: 0; display: flex; gap: 4px; align-items: center; justify-content: safe center; overflow-x: auto; scrollbar-width: none; padding: 6px; scroll-padding: 0 6px; }
+.ix-nav::-webkit-scrollbar { display: none; }
+.ix-top .ix-row, .ix-top > .ix-row:last-child { flex: none; }
+.ix-top > a.ix-row { flex: none; }
+.ix-nav a { flex: none; padding: 9px 13px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: #5f5870; white-space: nowrap; }
 .ix-nav a:hover { color: #431171; } .ix-nav a.on { background: #f2ecf8; color: #431171; }
 .ix-tabbar { position: fixed; z-index: 60; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-around; padding: 8px; border-radius: 22px; background: rgba(255,255,255,.92); backdrop-filter: blur(18px); border: 1px solid #e7e2ee; box-shadow: 0 20px 50px -20px rgba(67,17,113,.45); }
 .ix-tabbar a { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; color: #8c849c; padding: 6px 10px; border-radius: 14px; min-width: 60px; }
@@ -209,3 +213,20 @@
 .ix-pop .rdp-nav_button { color: #431171 !important; background: #fff !important; border: 1.5px solid #d2c5e3 !important; opacity: 1 !important; border-radius: 10px; }
 .ix-pop .rdp-nav_button svg { stroke: #431171; }
 .ix-pop .rdp-head_cell { color: #8c849c; }
+.ix-pull { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; margin: 0 0 16px; border-radius: 16px; background: #f7f3fb; border: 1px solid rgba(67,17,113,.1); }
+.ix-pull .t { display: grid; gap: 2px; min-width: 0; } .ix-pull .t b { font-size: 14.5px; font-weight: 600; color: #120a1c; } .ix-pull .t span { font-size: 13px; color: #5f5870; }
+
+/* Com menu: o nome some (o avatar leva ao perfil) e "Áreas" vira só a seta, para o menu caber inteiro */
+.ix-top.has-nav .ix-who { display: none !important; }
+.ix-top.has-nav .ix-back span { display: none; } .ix-top.has-nav .ix-back { padding: 0 11px; }
+@media (max-width: 1180px) { .ix-top.has-nav > a.ix-row > .hd, .ix-top.has-nav > a.ix-row > .ix-chip { display: none; } }
+@media (max-width: 960px) { .ix-top.has-nav .ix-btn.sm span { display: none; } .ix-top.has-nav .ix-btn.sm { padding: 0 11px; } }
+/* sem barra preta no topo: a margem do menu não colapsa para fora e o fundo é sempre branco */
+.ix { display: flow-root; }
+html:has(.sg.ix), body:has(.sg.ix) { background: #fff; }
+@media (max-width: 1000px) { .ix-nav { gap: 2px; } .ix-nav a { padding: 9px 10px; font-size: 14px; } }
+/* Celular com menu (gestor): o menu ganha a própria linha dentro da barra, rolável e sem cortar item nas bordas */
+@media (max-width: 767px) {
+  .ix-top.has-nav { flex-wrap: wrap; row-gap: 4px; border-radius: 22px; padding: 8px 10px 6px 12px; }
+  .ix-top.has-nav .ix-nav { order: 3; flex: 1 0 100%; justify-content: flex-start; padding: 4px 6px 6px; margin: 0 -4px; }
+}

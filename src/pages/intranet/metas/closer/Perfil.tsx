@@ -17,7 +17,7 @@ const part = (id: string, fields: FieldDef[]): GroupDef => ({ id, scope: "user",
 /** Perfil usa os MESMOS campos (máscara/seleção) do cadastro pendente; o que falta aparece com a tag "Pendente". */
 const BASIC = part("perfil", F("u_full_name", "u_nickname", "u_personal_email", "u_phone", "u_whatsapp", "u_birth_date"));
 const ADDRESS = part("perfil-end", F("u_cep", "u_street", "u_number", "u_complement", "u_neighborhood", "u_city", "u_uf"));
-const EMERG = part("perfil-emerg", F("u_emerg_name", "u_emerg_relation", "u_emerg_phone"));
+const EMERG = part("perfil-emerg", F("u_emerg_name", "u_emerg_relation", "u_emerg_phone", "u_emerg_cep", "u_emerg_street", "u_emerg_number", "u_emerg_complement", "u_emerg_neighborhood", "u_emerg_city", "u_emerg_uf"));
 const SENSITIVE = part("ident", F("u_cpf", "u_rg", "u_cnpj", "u_company_name", "u_trade_name", "u_municipal_reg", "u_pix_type", "u_pix_key", "u_bank", "u_agency", "u_account"));
 
 const Perfil = () => {
@@ -70,7 +70,7 @@ const Perfil = () => {
               {grid(BASIC)}
               <h2 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Endereço</h2>
               {grid(ADDRESS)}
-              <h2 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Contato de emergência</h2>
+              <h2 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Contato de referência</h2>
               {grid(EMERG)}
               <Btn type="submit" busy={save.isPending} mfull>Salvar</Btn>
             </Card>

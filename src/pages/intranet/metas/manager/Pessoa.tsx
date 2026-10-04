@@ -107,7 +107,7 @@ const Pessoa = () => {
           </div>
           <h3 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Endereço</h3>
           <div className="ix-grid c4">{ADDR.map(([k, l]) => <div key={k}>{addr(k, l)}</div>)}</div>
-          <h3 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Contato de emergência</h3>
+          <h3 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Contato de referência</h3>
           <div className="ix-grid c3"><NameInput label="Nome" value={f.emergency_name ?? ""} onChange={put("emergency_name")} /><RelationSelect label="Parentesco" value={f.emergency_relation ?? ""} onChange={put("emergency_relation")} /><PhoneInput label="Telefone" value={f.emergency_phone ?? ""} onChange={put("emergency_phone")} /></div>
         </Card>
 

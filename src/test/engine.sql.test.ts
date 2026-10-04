@@ -212,14 +212,15 @@ describe("cadastro pendente", () => {
     expect(a.company).toContain("c_rep_cpf");
     await as(null);
   });
-  it("PJ troca CPF/RG por CNPJ/razão social nas pendências", async () => {
+  it("PJ acrescenta CNPJ/razão social e mantém CPF/RG do representante legal", async () => {
     await as(ANA);
     await db.exec(`insert into public.profile_sensitive (user_id, doc_type) values ('${ANA}','pj')`);
     const p = (await q(`select public.my_pending() p`))[0].p;
     expect(p.user).toContain("u_cnpj");
     expect(p.user).toContain("u_company_name");
-    expect(p.user).not.toContain("u_cpf");
-    expect(p.user).not.toContain("u_rg");
+    expect(p.user).toContain("u_cpf");                 // representante legal também informa CPF e RG
+    expect(p.user).toContain("u_rg");
+    expect(p.user).not.toContain("u_municipal_reg");   // inscrição municipal é opcional
     await as(null);
   });
   it("preencher reduz as pendências; CPF/CNPJ inválidos e CNPJ inativo são recusados", async () => {
@@ -266,5 +267,34 @@ describe("cadastro pendente", () => {
     await as(DARCIO);
     await expect(q(`select * from public.pending_people()`)).rejects.toThrow(/permissão/);
     await as(null);
+  });
+  it("inscrição municipal da empresa não é obrigatória; contato de referência exige endereço", async () => {
+    await as(ADMIN);
+    const a = (await q(`select public.my_pending() p`))[0].p;
+    expect(a.company).not.toContain("c_municipal_reg");
+    expect(a.user).toEqual(expect.arrayContaining(["u_emerg_cep", "u_emerg_street", "u_emerg_number", "u_emerg_neighborhood", "u_emerg_city", "u_emerg_uf"]));
+    expect(a.user).not.toContain("u_emerg_complement");
+    await q(`select public.update_my_profile('{"emergency_name":"Maria","emergency_relation":"Mãe","emergency_phone":"+5545999990000","emergency_address":{"cep":"85851000","rua":"Av. Brasil","numero":"1","bairro":"Centro","cidade":"Foz do Iguaçu","uf":"PR"}}'::jsonb)`);
+    const b = (await q(`select public.my_pending() p`))[0].p;
+    expect(b.user).not.toContain("u_emerg_cep");
+    expect(b.user).not.toContain("u_emerg_name");
+    await as(null);
+  });
+  it("admin PJ: CNPJ, banco e responsável espelham para a empresa e não são pedidos de novo", async () => {
+    await as(null);
+    await db.exec(`update public.company_info set cnpj=null, cnpj_status=null, legal_name=null, bank=null, agency=null, account=null,
+                   rep_name=null, rep_cpf=null, rep_birth=null, rep_phone=null, tax_regime=null, email=null where id = 1;
+                   delete from public.profile_sensitive where user_id='${ADMIN}'`);
+    await as(ADMIN);
+    await db.exec(`insert into public.profile_sensitive (user_id, doc_type, cpf, cnpj, cnpj_status, company_name, bank, agency, account)
+                   values ('${ADMIN}','pj','52998224725','${VALID_CNPJ}','ATIVA','SIGMA LTDA','Itaú','1234','56789-0')`);
+    await q(`select public.update_my_profile('{"phone":"+5545999991111","birth_date":"1985-01-02"}'::jsonb)`);
+    const c = (await q(`select public.my_pending() p`))[0].p.company;
+    for (const k of ["c_cnpj", "c_bank", "c_agency", "c_account", "c_rep_cpf", "c_rep_birth", "c_rep_phone"]) expect(c).not.toContain(k);
+    expect(c).toContain("c_tax_regime");               // continua pendente: só a empresa sabe
+    expect(c).toContain("c_email");
+    await as(null);
+    const row = (await q(`select cnpj, cnpj_status, rep_cpf, bank from public.company_info where id = 1`))[0];
+    expect(row).toEqual({ cnpj: VALID_CNPJ, cnpj_status: "ATIVA", rep_cpf: "52998224725", bank: "Itaú" });
   });
 });
