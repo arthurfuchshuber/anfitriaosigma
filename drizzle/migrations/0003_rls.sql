@@ -79,4 +79,8 @@ begin
   end if;
 exception when others then
   raise notice 'pg_cron indisponível: ative em Database → Extensions e agende run_validation() diariamente.';
+<<<<<<< HEAD
 end $$;
+=======
+end $$;
+>>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675

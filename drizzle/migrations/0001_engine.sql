@@ -235,4 +235,8 @@ on conflict do nothing;
 
 insert into public.company_info (id, legal_name, cnpj, address, email, nf_notes)
 values (1, 'Anfitrião Sigma', '', '', 'sigma@anfitriaosigma.com.br', 'Descrição sugerida: Prestação de serviços de venda e consultoria comercial.')
+<<<<<<< HEAD
 on conflict do nothing;
+=======
+on conflict do nothing;
+>>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675

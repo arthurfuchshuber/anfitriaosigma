@@ -337,4 +337,8 @@ begin
     execute format('create trigger audit_%1$s after insert or update or delete on public.%1$s
                     for each row execute function public.audit_row()', t);
   end loop;
+<<<<<<< HEAD
 end $$;
+=======
+end $$;
+>>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675
