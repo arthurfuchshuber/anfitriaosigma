@@ -11,7 +11,7 @@ import { IntranetTop } from "@/components/intranet/IntranetTop";
 import { Banner, Btn, Card, ErrorBox, Loading } from "@/components/intranet/ui";
 import { PENDING_KEY, useCadastroForm } from "@/components/intranet/useCadastroForm";
 import { useAuth } from "@/contexts/AuthContext";
-import { listNotices, resolveNotice } from "@/lib/intranet/api";
+import { getMyPending, listNotices, resolveNotice } from "@/lib/intranet/api";
 import { COMPANY_GROUPS, MIRRORED_COMPANY_KEYS, PULL_FROM_COMPANY, USER_GROUPS, titleFor, visibleFields, type DocType, type GroupDef } from "@/lib/intranet/cadastro";
 
 const ICON = { id: User, phone: Phone, pin: MapPin, alert: AlertCircle, wallet: Wallet, building: Building2, user: UserCheck };
@@ -79,6 +79,8 @@ const Cadastro = () => {
   const [showDone, setShowDone] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
   const [pulled, setPulled] = useState<Record<string, boolean>>({});
+  const [lacking, setLacking] = useState<string[] | null>(null);
+  const [going, setGoing] = useState(false);
 
   const pjMgr = isManager && U.doc === "pj";
   const hide = pjMgr ? MIRRORED_COMPANY_KEYS : undefined;
@@ -116,7 +118,7 @@ const Cadastro = () => {
   const save = async (s: Sec) => {
     setSaving(s.key);
     try {
-      const st = await s.form.save([s.g]);
+      const st = await s.form.save([s.g], {}, hide);
       const vis = visibleFields(s.g, s.doc, hide);
       const miss = (s.g.scope === "user" ? st.user : st.company ?? []).filter((k) => vis.some((f) => f.key === k)).length;
       qc.setQueryData([PENDING_KEY, profile?.id], (old: unknown) => ({ ...(old as object), ...st }));
@@ -136,6 +138,21 @@ const Cadastro = () => {
       }
     } catch (e) { toast.error(e instanceof Error ? e.message : "Não foi possível salvar."); }
     setSaving(null);
+  };
+
+  /** Botão final: confere no banco; se faltar algo, diz exatamente o quê (e abre o item), em vez de só recarregar a página. */
+  const goHome = async () => {
+    setGoing(true); setLacking(null);
+    try {
+      const st = await qc.fetchQuery({ queryKey: [PENDING_KEY, profile?.id], queryFn: getMyPending, staleTime: 0 });
+      const ku = st.user ?? [], kc = st.company ?? [];
+      if (ku.length + kc.length === 0) { nav("/intranet/areas", { replace: true }); return; }
+      const label = (k: string) => [...U.required, ...C.required].find((r) => r.key === k)?.label ?? k;
+      setLacking([...ku, ...kc].map(label));
+      const first = secs.find((x) => { const v = visibleFields(x.g, x.doc, hide); return (x.g.scope === "user" ? ku : kc).some((k) => v.some((f) => f.key === k)); });
+      if (first) setOpen(first.key);
+    } catch (e) { toast.error(e instanceof Error ? e.message : "Não foi possível conferir o cadastro."); }
+    setGoing(false);
   };
 
   /** Chavezinha: copia da empresa para o representante legal (contato / endereço). */
@@ -191,7 +208,8 @@ const Cadastro = () => {
                   </div>
                 )}
               </div>
-              {remaining === 0 && <div style={{ marginTop: 20, display: "flex", justifyContent: "center" }}><Btn arrow mfull style={{ minWidth: 320 }} onClick={() => nav("/intranet/areas")}>Ir para a página inicial</Btn></div>}
+              {remaining === 0 && <div style={{ marginTop: 20, display: "flex", justifyContent: "center" }}><Btn arrow mfull busy={going} style={{ minWidth: 320 }} onClick={goHome}>Ir para a página inicial</Btn></div>}
+              {lacking && lacking.length > 0 && <div style={{ marginTop: 16 }}><Banner error>Ainda falta preencher: {lacking.join(", ")}. Complete {lacking.length === 1 ? "esse campo" : "esses campos"} para avançar.</Banner></div>}
             </>
           )}
         </main>

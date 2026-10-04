@@ -61,10 +61,10 @@ export function useCadastroForm(scope: Scope, enabled = true) {
   };
 
   /** Valida e grava os itens informados. Lança Error com mensagem amigável quando algo bloqueia. */
-  const save = useCallback(async (groups: GroupDef[], extraCompany: Record<string, unknown> = {}) => {
+  const save = useCallback(async (groups: GroupDef[], extraCompany: Record<string, unknown> = {}, hide?: ReadonlySet<string>) => {
     const errs: Record<string, string> = {};
-    for (const g of groups) Object.assign(errs, validateGroup(g, values, doc));
-    const hasCnpj = groups.some((g) => g.fields.some((f) => f.kind === "cnpj" && (!f.docs || f.docs === doc)));
+    for (const g of groups) Object.assign(errs, validateGroup(g, values, doc, hide));
+    const hasCnpj = groups.some((g) => g.fields.some((f) => f.kind === "cnpj" && (!f.docs || f.docs === doc) && !hide?.has(f.key)));
     const cnpjKey = scope === "user" ? "u_cnpj" : "c_cnpj";
     if (hasCnpj && values[cnpjKey]) {
       if (cnpj.state === "checking") throw new Error("Aguarde a consulta do CNPJ na Receita Federal.");
@@ -76,7 +76,7 @@ export function useCadastroForm(scope: Scope, enabled = true) {
     const merged = { profile: {} as Record<string, unknown>, sensitive: {} as Record<string, string | null>, company: { ...extraCompany } as Record<string, unknown> };
     const base = { address: { ...(profile?.address ?? {}) } as Record<string, string>, addr: { ...(comp.data?.addr ?? {}) } as Record<string, string>, eaddr: { ...(profile?.emergency_address ?? {}) } as Record<string, string> };
     for (const g of groups) {
-      const p = planSave(g, values, doc, base, status);
+      const p = planSave(g, values, doc, base, status, hide);
       Object.assign(merged.profile, p.profile); Object.assign(merged.sensitive, p.sensitive); Object.assign(merged.company, p.company);
       if (p.profile.address) base.address = p.profile.address as Record<string, string>;
       if (p.profile.emergency_address) base.eaddr = p.profile.emergency_address as Record<string, string>;

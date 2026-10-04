@@ -161,12 +161,13 @@ export interface SavePlan {
 }
 
 /** Monta o que gravar para os campos de UM item. `cnpjStatus` vem da consulta na Receita feita ao digitar. */
-export function planSave(g: GroupDef, values: Values, doc: DocType, base: { address?: Record<string, string>; addr?: Record<string, string>; eaddr?: Record<string, string> }, cnpjStatus: "ATIVA" | "unverified" | null): SavePlan {
+export function planSave(g: GroupDef, values: Values, doc: DocType, base: { address?: Record<string, string>; addr?: Record<string, string>; eaddr?: Record<string, string> }, cnpjStatus: "ATIVA" | "unverified" | null, hide?: ReadonlySet<string>): SavePlan {
   const plan: SavePlan = { profile: {}, sensitive: {}, company: {} };
   const addr = { ...(base.address ?? {}) }, caddr = { ...(base.addr ?? {}) }, eaddr = { ...(base.eaddr ?? {}) };
   let touchA = false, touchCA = false, touchEA = false;
   for (const f of g.fields) {
     if (f.docs && f.docs !== doc) continue;
+    if (hide?.has(f.key)) continue; // campo espelhado/oculto: nunca sobrescrever com vazio
     const [t, c] = f.store.split(".");
     const v = values[f.key] ?? "";
     if (t === "p") plan.profile[c] = f.kind === "date" ? v || "" : v;
@@ -183,7 +184,7 @@ export function planSave(g: GroupDef, values: Values, doc: DocType, base: { addr
     plan.company.address = [[caddr.rua, caddr.numero].filter(Boolean).join(", "), caddr.complemento, caddr.bairro, [caddr.cidade, caddr.uf].filter(Boolean).join("/"), caddr.cep && `CEP ${caddr.cep}`].filter(Boolean).join(" - ");
   }
   if (g.scope === "user" && g.id === "ident") plan.sensitive.doc_type = doc;
-  const hasCnpj = g.fields.some((f) => f.kind === "cnpj" && (!f.docs || f.docs === doc));
+  const hasCnpj = g.fields.some((f) => f.kind === "cnpj" && (!f.docs || f.docs === doc) && !hide?.has(f.key));
   if (hasCnpj) {
     const key = g.scope === "user" ? "s" : "c";
     const filled = (g.scope === "user" ? values.u_cnpj : values.c_cnpj) ?? "";
@@ -216,8 +217,8 @@ export function validateField(f: FieldDef, values: Values): string | null {
     default: return null;
   }
 }
-export const validateGroup = (g: GroupDef, values: Values, doc: DocType) => {
+export const validateGroup = (g: GroupDef, values: Values, doc: DocType, hide?: ReadonlySet<string>) => {
   const errs: Record<string, string> = {};
-  for (const f of visibleFields(g, doc)) { const e = validateField(f, values); if (e) errs[f.key] = e; }
+  for (const f of visibleFields(g, doc, hide)) { const e = validateField(f, values); if (e) errs[f.key] = e; }
   return errs;
 };
