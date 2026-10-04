@@ -10,7 +10,7 @@ import { CITIES } from "./data/cities";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { intranetRoutes } from "./pages/intranet/intranetRoutes";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1 } } });
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

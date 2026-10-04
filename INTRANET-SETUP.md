@@ -8,8 +8,8 @@ Banco, login e e-mails ficam 100% no **Supabase** (sem planilhas).
 2. No projeto/hospedagem defina:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_PUBLISHABLE_KEY`  (modelo em `.env.example`)
-3. **SQL Editor**: rode, em ordem, os 7 arquivos de `supabase/migrations/`:
-   `…01_schema.sql` → `…02_engine.sql` → `…03_rpc.sql` → `…04_rls.sql` → `…05_pending.sql` (cadastro pendente) → `…06_grants.sql` (permissões da API de dados; no Lovable Cloud sem isso o app não lê nenhuma tabela) → `…07_pj_flow.sql` (fluxo PJ sem repetição, contato de referência com endereço).
+3. **SQL Editor**: rode, em ordem, os 8 arquivos de `supabase/migrations/`:
+   `…01_schema.sql` → `…02_engine.sql` → `…03_rpc.sql` → `…04_rls.sql` → `…05_pending.sql` (cadastro pendente) → `…06_grants.sql` (permissões da API de dados; no Lovable Cloud sem isso o app não lê nenhuma tabela) → `…07_pj_flow.sql` (fluxo PJ sem repetição, contato de referência com endereço) → `…08_profile_fks.sql` (relações com perfis; corrige o erro da tela Vendas)).
    No Lovable Cloud a gravação direta em `storage.buckets` é recusada: crie os buckets **avatars** (público) e **invoices** (privado) pela ferramenta de Storage (o arquivo 04 já ignora o erro e segue).
    (Ou `supabase db push` com a CLI.) O arquivo 04 agenda a validação automática diária via `pg_cron`; se a extensão não existir, ative em *Database → Extensions* e agende `select public.run_validation();` 1×/dia.
 4. **Authentication → Providers → Google**: ative, informe Client ID/Secret do Google Cloud.
