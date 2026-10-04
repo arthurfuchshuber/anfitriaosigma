@@ -391,8 +391,4 @@ revoke execute on function public.missing_user_fields(uuid), public.missing_comp
 grant execute on function public.missing_user_fields(uuid), public.missing_company_fields(), public.my_pending(),
   public.pending_people(), public.required_field_stats(), public.set_required_field(text, boolean),
   public.remind_pending(uuid) to authenticated;
-<<<<<<< HEAD
 grant select on public.required_fields to authenticated;
-=======
-grant select on public.required_fields to authenticated;
->>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675

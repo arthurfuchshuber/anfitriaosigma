@@ -12,8 +12,4 @@ revoke execute on function public.write_log(text, text, text, text, text, text) 
 revoke execute on function public.notify(uuid, text, text, text, text) from authenticated;
 revoke execute on function public.field_value(text, uuid) from authenticated;
 revoke execute on function public.user_doc_type(uuid) from authenticated;
-<<<<<<< HEAD
 alter default privileges in schema public revoke execute on functions from public;
-=======
-alter default privileges in schema public revoke execute on functions from public;
->>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675

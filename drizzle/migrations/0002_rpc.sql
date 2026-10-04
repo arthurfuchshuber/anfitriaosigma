@@ -340,8 +340,4 @@ language plpgsql security definer set search_path = public as $$
 begin
   if not public.is_admin() then raise exception 'somente admin'; end if;
   update public.user_roles set role = p_role where user_id = p_user;
-<<<<<<< HEAD
 end $$;
-=======
-end $$;
->>>>>>> bc7700809b13b46d15519ecd52edc6612e88d675
