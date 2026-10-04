@@ -114,7 +114,8 @@ begin
   p2 := (som - interval '2 month')::date;
   p3 := (som - interval '3 month')::date;
   cutd := p1 + (public.param('dia_corte', p1)::int - 1);
-  frac := public.business_days(p1, cutd)::numeric / nullif(public.business_days(p1, public.month_end(p1)), 0);
+  -- dias CORRIDOS: dia de corte (25) ÷ total de dias do mês; meses t-2 e t-3 entram inteiros
+  frac := (cutd - p1 + 1)::numeric / (public.month_end(p1) - p1 + 1);
 
   for r in select u.user_id from public.user_roles u where u.role = 'closer' loop
     if public.is_ramped(r.user_id, p1) then

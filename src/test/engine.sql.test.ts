@@ -136,6 +136,11 @@ describe("vendas e bônus", () => {
 });
 
 describe("multiplicador histórico", () => {
+  it("usa dias corridos (25 de 31 em outubro) no mês vigente", async () => {
+    await db.exec(`insert into public.profiles (id, email) select '00000000-0000-0000-0000-0000000000d1','x@anfitriaosigma.com.br' where false`);
+    const f = Number((await q(`select (date '2026-10-25' - date '2026-10-01' + 1)::numeric / (public.month_end('2026-10-01') - date '2026-10-01' + 1) f`))[0].f);
+    expect(f).toBeCloseTo(25 / 31, 6);
+  });
   it("fica dentro dos limites 0,9 / 1,25 do múltiplo anterior", async () => {
     await db.exec(`insert into public.params (key, valid_from, value) values ('ajuste_historico','2026-01-01',1)`);
     const mult = Number((await q(`select public.team_multiplier(date_trunc('month', current_date)::date) m`))[0].m);

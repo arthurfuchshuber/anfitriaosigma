@@ -39,7 +39,7 @@ Login Google → **/intranet/areas** → ao clicar numa área sem permissão: *S
 ## 6. Premissas assumidas (confira)
 - Venda validada = `data da venda + 10 dias`. Atingimento e bônus usam só vendas **validadas**; pendentes aparecem separadas.
 - `caixa_pct` do produto = parte do valor da venda que entra em caixa (base do alerta Comissão ÷ caixa ≤ 15%).
-- Fração de corte do múltiplo histórico = dias úteis até o dia 25 ÷ dias úteis do mês.
+- Múltiplo histórico em **dias corridos**: mês vigente até o dia 25 (25 ÷ dias do mês no denominador) + os 2 meses anteriores inteiros.
 - Salário fixo da nota/folha = salário vigente do mês (sem proporcional de entrada).
 - Gestor vê CPF/CNPJ/RG/PIX **mascarados**; só o dono altera.
 - A nota fiscal é um *espelho* gerado pelo sistema; a NFS-e oficial é emitida no portal da prefeitura.
