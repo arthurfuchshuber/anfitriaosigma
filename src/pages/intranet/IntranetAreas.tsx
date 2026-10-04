@@ -44,7 +44,7 @@ const IntranetAreas = () => {
   };
 
   const footer = (a: AreaDef) => {
-    if (!a.active) return <Chip tone="muted">em breve</Chip>;
+    if (!a.active) return <Chip>Indisponível</Chip>;
     const st = isManager ? "approved" : access[a.id];
     if (st === "approved") return <><Chip>{ROLE_LABEL[role]}</Chip><span className="ix-area-go"><ArrowRight size={18} /></span></>;
     if (st === "pending") return <Chip tone="pending">Aguardando aprovação</Chip>;
