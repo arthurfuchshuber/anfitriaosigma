@@ -33,14 +33,14 @@ const IntranetLogin = () => {
 
         <header className="ix-top" style={{ position: "relative", top: mobile ? 12 : 18 }}>
           <Link to="/" className="ix-row" style={{ gap: 11 }}>
-            <SigmaLogo size={36} /><span className="hd" style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-.02em" }}>Anfitrião Sigma</span>
+            <SigmaLogo size={36} variant="tile" /><span className="hd" style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-.02em" }}>Anfitrião Sigma</span>
           </Link>
           <Link to="/" className="ix-btn secondary sm"><ArrowLeft size={14} />Voltar ao site</Link>
         </header>
 
         <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", position: "relative" }}>
           <div style={{ width: "min(480px,100%)", background: "#fff", border: "1px solid #e7e2ee", borderRadius: 32, padding: mobile ? "36px 24px" : "48px 44px", boxShadow: "0 40px 90px -40px rgba(67,17,113,.35)" }}>
-            <SigmaLogo size={52} radius={16} />
+            <SigmaLogo size={52} radius={16} variant="tile" />
             <div className="ix-eyebrow" style={{ marginTop: 28 }}>Intranet</div>
             <h1 className="ix-h1 hd" style={{ fontSize: mobile ? 30 : 36 }}>Acesse sua <span className="gt">conta</span></h1>
             <p className="ix-sub" style={{ fontSize: 16 }}>

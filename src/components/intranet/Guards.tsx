@@ -3,13 +3,13 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { getMyPending } from "@/lib/intranet/api";
-import { Loading } from "./ui";
+import { GateLoading } from "./ui";
 import { PENDING_KEY } from "./useCadastroForm";
 
 export const RequireAuth = ({ children }: { children: ReactNode }) => {
   const { loading, session } = useAuth();
   const loc = useLocation();
-  if (loading) return <div className="ix-wrap" style={{ paddingTop: 120 }}><Loading /></div>;
+  if (loading) return <GateLoading />;
   if (!session) return <Navigate to="/intranet" replace state={{ from: loc.pathname }} />;
   return <>{children}</>;
 };
@@ -35,7 +35,7 @@ export const RequireComplete = ({ children }: { children: ReactNode }) => {
   const q = useQuery({ queryKey: [PENDING_KEY, profile?.id], queryFn: getMyPending, enabled: !!profile?.id, retry: false, refetchOnMount: "always" });
   if (!profile) return <>{children}</>;
   const has = (q.data?.user?.length ?? 0) > 0 || (q.data?.company?.length ?? 0) > 0;
-  if (q.isLoading || (q.isFetching && has)) return <div className="ix-wrap" style={{ paddingTop: 120 }}><Loading /></div>;
+  if (q.isLoading || (q.isFetching && has)) return <GateLoading />;
   if (has) return <Navigate to="/intranet/cadastro" replace state={{ from: loc.pathname }} />;
   return <>{children}</>;
 };

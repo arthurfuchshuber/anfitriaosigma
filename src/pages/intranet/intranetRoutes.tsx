@@ -1,7 +1,7 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { Route } from "react-router-dom";
 import { RequireArea, RequireAuth, RequireComplete, RequireManager } from "@/components/intranet/Guards";
-import { Loading } from "@/components/intranet/ui";
+import { GateLoading } from "@/components/intranet/ui";
 
 const L = (f: () => Promise<{ default: React.ComponentType }>) => lazy(f);
 const Login = L(() => import("./IntranetLogin"));
@@ -22,7 +22,7 @@ const manager = {
   Log: L(() => import("./metas/manager/Log")), Vendedor: L(() => import("./metas/manager/Vendedor")),
 };
 
-const S = ({ children }: { children: ReactNode }) => <Suspense fallback={<div className="ix-wrap" style={{ paddingTop: 120 }}><Loading /></div>}>{children}</Suspense>;
+const S = ({ children }: { children: ReactNode }) => <Suspense fallback={<GateLoading />}>{children}</Suspense>;
 const M = ({ children }: { children: ReactNode }) => <RequireManager>{children}</RequireManager>;
 
 /** Rotas da Intranet — inseridas em App.tsx acima do catch-all. */

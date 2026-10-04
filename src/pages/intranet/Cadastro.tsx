@@ -167,7 +167,6 @@ const Cadastro = () => {
       <div className="ix-bg">
         <IntranetTop />
         <main className="ix-cad">
-          <span className="ix-eyebrow">Cadastro</span>
           <h1 className="ix-h1 hd" style={{ fontSize: "clamp(28px, 5vw, 40px)" }}>Complete seu <span className="gt">cadastro</span></h1>
           <p className="ix-sub" style={{ fontSize: 16 }}>
             {!ready ? "Carregando…" : remaining > 0 ? <>Toque em cada item para preencher. {remaining === 1 ? "Falta 1 informação." : `Faltam ${remaining} informações.`}</> : "Tudo preenchido. Toque em um item se quiser revisar."}
@@ -192,7 +191,7 @@ const Cadastro = () => {
                   </div>
                 )}
               </div>
-              {remaining === 0 && U.pending && (U.pending.user?.length ?? 0) === 0 && (U.pending.company?.length ?? 0) === 0 && <Btn arrow mfull style={{ marginTop: 20 }} onClick={() => nav("/intranet/areas")}>Continuar</Btn>}
+              {remaining === 0 && <div style={{ marginTop: 20, display: "flex", justifyContent: "center" }}><Btn arrow mfull style={{ minWidth: 320 }} onClick={() => nav("/intranet/areas")}>Ir para a página inicial</Btn></div>}
             </>
           )}
         </main>

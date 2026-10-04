@@ -15,7 +15,7 @@ export const IntranetTop = ({ nav, back }: { nav?: NavItem[]; back?: { to: strin
   return (
     <header className={`ix-top ${nav ? "has-nav" : ""}`}>
       <Link to="/intranet/areas" className="ix-row" style={{ gap: 11 }}>
-        <SigmaLogo size={36} />
+        <SigmaLogo size={36} variant="tile" />
         <span className="hd hide-m" style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-.02em" }}>Anfitrião Sigma</span>
         <span className="ix-chip muted" style={{ marginLeft: 4 }}>Intranet</span>
       </Link>

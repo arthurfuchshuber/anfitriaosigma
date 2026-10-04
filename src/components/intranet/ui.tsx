@@ -1,4 +1,4 @@
-import { useEffect, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
+import { useEffect, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 import { ArrowRight, Loader2, X } from "lucide-react";
 import { initials } from "@/lib/intranet/format";
 
@@ -79,6 +79,15 @@ export const Avatar = ({ name, src, size = 40 }: { name: string; src?: string | 
 export const Loading = ({ rows = 3 }: { rows?: number }) => (
   <div style={{ display: "grid", gap: 14 }}>{Array.from({ length: rows }).map((_, i) => <div key={i} className="ix-skel" style={{ height: 64 }} />)}</div>
 );
+/** Tela de espera dos guardas/rotas (login, permissão, carregamento da página): mantém o fundo da intranet e só mostra
+ *  os blocos de carregamento se demorar (> 600 ms) — evita o "piscar" de barras roxas a cada recarga/entrada. */
+export const GateLoading = () => {
+  const [late, setLate] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setLate(true), 600); return () => clearTimeout(t); }, []);
+  return (
+    <div className="sg ix"><div className="ix-bg"><div className="ix-wrap" style={{ paddingTop: 120, minHeight: "100vh" }}>{late && <Loading />}</div></div></div>
+  );
+};
 export const Empty = ({ children }: { children: ReactNode }) => <div className="ix-card lilac ix-muted" style={{ textAlign: "center", padding: 36 }}>{children}</div>;
 export const ErrorBox = ({ error }: { error: unknown }) => <Banner error>{error instanceof Error ? error.message : "Algo deu errado. Tente novamente."}</Banner>;
 
