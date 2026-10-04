@@ -25,7 +25,7 @@ export const About = () => {
 </div>
 </div>
 <div style={css('position:relative;overflow:hidden;flex:1 1 480px;min-width:0;border:1px solid rgba(255,255,255,.14);border-radius:32px;padding:44px 40px;background:rgba(255,255,255,.05);backdrop-filter:blur(14px)')}>
-<div style={css('position:absolute;right:-30px;bottom:-110px;font-weight:800;font-size:360px;line-height:1;color:rgba(255,255,255,.04)')}>σ</div>
+<img src="/logo-sigma-mark.png" alt="" aria-hidden="true" style={css('position:absolute;right:-30px;bottom:-60px;width:360px;opacity:.05;pointer-events:none')} />
 <div style={css('position:relative;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C2B1D6')}>Case · Stúdio 35m² · Foz do Iguaçu</div>
 <div style={css('position:relative;margin-top:44px;font-size:16px;color:#C2B1D6')}>Faturamento em 2025</div>
 <div className="hd gtl" style={css('position:relative;margin-top:6px;font-weight:600;font-size:clamp(56px,6vw,88px);line-height:1;letter-spacing:-0.05em')}>R$ 83 mil</div>

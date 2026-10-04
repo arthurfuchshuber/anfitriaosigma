@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import {
   DropdownMenu,
@@ -7,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { css } from "@/lib/css";
+import { SigmaLogo } from "@/components/sigma/SigmaLogo";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 const LINKS = [
@@ -17,10 +19,9 @@ const LINKS = [
   { label: "FAQ", href: "#faq" },
 ];
 
-// Áreas de acesso. `href` fica vazio enquanto as páginas não existem: o item aparece desativado.
-// Quando a página estiver pronta, basta preencher o href (ex.: "/intranet") e `enabled: true`.
+// Áreas de acesso. Intranet ligada (/intranet). "Proprietário" segue desativado até existir a página.
 const ACCESS = [
-  { label: "Intranet", href: "", enabled: false },
+  { label: "Intranet", href: "/intranet", enabled: true },
   { label: "Proprietário", href: "", enabled: false },
 ];
 
@@ -33,6 +34,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 767px)");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -63,12 +65,7 @@ export const Navbar = () => {
     <>
       <header style={header}>
         <a href="#top" style={css(`display:flex;align-items:center;gap:11px;color:${brandColor};transition:color .3s`)}>
-          <span
-            className="hd"
-            style={css("width:36px;height:36px;border-radius:10px;background:linear-gradient(145deg,#5A2394,#2A0A47);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:19px")}
-          >
-            σ
-          </span>
+          <SigmaLogo size={36} />
           <span className="hd" style={css("font-weight:600;font-size:16px;letter-spacing:-0.02em")}>Anfitrião Sigma</span>
         </a>
 
@@ -97,7 +94,7 @@ export const Navbar = () => {
                 <DropdownMenuItem
                   key={a.label}
                   disabled={!a.enabled}
-                  onSelect={() => a.enabled && a.href && (window.location.href = a.href)}
+                  onSelect={() => a.enabled && a.href && navigate(a.href)}
                   style={css("display:flex;justify-content:space-between;gap:16px;padding:11px 12px;border-radius:10px;font-size:14.5px;font-weight:600;color:#120A1C")}
                 >
                   {a.label}
@@ -140,15 +137,26 @@ export const Navbar = () => {
             </a>
           ))}
           <div style={css("margin-top:14px")}>
-            {ACCESS.map((a, i) => (
-              <span
-                key={a.label}
-                style={css(`display:flex;justify-content:space-between;align-items:center;padding:12px 4px;font-weight:600;font-size:16px;color:#8F7FA6;${i < ACCESS.length - 1 ? "border-bottom:1px solid rgba(255,255,255,.07)" : ""}`)}
-              >
-                {a.label}
-                <span style={css("font-size:11px;font-weight:600")}>em breve</span>
-              </span>
-            ))}
+            {ACCESS.map((a, i) =>
+              a.enabled ? (
+                <a
+                  key={a.label}
+                  href={a.href}
+                  onClick={(e) => { e.preventDefault(); setOpen(false); navigate(a.href); }}
+                  style={css(`display:flex;justify-content:space-between;align-items:center;padding:12px 4px;font-weight:600;font-size:16px;color:#fff;${i < ACCESS.length - 1 ? "border-bottom:1px solid rgba(255,255,255,.07)" : ""}`)}
+                >
+                  {a.label}
+                </a>
+              ) : (
+                <span
+                  key={a.label}
+                  style={css(`display:flex;justify-content:space-between;align-items:center;padding:12px 4px;font-weight:600;font-size:16px;color:#8F7FA6;${i < ACCESS.length - 1 ? "border-bottom:1px solid rgba(255,255,255,.07)" : ""}`)}
+                >
+                  {a.label}
+                  <span style={css("font-size:11px;font-weight:600")}>em breve</span>
+                </span>
+              ),
+            )}
           </div>
           <a className="btn" href="#cta" onClick={() => setOpen(false)} style={css("margin-top:12px;display:flex;align-items:center;justify-content:center;background:#fff;color:#431171;font-weight:600;font-size:16.5px;height:54px;border-radius:999px")}>
             Análise gratuita

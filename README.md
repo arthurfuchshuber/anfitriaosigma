@@ -1,6 +1,6 @@
 > **LEIA ANTES DE MEXER EM LAYOUT/DESIGN:** `PLAYBOOK-LAYOUT-DESIGN.md` (raiz do projeto) define cores, tipografia, espaçamento, componentes, degradês e efeitos. Todo ajuste visual deve segui-lo. Layout novo ou alterado só é implementado depois de validado em mockup.
 
-# Welcome to your Lovable project
+# Anfitrião Sigma — Landing + Intranet
 
 TODO: Document your project here
 

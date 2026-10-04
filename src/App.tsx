@@ -7,6 +7,8 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { CityPage } from "./pages/CityPage.tsx";
 import { CITIES } from "./data/cities";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { intranetRoutes } from "./pages/intranet/intranetRoutes";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AuthProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           {Object.values(CITIES).map((c) => (
@@ -25,9 +28,11 @@ const App = () => (
               element={<CityPage content={c} />}
             />
           ))}
+          {intranetRoutes}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
