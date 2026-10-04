@@ -677,7 +677,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      actor_name: { Args: never; Returns: string }
+      attach_invoice: {
+        Args: { p_month: string; p_path: string }
+        Returns: undefined
+      }
       business_days: { Args: { a: string; b: string }; Returns: number }
+      cancel_sale: {
+        Args: { p_id: string; p_reason: string }
+        Returns: undefined
+      }
+      check_duplicate: {
+        Args: { p_date: string; p_doc: string; p_total: number }
+        Returns: string
+      }
+      close_month: { Args: { p_month: string }; Returns: undefined }
       compute_month: {
         Args: { m: string }
         Returns: {
@@ -696,6 +710,45 @@ export type Database = {
           validated: number
         }[]
       }
+      confirm_goal_lock: { Args: { p_month: string }; Returns: undefined }
+      decide_access: {
+        Args: {
+          p_approve: boolean
+          p_area: string
+          p_note?: string
+          p_user: string
+        }
+        Returns: undefined
+      }
+      decide_floor: {
+        Args: { p_approve: boolean; p_id: string }
+        Returns: undefined
+      }
+      digits: { Args: { v: string }; Returns: string }
+      effective_month: { Args: { p_when: string }; Returns: string }
+      generate_invoice: {
+        Args: { p_month: string }
+        Returns: {
+          amount: number
+          approved_by: string | null
+          bonus: number
+          file_path: string | null
+          fixo: number
+          generated_at: string
+          id: string
+          month: string
+          number: string | null
+          paid_at: string | null
+          status: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "invoices"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       has_area: { Args: { a: string }; Returns: boolean }
       individual_goal: { Args: { m: string; uid: string }; Returns: number }
       is_admin: { Args: never; Returns: boolean }
@@ -703,11 +756,63 @@ export type Database = {
       is_ramped: { Args: { m: string; uid: string }; Returns: boolean }
       item_caixa_pct: { Args: { d: string; pid: string }; Returns: number }
       item_weight: { Args: { d: string; pid: string }; Returns: number }
+      log_event: {
+        Args: {
+          p_action: string
+          p_detail?: string
+          p_device?: string
+          p_location?: string
+        }
+        Returns: undefined
+      }
+      mask_text: { Args: { keep?: number; v: string }; Returns: string }
       meta_scale: { Args: { m: string; uid: string }; Returns: number }
       month_end: { Args: { d: string }; Returns: string }
       month_start: { Args: { d: string }; Returns: string }
+      month_summary: {
+        Args: { p_month: string }
+        Returns: {
+          attainment: number
+          bonus: number
+          caixa: number
+          full_name: string
+          goal: number
+          multiplier: number
+          nickname: string
+          pending: number
+          ramp: number
+          salary: number
+          total_pay: number
+          user_id: string
+          validated: number
+        }[]
+      }
+      notify: {
+        Args: {
+          p_body: string
+          p_kind: string
+          p_ref?: string
+          p_title: string
+          p_user: string
+        }
+        Returns: undefined
+      }
       param: { Args: { d?: string; k: string }; Returns: number }
       ramp_factor: { Args: { m: string; uid: string }; Returns: number }
+      register_sale: {
+        Args: {
+          p_client: string
+          p_date: string
+          p_doc: string
+          p_installments: number
+          p_items: Json
+          p_notes: string
+          p_pay: string
+          p_recurring: boolean
+        }
+        Returns: Json
+      }
+      request_access: { Args: { p_area: string }; Returns: string }
       run_validation: { Args: never; Returns: number }
       salary_at: { Args: { m: string; uid: string }; Returns: number }
       seller_caixa: { Args: { m: string; uid: string }; Returns: number }
@@ -715,7 +820,77 @@ export type Database = {
         Args: { cut?: string; m: string; status_filter?: string; uid: string }
         Returns: number
       }
+      sensitive_masked: {
+        Args: { p_user: string }
+        Returns: {
+          account: string
+          agency: string
+          bank: string
+          cnpj: string
+          cpf: string
+          filled: boolean
+          pix_key: string
+          rg: string
+        }[]
+      }
+      set_invoice_status: {
+        Args: { p_month: string; p_status: string; p_user: string }
+        Returns: undefined
+      }
+      set_item_qty: {
+        Args: { p_item: string; p_qty: number }
+        Returns: undefined
+      }
+      set_meta_scale: {
+        Args: {
+          p_reason: string
+          p_scale: number
+          p_user: string
+          p_when: string
+        }
+        Returns: undefined
+      }
+      set_multiplier: {
+        Args: { p_month: string; p_value: number }
+        Returns: undefined
+      }
+      set_product_version: {
+        Args: {
+          p_caixa: number
+          p_min: number
+          p_points: number
+          p_product: string
+          p_when: string
+        }
+        Returns: undefined
+      }
+      set_role: {
+        Args: {
+          p_role: Database["public"]["Enums"]["app_role"]
+          p_user: string
+        }
+        Returns: undefined
+      }
+      team_average: {
+        Args: { p_month: string }
+        Returns: {
+          avg_attainment: number
+          n: number
+        }[]
+      }
       team_multiplier: { Args: { m: string }; Returns: number }
+      update_my_profile: { Args: { p: Json }; Returns: undefined }
+      write_log: {
+        Args: {
+          p_action: string
+          p_detail: string
+          p_device?: string
+          p_entity: string
+          p_entity_id: string
+          p_location?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "closer" | "gestor" | "admin"
