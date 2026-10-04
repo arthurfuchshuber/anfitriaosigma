@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Briefcase, GraduationCap, Home, Target, Wallet } from "lucide-react";
+import { ArrowRight, Briefcase, GraduationCap, Home, Lock, Target, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import "@/styles/sigma.css";
 import "@/styles/intranet.css";
@@ -46,7 +46,7 @@ const IntranetAreas = () => {
   const footer = (a: AreaDef) => {
     if (!a.active) return <Chip tone="muted">em breve</Chip>;
     const st = isManager ? "approved" : access[a.id];
-    if (st === "approved") return <><Chip>{ROLE_LABEL[role]}</Chip><span style={{ marginLeft: "auto", width: 44, height: 44, borderRadius: "50%", background: "#431171", color: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowRight size={18} /></span></>;
+    if (st === "approved") return <><Chip>{ROLE_LABEL[role]}</Chip><span className="ix-area-go"><ArrowRight size={18} /></span></>;
     if (st === "pending") return <Chip tone="pending">Aguardando aprovação</Chip>;
     if (st === "denied") return <><Chip tone="error">Acesso negado</Chip><span className="ix-small" style={{ marginLeft: "auto", fontWeight: 600, color: "#431171" }}>Solicitar novamente</span></>;
     return <span className="ix-btn secondary sm" style={{ marginLeft: "auto" }}>Solicitar acesso</span>;
@@ -78,8 +78,11 @@ const IntranetAreas = () => {
           <div className="ix-grid c3" style={{ gap: mobile ? 14 : 22 }}>
             {AREAS.map((a) => {
               const I = ICONS[a.icon];
+              const released = a.active && (isManager || access[a.id] === "approved");
               return (
-                <button key={a.id} type="button" className={`ix-area ${a.active ? "" : "off"}`} onClick={() => open(a)} aria-disabled={!a.active}>
+                <button key={a.id} type="button" className={`ix-area ${!a.active ? "off" : released ? "rel" : ""}`} onClick={() => open(a)} aria-disabled={!a.active}>
+                  {released && <span className="ix-area-tag on"><i />Liberada</span>}
+                  {!a.active && <span className="ix-area-tag"><Lock size={12} />Em breve</span>}
                   <IconBox><I size={22} /></IconBox>
                   <h2 className="hd" style={{ fontWeight: 600, fontSize: 22, letterSpacing: "-.02em", margin: "6px 0 0" }}>{a.title}</h2>
                   <p className="ix-muted" style={{ margin: 0, fontSize: 15.5, flex: 1 }}>{a.desc}</p>
