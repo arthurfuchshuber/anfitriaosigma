@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { TwoStepConfirm } from "@/components/intranet/TwoStepConfirm";
-import { Btn, Card, Chip, Empty, ErrorBox, Field, Input, Loading, Modal, PageHeader, Select, Textarea } from "@/components/intranet/ui";
+import { FieldGrid } from "@/components/intranet/CadastroFields";
+import { DateInput, DecimalInput, DigitsInput, MoneyInput, PercentInput, TextInput } from "@/components/intranet/fields";
+import { useCadastroForm } from "@/components/intranet/useCadastroForm";
+import { Btn, Card, Chip, Empty, ErrorBox, Field, Loading, Modal, PageHeader, Select, Textarea } from "@/components/intranet/ui";
+import { COMPANY_GROUPS, visibleFields, type GroupDef } from "@/lib/intranet/cadastro";
+import { maskPercent, moneyToNumber, numberToMoney, percentToNumber } from "@/lib/intranet/masks";
+import CamposObrigatorios from "./CamposObrigatorios";
 import {
-  addHoliday, createProduct, getCompany, getParams, listHolidays, listNotices, listProducts, removeHoliday, resolveNotice, saveCompany, saveParam, saveProductVersion, setProductActive,
+  addHoliday, createProduct, getCompany, getParams, listHolidays, listNotices, listProducts, removeHoliday, resolveNotice, saveParam, saveProductVersion, setProductActive,
   type ProductRow,
 } from "@/lib/intranet/api";
 import { addMonths, brl, dmy, monthStart, toNumber } from "@/lib/intranet/format";
 
-const TABS = [["produtos", "Produtos"], ["parametros", "Parâmetros"], ["feriados", "Feriados"], ["empresa", "Empresa"], ["avisos", "Avisos"]] as const;
+const TABS = [["produtos", "Produtos"], ["parametros", "Parâmetros"], ["feriados", "Feriados"], ["empresa", "Empresa"], ["campos", "Campos obrigatórios"], ["avisos", "Avisos"]] as const;
 type TabId = (typeof TABS)[number][0];
 const err = (e: Error) => toast.error(e.message);
 const fmtNum = (n: number) => String(Math.round(n * 10000) / 10000).replace(".", ",");
@@ -25,10 +31,10 @@ const ProdutosTab = () => {
   const open = (p: ProductRow | "new") => {
     setEdit(p);
     setF(p === "new" ? { name: "", recurring: false, points: "", min: "", caixa: "" }
-      : { name: p.name, recurring: p.recurring, points: fmtNum(p.version?.points ?? 0), min: fmtNum(p.version?.min_price ?? 0), caixa: fmtNum((p.version?.caixa_pct ?? 0) * 100) });
+      : { name: p.name, recurring: p.recurring, points: numberToMoney(p.version?.points ?? 0), min: numberToMoney(p.version?.min_price ?? 0), caixa: maskPercent(String(Math.round((p.version?.caixa_pct ?? 0) * 1000))) });
   };
   const toggle = useMutation({ mutationFn: (p: ProductRow) => setProductActive(p.id, !p.active), onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }), onError: err });
-  const nums = { points: toNumber(f.points), min: toNumber(f.min), caixa: toNumber(f.caixa) / 100 };
+  const nums = { points: moneyToNumber(f.points), min: moneyToNumber(f.min), caixa: percentToNumber(f.caixa) / 100 };
   const valid = (edit !== "new" || f.name.trim().length > 1) && f.points !== "" && nums.caixa >= 0 && nums.caixa <= 1;
   const onConfirm = async (when: "now" | "next") => {
     if (edit === "new") await createProduct(f.name.trim(), f.recurring, nums.points, nums.min, nums.caixa, when);
@@ -62,14 +68,14 @@ const ProdutosTab = () => {
         footer={<><Btn kind="ghost" onClick={() => setEdit(null)}>Cancelar</Btn><Btn disabled={!valid} onClick={() => setConfirm(true)}>Continuar</Btn></>}>
         {edit === "new" ? (
           <>
-            <Field label="Nome"><Input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} aria-label="Nome do produto" /></Field>
+            <TextInput label="Nome" value={f.name} onChange={(v) => setF({ ...f, name: v })} />
             <label className="ix-row" style={{ gap: 8, marginBottom: 16 }}><input type="checkbox" checked={f.recurring} onChange={(e) => setF({ ...f, recurring: e.target.checked })} style={{ accentColor: "#431171" }} />Recorrente</label>
           </>
         ) : <p className="ix-muted" style={{ marginTop: 0 }}><b>{edit?.name}</b></p>}
         <div className="ix-grid c3">
-          <Field label="Valor (pontos)"><Input inputMode="decimal" value={f.points} onChange={(e) => setF({ ...f, points: e.target.value })} aria-label="Valor em pontos" /></Field>
-          <Field label="Piso"><Input inputMode="decimal" value={f.min} onChange={(e) => setF({ ...f, min: e.target.value })} aria-label="Piso" /></Field>
-          <Field label="Caixa (%)"><Input inputMode="decimal" value={f.caixa} onChange={(e) => setF({ ...f, caixa: e.target.value })} aria-label="Caixa em porcentagem" /></Field>
+          <MoneyInput label="Valor (pontos)" value={f.points} onChange={(v) => setF({ ...f, points: v })} />
+          <MoneyInput label="Piso" value={f.min} onChange={(v) => setF({ ...f, min: v })} />
+          <PercentInput label="Caixa (%)" value={f.caixa} onChange={(v) => setF({ ...f, caixa: v })} />
         </div>
       </Modal>
       <TwoStepConfirm open={confirm} onClose={() => setConfirm(false)} title="Confirmar produto"
@@ -111,7 +117,7 @@ const ParamsTab = () => {
             <thead><tr><th>Parâmetro</th><th className="r">Valor atual</th><th /></tr></thead>
             <tbody>{PARAMS.map((p) => (
               <tr key={p.key}><td><b>{p.label}</b></td><td className="r">{shown(p, q.data![p.key])}</td>
-                <td style={{ textAlign: "right" }}><Btn kind="secondary" size="sm" onClick={() => { setSel(p); const v = q.data![p.key]; setVal(v === undefined ? "" : p.kind === "pct" ? fmtNum(v * 100) : fmtNum(v)); }}>Alterar</Btn></td></tr>
+                <td style={{ textAlign: "right" }}><Btn kind="secondary" size="sm" onClick={() => { setSel(p); const v = q.data![p.key]; setVal(v === undefined ? "" : p.kind === "pct" ? maskPercent(String(Math.round(v * 1000))) : fmtNum(v)); }}>Alterar</Btn></td></tr>
             ))}</tbody>
           </table>
         </div>
@@ -120,7 +126,9 @@ const ParamsTab = () => {
         footer={<><Btn kind="ghost" onClick={() => setSel(null)}>Cancelar</Btn><Btn disabled={val === ""} onClick={() => setConfirm(true)}>Continuar</Btn></>}>
         {sel?.kind === "bool"
           ? <Field><Select value={val} onChange={(e) => setVal(e.target.value)} aria-label={sel.label}><option value="0">Não</option><option value="1">Sim</option></Select></Field>
-          : <Field label={sel?.kind === "pct" ? "Valor (%)" : "Valor"}><Input inputMode="decimal" value={val} onChange={(e) => setVal(e.target.value)} aria-label={sel?.label} /></Field>}
+          : sel?.kind === "pct" ? <PercentInput label="Valor (%)" value={val} onChange={setVal} />
+          : sel?.kind === "int" ? <DigitsInput label="Valor" value={val} max={3} onChange={setVal} />
+          : <DecimalInput label="Valor" value={val} onChange={setVal} />}
       </Modal>
       <TwoStepConfirm open={confirm} onClose={() => setConfirm(false)} title="Confirmar parâmetro"
         summary={sel ? <><b>{sel.label}</b><div>{shown(sel, q.data?.[sel.key])} → {shown(sel, parsed)}</div></> : null} onConfirm={onConfirm} />
@@ -140,8 +148,8 @@ const FeriadosTab = () => {
     <>
       <Card style={{ marginBottom: 16 }}>
         <div className="ix-row ix-wrapflex" style={{ alignItems: "flex-end" }}>
-          <div style={{ width: 180 }}><Field label="Data"><Input type="date" value={d} onChange={(e) => setD(e.target.value)} aria-label="Data do feriado" /></Field></div>
-          <div style={{ flex: 1, minWidth: 200 }}><Field label="Nome"><Input value={n} onChange={(e) => setN(e.target.value)} aria-label="Nome do feriado" /></Field></div>
+          <div style={{ width: 200 }}><DateInput label="Data" value={d} onChange={setD} /></div>
+          <div style={{ flex: 1, minWidth: 200 }}><TextInput label="Nome" value={n} onChange={setN} /></div>
           <div style={{ marginBottom: 16 }}><Btn busy={add.isPending} disabled={!d || !n.trim()} onClick={() => add.mutate()}>Adicionar</Btn></div>
         </div>
       </Card>
@@ -156,19 +164,28 @@ const FeriadosTab = () => {
 };
 
 // ---------- Empresa ----------
+const COMPANY_ALL: GroupDef = { id: "ident", scope: "company", title: "Empresa", sub: "", icon: "building", fields: COMPANY_GROUPS.flatMap((g) => g.fields) };
 const EmpresaTab = () => {
   const qc = useQueryClient();
+  const form = useCadastroForm("company");
   const q = useQuery({ queryKey: ["company"], queryFn: getCompany });
-  const [f, setF] = useState({ legal_name: "", cnpj: "", address: "", email: "", nf_notes: "" });
-  useEffect(() => { if (q.data) setF({ legal_name: q.data.legal_name ?? "", cnpj: q.data.cnpj ?? "", address: q.data.address ?? "", email: q.data.email ?? "", nf_notes: q.data.nf_notes ?? "" }); }, [q.data]);
-  const save = useMutation({ mutationFn: () => saveCompany(f), onSuccess: () => { toast.success("Dados da empresa salvos."); qc.invalidateQueries({ queryKey: ["company"] }); }, onError: err });
-  if (q.isLoading) return <Loading rows={3} />;
-  if (q.error) return <ErrorBox error={q.error} />;
-  const row = (k: keyof typeof f, l: string) => <Field label={l}><Input value={f[k]} onChange={(e) => setF({ ...f, [k]: e.target.value })} aria-label={l} /></Field>;
+  const [nf, setNf] = useState<string | null>(null);
+  const save = useMutation({
+    mutationFn: () => form.save([COMPANY_ALL], { nf_notes: nf ?? q.data?.nf_notes ?? "" }),
+    onSuccess: () => { toast.success("Dados da empresa salvos."); qc.invalidateQueries({ queryKey: ["company"] }); },
+    onError: err,
+  });
+  if (form.error) return <ErrorBox error={form.error} />;
+  if (!form.ready || q.isLoading) return <Loading rows={3} />;
   return (
     <Card>
-      <div className="ix-grid c2">{row("legal_name", "Razão social")}{row("cnpj", "CNPJ")}{row("email", "E-mail")}{row("address", "Endereço")}</div>
-      <Field label="Descrição sugerida da nota"><Textarea value={f.nf_notes} onChange={(e) => setF({ ...f, nf_notes: e.target.value })} aria-label="Descrição sugerida da nota" /></Field>
+      {COMPANY_GROUPS.map((g) => (
+        <div key={g.id}>
+          <h2 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>{g.title}</h2>
+          <FieldGrid fields={visibleFields(g, "pf")} ctx={form.ctx} />
+        </div>
+      ))}
+      <Field label="Descrição sugerida da nota"><Textarea value={nf ?? q.data?.nf_notes ?? ""} onChange={(e) => setNf(e.target.value)} aria-label="Descrição sugerida da nota" /></Field>
       <div className="ix-row" style={{ justifyContent: "flex-end" }}><Btn busy={save.isPending} onClick={() => save.mutate()}>Salvar</Btn></div>
     </Card>
   );
@@ -202,7 +219,7 @@ const Cadastros = () => {
       <div className="ix-tabs" role="tablist" style={{ marginBottom: 22 }}>
         {TABS.map(([id, l]) => <button key={id} type="button" role="tab" aria-selected={tab === id} className={`ix-tab ${tab === id ? "on" : ""}`} onClick={() => setTab(id)} style={{ background: "none", border: 0, borderBottomWidth: 2, borderBottomStyle: "solid", cursor: "pointer", fontFamily: "inherit" }}>{l}</button>)}
       </div>
-      {tab === "produtos" && <ProdutosTab />}{tab === "parametros" && <ParamsTab />}{tab === "feriados" && <FeriadosTab />}{tab === "empresa" && <EmpresaTab />}{tab === "avisos" && <AvisosTab />}
+      {tab === "produtos" && <ProdutosTab />}{tab === "parametros" && <ParamsTab />}{tab === "feriados" && <FeriadosTab />}{tab === "empresa" && <EmpresaTab />}{tab === "campos" && <CamposObrigatorios />}{tab === "avisos" && <AvisosTab />}
     </>
   );
 };

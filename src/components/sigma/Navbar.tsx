@@ -65,7 +65,7 @@ export const Navbar = () => {
     <>
       <header style={header}>
         <a href="#top" style={css(`display:flex;align-items:center;gap:11px;color:${brandColor};transition:color .3s`)}>
-          <SigmaLogo size={36} />
+          <SigmaLogo size={36} variant="tile" />
           <span className="hd" style={css("font-weight:600;font-size:16px;letter-spacing:-0.02em")}>Anfitrião Sigma</span>
         </a>
 

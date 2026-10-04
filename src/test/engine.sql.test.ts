@@ -162,12 +162,12 @@ describe("segurança", () => {
   });
   it("sensível: só o dono lê; gestor só vê mascarado", async () => {
     await as(DARCIO);
-    await db.exec(`insert into public.profile_sensitive (user_id, cpf, pix_key) values ('${DARCIO}','12345678901','darcio@pix.com')`);
+    await db.exec(`insert into public.profile_sensitive (user_id, cpf, pix_key) values ('${DARCIO}','52998224725','darcio@pix.com')`);
     expect(await q(`select * from public.profile_sensitive`)).toHaveLength(1);
     await as(GESTOR);
     expect(await q(`select * from public.profile_sensitive`)).toHaveLength(0);
     const m = (await q(`select * from public.sensitive_masked('${DARCIO}')`))[0];
-    expect(m.cpf).toMatch(/^•+01$/);
+    expect(m.cpf).toMatch(/^•+25$/);
     await as(ANA);
     await expect(q(`select * from public.sensitive_masked('${DARCIO}')`)).rejects.toThrow(/permissão/);
     await as(null);
@@ -187,6 +187,84 @@ describe("segurança", () => {
     await q(`select public.decide_access('00000000-0000-0000-0000-0000000000c1','metas', true)`);
     await as("00000000-0000-0000-0000-0000000000c1");
     await q(`select * from public.month_summary('2026-10-01')`);
+    await as(null);
+  });
+});
+
+describe("cadastro pendente", () => {
+  const VALID_CNPJ = "11222333000181";
+  it("valida dígitos de CPF e CNPJ", async () => {
+    const r = (await q(`select public.valid_cpf('529.982.247-25') a, public.valid_cpf('111.111.111-11') b, public.valid_cpf('529.982.247-24') c,
+                               public.valid_cnpj('11.222.333/0001-81') d, public.valid_cnpj('11.222.333/0001-80') e, public.valid_cnpj('00000000000000') f`))[0];
+    expect(r).toEqual({ a: true, b: false, c: false, d: true, e: false, f: false });
+  });
+  it("colaborador novo tem pendências; gestor/admin também veem as da empresa; closer não vê as da empresa", async () => {
+    await as(ANA);
+    const p = (await q(`select public.my_pending() p`))[0].p;
+    expect(p.user).toContain("u_cpf");
+    expect(p.user).toContain("u_rg");
+    expect(p.user).not.toContain("u_cnpj");           // PF por padrão
+    expect(p.user).not.toContain("u_whatsapp");       // opcional
+    expect(p.company).toBeNull();
+    await as(ADMIN);
+    const a = (await q(`select public.my_pending() p`))[0].p;
+    expect(a.company).toContain("c_cnpj");
+    expect(a.company).toContain("c_rep_cpf");
+    await as(null);
+  });
+  it("PJ troca CPF/RG por CNPJ/razão social nas pendências", async () => {
+    await as(ANA);
+    await db.exec(`insert into public.profile_sensitive (user_id, doc_type) values ('${ANA}','pj')`);
+    const p = (await q(`select public.my_pending() p`))[0].p;
+    expect(p.user).toContain("u_cnpj");
+    expect(p.user).toContain("u_company_name");
+    expect(p.user).not.toContain("u_cpf");
+    expect(p.user).not.toContain("u_rg");
+    await as(null);
+  });
+  it("preencher reduz as pendências; CPF/CNPJ inválidos e CNPJ inativo são recusados", async () => {
+    await as(ANA);
+    await expect(db.exec(`update public.profile_sensitive set cnpj='11222333000180' where user_id='${ANA}'`)).rejects.toThrow(/CNPJ inválido/);
+    await expect(db.exec(`update public.profile_sensitive set cnpj='${VALID_CNPJ}', cnpj_status='BAIXADA' where user_id='${ANA}'`)).rejects.toThrow(/sem situação ATIVA/);
+    await db.exec(`update public.profile_sensitive set cnpj='11.222.333/0001-81', cnpj_status='ATIVA', company_name='ANA LTDA' where user_id='${ANA}'`);
+    expect((await q(`select cnpj from public.profile_sensitive where user_id='${ANA}'`))[0].cnpj).toBe(VALID_CNPJ);
+    const p = (await q(`select public.my_pending() p`))[0].p;
+    expect(p.user).not.toContain("u_cnpj");
+    expect(p.user).not.toContain("u_company_name");
+    await q(`select public.update_my_profile('{"phone":"+5545999999999","birth_date":"1990-05-10","nickname":"Ana","address":{"cep":"85851000","rua":"Av. Paraná","numero":"10","bairro":"Centro","cidade":"Foz do Iguaçu","uf":"PR"}}'::jsonb)`);
+    const p2 = (await q(`select public.my_pending() p`))[0].p;
+    for (const k of ["u_phone", "u_birth_date", "u_nickname", "u_cep", "u_street", "u_number", "u_neighborhood", "u_city", "u_uf"]) expect(p2.user).not.toContain(k);
+    await expect(q(`select public.update_my_profile('{"personal_email":"xx"}'::jsonb)`)).rejects.toThrow(/E-mail pessoal inválido/);
+    await as(null);
+  });
+  it("campo novo obrigatório faz a pendência reaparecer para quem já estava completo; só gestor liga/desliga", async () => {
+    await as(ANA);
+    await expect(q(`select public.set_required_field('u_whatsapp', true)`)).rejects.toThrow(/gestor/);
+    await as(GESTOR);
+    await q(`select public.set_required_field('u_whatsapp', true)`);
+    await as(ANA);
+    expect((await q(`select public.my_pending() p`))[0].p.user).toContain("u_whatsapp");
+    await as(GESTOR);
+    await q(`select public.set_required_field('u_whatsapp', false)`);
+    await as(ANA);
+    expect((await q(`select public.my_pending() p`))[0].p.user).not.toContain("u_whatsapp");
+    await as(null);
+  });
+  it("empresa: gestor salva e a pendência some; estatísticas e lembrete funcionam", async () => {
+    await as(GESTOR);
+    await db.exec(`update public.company_info set cnpj='${VALID_CNPJ}', cnpj_status='ATIVA', legal_name='ANFITRIAO SIGMA LTDA', municipal_reg='123', tax_regime='Simples Nacional',
+      addr='{"cep":"85851000","rua":"Av. Paraná","numero":"1","bairro":"Centro","cidade":"Foz","uf":"PR"}'::jsonb, phone='+5545999999999',
+      rep_name='Fulano', rep_cpf='52998224725', rep_birth='1980-01-01', rep_phone='+5545999999999', bank='260', agency='0001', account='12345-6' where id=1`);
+    const c = (await q(`select public.my_pending() p`))[0].p.company;
+    expect(c).toEqual([]);
+    const st = await q(`select * from public.required_field_stats()`);
+    expect(st.find((r) => r.key === "c_cnpj")!.filled_pct).toBe(100);
+    expect(st.find((r) => r.key === "u_cpf")!.filled_pct).toBeLessThan(100);
+    const ppl = await q(`select * from public.pending_people()`);
+    expect(ppl.length).toBeGreaterThan(0);
+    expect(Number((await q(`select public.remind_pending('${DARCIO}') n`))[0].n)).toBeGreaterThan(0);
+    await as(DARCIO);
+    await expect(q(`select * from public.pending_people()`)).rejects.toThrow(/permissão/);
     await as(null);
   });
 });

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ArrowLeft, Lock } from "lucide-react";
+import { CepInput, DateInput, EmailInput, MoneyInput, NameInput, NumberInput, PhoneInput, RelationSelect, TextInput, UfSelect } from "@/components/intranet/fields";
 import { Avatar, Btn, Card, Chip, ErrorBox, Field, Input, Loading, PageHeader, Select, Textarea } from "@/components/intranet/ui";
 import { addSalary, decideAccess, getMasked, listAccessRows, listProfiles, listSalaries, setRole, updateProfile } from "@/lib/intranet/api";
 import { useAuth } from "@/contexts/AuthContext";
@@ -38,13 +39,14 @@ const Pessoa = () => {
     setF({
       full_name: person.full_name ?? "", nickname: person.nickname ?? "", personal_email: person.personal_email ?? "", phone: person.phone ?? "", whatsapp: person.whatsapp ?? "",
       birth_date: person.birth_date ?? "", job_title: person.job_title ?? "", seniority: person.seniority ?? "", manager_id: person.manager_id ?? "", regime: person.regime ?? "",
-      start_date: person.start_date ?? "", end_date: person.end_date ?? "", emergency_name: person.emergency_name ?? "", emergency_phone: person.emergency_phone ?? "", notes: person.notes ?? "",
+      start_date: person.start_date ?? "", end_date: person.end_date ?? "", emergency_name: person.emergency_name ?? "", emergency_relation: person.emergency_relation ?? "", emergency_phone: person.emergency_phone ?? "", notes: person.notes ?? "",
       ...Object.fromEntries(ADDR.map(([k]) => [`addr_${k}`, a[k] ?? ""])),
     });
     setActive(person.active); setGoogle(person.google_login); setRoleSel(person.role);
   }, [person]);
 
   const set = (k: string) => (e: { target: { value: string } }) => setF((s) => ({ ...s, [k]: e.target.value }));
+  const put = (k: string) => (v: string) => setF((s) => ({ ...s, [k]: v }));
   const err = (e: Error) => toast.error(e.message);
 
   const save = useMutation({
@@ -53,7 +55,7 @@ const Pessoa = () => {
       const patch: Partial<Profile> = {
         full_name: nz(f.full_name), nickname: nz(f.nickname), personal_email: nz(f.personal_email), phone: nz(f.phone), whatsapp: nz(f.whatsapp), birth_date: nz(f.birth_date),
         address, job_title: nz(f.job_title), seniority: nz(f.seniority), manager_id: nz(f.manager_id), regime: (nz(f.regime) as Profile["regime"]),
-        start_date: nz(f.start_date), end_date: nz(f.end_date), active, google_login: google, emergency_name: nz(f.emergency_name), emergency_phone: nz(f.emergency_phone), notes: nz(f.notes),
+        start_date: nz(f.start_date), end_date: nz(f.end_date), active, google_login: google, emergency_name: nz(f.emergency_name), emergency_relation: nz(f.emergency_relation), emergency_phone: nz(f.emergency_phone), notes: nz(f.notes),
       };
       return updateProfile(id, patch);
     },
@@ -78,7 +80,14 @@ const Pessoa = () => {
 
   const managers = (people.data ?? []).filter((p) => p.role !== "closer" && p.id !== id);
   const mine = (access.data ?? []).filter((r) => r.user_id === id);
-  const inp = (k: string, label: string, type = "text") => <Field label={label}><Input type={type} value={f[k] ?? ""} onChange={set(k)} aria-label={label} /></Field>;
+  const inp = (k: string, label: string) => <TextInput label={label} value={f[k] ?? ""} onChange={put(k)} />;
+  const addr = (k: string, l: string) => {
+    const v = f[`addr_${k}`] ?? "", on = put(`addr_${k}`);
+    if (k === "cep") return <CepInput label={l} value={v.replace(/\D/g, "")} onChange={on} onAddress={(a) => setF((s) => ({ ...s, addr_rua: a.rua, addr_bairro: a.bairro, addr_cidade: a.cidade, addr_uf: a.uf }))} />;
+    if (k === "uf") return <UfSelect label={l} value={v} onChange={on} />;
+    if (k === "numero") return <NumberInput label={l} value={v} onChange={on} />;
+    return <TextInput label={l} value={v} onChange={on} />;
+  };
   const name = person.full_name || person.email;
 
   return (
@@ -90,15 +99,16 @@ const Pessoa = () => {
         <Card>
           <h2 className="ix-h2 hd" style={{ marginBottom: 18 }}>Dados pessoais</h2>
           <div className="ix-grid c3">
-            {inp("full_name", "Nome completo")}{inp("nickname", "Apelido")}
+            <NameInput label="Nome completo" value={f.full_name ?? ""} onChange={put("full_name")} />{inp("nickname", "Apelido")}
             <Field label="E-mail de login"><Input value={person.email} readOnly aria-label="E-mail de login" /></Field>
-            {inp("personal_email", "E-mail pessoal", "email")}{inp("phone", "Telefone")}{inp("whatsapp", "WhatsApp")}
-            {inp("birth_date", "Nascimento", "date")}
+            <EmailInput label="E-mail pessoal" value={f.personal_email ?? ""} onChange={put("personal_email")} />
+            <PhoneInput label="Telefone" value={f.phone ?? ""} onChange={put("phone")} /><PhoneInput label="WhatsApp" value={f.whatsapp ?? ""} onChange={put("whatsapp")} />
+            <DateInput label="Nascimento" value={f.birth_date ?? ""} onChange={put("birth_date")} min="1930-01-01" max={new Date().toISOString().slice(0, 10)} />
           </div>
           <h3 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Endereço</h3>
-          <div className="ix-grid c4">{ADDR.map(([k, l]) => inp(`addr_${k}`, l))}</div>
+          <div className="ix-grid c4">{ADDR.map(([k, l]) => <div key={k}>{addr(k, l)}</div>)}</div>
           <h3 className="ix-h3 hd" style={{ margin: "8px 0 14px" }}>Contato de emergência</h3>
-          <div className="ix-grid c2">{inp("emergency_name", "Nome")}{inp("emergency_phone", "Telefone")}</div>
+          <div className="ix-grid c3"><NameInput label="Nome" value={f.emergency_name ?? ""} onChange={put("emergency_name")} /><RelationSelect label="Parentesco" value={f.emergency_relation ?? ""} onChange={put("emergency_relation")} /><PhoneInput label="Telefone" value={f.emergency_phone ?? ""} onChange={put("emergency_phone")} /></div>
         </Card>
 
         <Card>
@@ -107,7 +117,7 @@ const Pessoa = () => {
             {inp("job_title", "Cargo")}{inp("seniority", "Senioridade (informativa)")}
             <Field label="Gestor direto"><Select value={f.manager_id ?? ""} onChange={set("manager_id")} aria-label="Gestor direto"><option value="">—</option>{managers.map((m) => <option key={m.id} value={m.id}>{m.full_name || m.email}</option>)}</Select></Field>
             <Field label="Regime"><Select value={f.regime ?? ""} onChange={set("regime")} aria-label="Regime"><option value="">—</option><option value="clt">CLT</option><option value="pj">PJ</option></Select></Field>
-            {inp("start_date", "Data de início", "date")}{inp("end_date", "Data de saída", "date")}
+            <DateInput label="Data de início" value={f.start_date ?? ""} onChange={put("start_date")} min="2000-01-01" /><DateInput label="Data de saída" value={f.end_date ?? ""} onChange={put("end_date")} min="2000-01-01" />
           </div>
           <div className="ix-row ix-wrapflex" style={{ gap: 28, margin: "4px 0 16px" }}>
             <label className="ix-row" style={{ gap: 8 }}><input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} style={{ accentColor: "#431171" }} />Ativo</label>
@@ -136,8 +146,8 @@ const Pessoa = () => {
               </div>
             )}
             <div className="ix-grid c2">
-              <Field label="Vigência"><Input type="date" value={sal.from} onChange={(e) => setSal({ ...sal, from: e.target.value })} aria-label="Vigência do reajuste" /></Field>
-              <Field label="Novo salário"><Input inputMode="decimal" value={sal.amount} onChange={(e) => setSal({ ...sal, amount: e.target.value })} aria-label="Novo salário" /></Field>
+              <DateInput label="Vigência" value={sal.from} onChange={(v) => setSal({ ...sal, from: v })} min="2000-01-01" />
+              <MoneyInput label="Novo salário" value={sal.amount} onChange={(v) => setSal({ ...sal, amount: v })} />
             </div>
             <div className="ix-hint" style={{ margin: "-8px 0 12px" }}>Vale a partir da data, não retroativo.</div>
             <Btn size="sm" busy={addSal.isPending} disabled={!sal.from || toNumber(sal.amount) <= 0} onClick={() => addSal.mutate()}>Adicionar reajuste</Btn>

@@ -113,12 +113,15 @@ export const addSalary = async (user: string, validFrom: string, amount: number)
   ok(await supabase.from("salary_history").upsert({ user_id: user, valid_from: validFrom, amount }, { onConflict: "user_id,valid_from" }));
 export const listSalaries = async (user: string) => ok(await supabase.from("salary_history").select("*").eq("user_id", user).order("valid_from", { ascending: false })) as { valid_from: string; amount: number }[];
 export const getMySensitive = async (uid: string) => ok(await supabase.from("profile_sensitive").select("*").eq("user_id", uid).maybeSingle()) as Record<string, string | null> | null;
-export const saveMySensitive = async (uid: string, v: Record<string, string>) => ok(await supabase.from("profile_sensitive").upsert({ user_id: uid, ...v }));
+export const saveMySensitive = async (uid: string, v: Record<string, string | null>) =>
+  ok(await supabase.from("profile_sensitive").upsert({ user_id: uid, ...Object.fromEntries(Object.entries(v).map(([k, x]) => [k, x === "" ? null : x])) }));
 export const getMasked = async (uid: string) => (await rpc<Record<string, string | null>[]>("sensitive_masked", { p_user: uid }))[0] ?? null;
 
 // ---------- empresa / nota ----------
-export const getCompany = async () => ok(await supabase.from("company_info").select("*").eq("id", 1).single()) as { legal_name: string; cnpj: string; address: string; email: string; nf_notes: string };
-export const saveCompany = async (v: Record<string, string>) => ok(await supabase.from("company_info").update(v).eq("id", 1));
+export type Company = Record<string, unknown> & { legal_name: string | null; cnpj: string | null; address: string | null; email: string | null; nf_notes: string | null; addr: Record<string, string> };
+export const getCompany = async () => ok(await supabase.from("company_info").select("*").eq("id", 1).single()) as Company;
+export const saveCompany = async (v: Record<string, unknown>) =>
+  ok(await supabase.from("company_info").update(Object.fromEntries(Object.entries(v).map(([k, x]) => [k, x === "" ? null : x]))).eq("id", 1));
 export const generateInvoice = (month: string) => rpc<Invoice>("generate_invoice", { p_month: month });
 export const getMyInvoice = async (uid: string, month: string) => ok(await supabase.from("invoices").select("*").eq("user_id", uid).eq("month", month).maybeSingle()) as Invoice | null;
 export const listInvoices = async (month: string) => ok(await supabase.from("invoices").select("*").eq("month", month)) as Invoice[];
@@ -178,3 +181,33 @@ export const getProfileName = async (id: string) => {
   const r = ok(await supabase.from("profiles").select("full_name, nickname").eq("id", id).maybeSingle()) as { full_name: string | null; nickname: string | null } | null;
   return r?.full_name ?? r?.nickname ?? null;
 };
+
+// ---------- cadastro pendente ----------
+export interface PendingState { user: string[]; company: string[] | null; doc_type: "pf" | "pj" }
+export const getMyPending = () => rpc<PendingState>("my_pending");
+export interface RequiredField { key: string; scope: "company" | "user"; grp: string; label: string; doc_type: "pf" | "pj" | null; required: boolean; since: string; sort: number }
+export const listRequiredFields = async () => ok(await supabase.from("required_fields").select("*").order("sort")) as RequiredField[];
+export type RequiredStat = RequiredField & { filled_pct: number };
+export const requiredFieldStats = () => rpc<RequiredStat[]>("required_field_stats");
+export const setRequiredField = (key: string, required: boolean) => rpc("set_required_field", { p_key: key, p_required: required });
+export interface PendingPerson { user_id: string; full_name: string | null; email: string; missing: number; total: number }
+export const pendingPeople = () => rpc<PendingPerson[]>("pending_people");
+export const remindPending = (user: string) => rpc<number>("remind_pending", { p_user: user });
+
+/** Consulta de CNPJ na Receita Federal (edge function cnpj-lookup). `unavailable` = serviço fora do ar (não bloqueia). */
+export interface CnpjInfo { valid: boolean; found?: boolean; active?: boolean; status?: string; razao_social?: string; nome_fantasia?: string; cnae?: string; abertura?: string; simples?: boolean | null; unavailable?: boolean }
+const cnpjCache = new Map<string, CnpjInfo>();
+export async function lookupCnpj(cnpj: string): Promise<CnpjInfo> {
+  const d = cnpj.replace(/\D/g, "");
+  const hit = cnpjCache.get(d);
+  if (hit) return hit;
+  try {
+    const { data, error } = await supabase.functions.invoke("cnpj-lookup", { body: { cnpj: d } });
+    if (error) throw error;
+    const r = data as CnpjInfo;
+    if (!r.unavailable) cnpjCache.set(d, r);
+    return r;
+  } catch {
+    return { valid: true, unavailable: true };
+  }
+}

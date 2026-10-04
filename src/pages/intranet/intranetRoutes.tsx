@@ -1,11 +1,12 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { Route } from "react-router-dom";
-import { RequireArea, RequireAuth, RequireManager } from "@/components/intranet/Guards";
+import { RequireArea, RequireAuth, RequireComplete, RequireManager } from "@/components/intranet/Guards";
 import { Loading } from "@/components/intranet/ui";
 
 const L = (f: () => Promise<{ default: React.ComponentType }>) => lazy(f);
 const Login = L(() => import("./IntranetLogin"));
 const Areas = L(() => import("./IntranetAreas"));
+const Cadastro = L(() => import("./Cadastro"));
 const Layout = L(() => import("./metas/MetasLayout"));
 const Home = L(() => import("./metas/MetasHome"));
 const closer = {
@@ -28,8 +29,9 @@ const M = ({ children }: { children: ReactNode }) => <RequireManager>{children}<
 export const intranetRoutes = (
   <>
     <Route path="/intranet" element={<S><Login /></S>} />
-    <Route path="/intranet/areas" element={<S><RequireAuth><Areas /></RequireAuth></S>} />
-    <Route path="/intranet/metas" element={<S><RequireAuth><RequireArea area="metas"><Layout /></RequireArea></RequireAuth></S>}>
+    <Route path="/intranet/cadastro" element={<S><RequireAuth><Cadastro /></RequireAuth></S>} />
+    <Route path="/intranet/areas" element={<S><RequireAuth><RequireComplete><Areas /></RequireComplete></RequireAuth></S>} />
+    <Route path="/intranet/metas" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><Layout /></RequireArea></RequireComplete></RequireAuth></S>}>
       <Route index element={<S><Home /></S>} />
       <Route path="registrar" element={<S><closer.Registrar /></S>} />
       <Route path="vendas" element={<S><closer.Vendas /></S>} />

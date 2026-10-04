@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Plus, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { DateInput, DigitsInput, DocInput, MoneyInput, NameInput } from "@/components/intranet/fields";
 import { Banner, Btn, Card, Chip, ErrorBox, Field, Input, Loading, Select, Textarea } from "@/components/intranet/ui";
 import { checkDuplicate, registerSale } from "@/lib/intranet/api";
 import { brl, digits, iso, maskDoc, monthLabel, monthStart, num, PAY_LABEL, toNumber } from "@/lib/intranet/format";
@@ -90,12 +91,10 @@ const Registrar = () => {
       <form onSubmit={(e) => { e.preventDefault(); if (valid) check.mutate(); }}>
         <Card>
           <div className="ix-grid c2" style={{ gap: "0 20px" }}>
-            <Field label="Cliente"><Input value={client} onChange={(e) => setClient(e.target.value)} autoComplete="off" required /></Field>
-            <Field label="CPF / CNPJ"><Input inputMode="numeric" value={doc} onChange={(e) => digits(e.target.value).length <= 14 && setDoc(maskDoc(e.target.value))} required /></Field>
+            <NameInput label="Cliente" company value={client} onChange={setClient} />
+            <DocInput label="CPF / CNPJ" value={digits(doc)} onChange={setDoc} />
           </div>
-          <Field label="Data da venda" hint={`Retroativo: até ${retro} dias`}>
-            <Input type="date" value={date} min={addDaysIso(today, -retro)} max={today} onChange={(e) => setDate(e.target.value)} required />
-          </Field>
+          <DateInput label="Data da venda" hint={`Retroativo: até ${retro} dias`} value={date} min={addDaysIso(today, -retro)} max={today} onChange={setDate} />
         </Card>
 
         {lines.map((l, i) => (
@@ -111,8 +110,8 @@ const Registrar = () => {
               </Select>
             </Field>
             <div className="ix-grid c2" style={{ gap: "0 20px", gridTemplateColumns: "100px 1fr" }}>
-              <Field label="Qtd"><Input type="number" min={1} inputMode="numeric" value={l.qty} onChange={(e) => setLine(i, { qty: e.target.value })} required /></Field>
-              <Field label="Valor total da linha (R$)"><Input inputMode="decimal" placeholder="0,00" value={l.value} onChange={(e) => setLine(i, { value: e.target.value.replace(/[^\d.,]/g, "") })} required /></Field>
+              <DigitsInput label="Qtd" max={3} value={l.qty} onChange={(v) => setLine(i, { qty: v })} />
+              <MoneyInput label="Valor total da linha" value={l.value} onChange={(v) => setLine(i, { value: v })} />
             </div>
             <div className="ix-row" style={{ flexWrap: "wrap", gap: 8 }}>
               <span className="ix-small ix-muted">{num(calc[i].points)} pts</span>
@@ -147,7 +146,7 @@ const Registrar = () => {
         {dup && (
           <div style={{ marginTop: 16 }}>
             <Banner error action={<div className="ix-row"><Btn size="sm" kind="secondary" type="button" onClick={() => setDup(false)}>Revisar</Btn><Btn size="sm" type="button" busy={reg.isPending} onClick={() => reg.mutate()}>Registrar mesmo assim</Btn></div>}>
-              Possível duplicada: já existe venda de {doc} de {brl(total, 2)} em {monthLabel(monthStart(new Date(date + "T12:00:00")))}.
+              Possível duplicada: já existe venda de {maskDoc(doc)} de {brl(total, 2)} em {monthLabel(monthStart(new Date(date + "T12:00:00")))}.
             </Banner>
           </div>
         )}
