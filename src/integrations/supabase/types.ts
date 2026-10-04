@@ -677,9 +677,45 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      business_days: { Args: { a: string; b: string }; Returns: number }
+      compute_month: {
+        Args: { m: string }
+        Returns: {
+          attainment: number
+          bonus: number
+          caixa: number
+          full_name: string
+          goal: number
+          multiplier: number
+          nickname: string
+          pending: number
+          ramp: number
+          salary: number
+          total_pay: number
+          user_id: string
+          validated: number
+        }[]
+      }
       has_area: { Args: { a: string }; Returns: boolean }
+      individual_goal: { Args: { m: string; uid: string }; Returns: number }
       is_admin: { Args: never; Returns: boolean }
       is_manager: { Args: never; Returns: boolean }
+      is_ramped: { Args: { m: string; uid: string }; Returns: boolean }
+      item_caixa_pct: { Args: { d: string; pid: string }; Returns: number }
+      item_weight: { Args: { d: string; pid: string }; Returns: number }
+      meta_scale: { Args: { m: string; uid: string }; Returns: number }
+      month_end: { Args: { d: string }; Returns: string }
+      month_start: { Args: { d: string }; Returns: string }
+      param: { Args: { d?: string; k: string }; Returns: number }
+      ramp_factor: { Args: { m: string; uid: string }; Returns: number }
+      run_validation: { Args: never; Returns: number }
+      salary_at: { Args: { m: string; uid: string }; Returns: number }
+      seller_caixa: { Args: { m: string; uid: string }; Returns: number }
+      seller_points: {
+        Args: { cut?: string; m: string; status_filter?: string; uid: string }
+        Returns: number
+      }
+      team_multiplier: { Args: { m: string }; Returns: number }
     }
     Enums: {
       app_role: "closer" | "gestor" | "admin"
