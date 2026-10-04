@@ -1,0 +1,3 @@
+project_id = "rklilwnwlkjxybpbhtmz"
+[functions.cnpj-lookup]
+verify_jwt = true
