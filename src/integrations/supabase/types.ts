@@ -94,28 +94,70 @@ export type Database = {
       }
       company_info: {
         Row: {
+          account: string | null
+          addr: Json
           address: string | null
+          agency: string | null
+          bank: string | null
           cnpj: string | null
+          cnpj_checked_at: string | null
+          cnpj_status: string | null
           email: string | null
           id: number
           legal_name: string | null
+          municipal_reg: string | null
           nf_notes: string | null
+          phone: string | null
+          rep_birth: string | null
+          rep_cpf: string | null
+          rep_name: string | null
+          rep_phone: string | null
+          tax_regime: string | null
+          trade_name: string | null
         }
         Insert: {
+          account?: string | null
+          addr?: Json
           address?: string | null
+          agency?: string | null
+          bank?: string | null
           cnpj?: string | null
+          cnpj_checked_at?: string | null
+          cnpj_status?: string | null
           email?: string | null
           id?: number
           legal_name?: string | null
+          municipal_reg?: string | null
           nf_notes?: string | null
+          phone?: string | null
+          rep_birth?: string | null
+          rep_cpf?: string | null
+          rep_name?: string | null
+          rep_phone?: string | null
+          tax_regime?: string | null
+          trade_name?: string | null
         }
         Update: {
+          account?: string | null
+          addr?: Json
           address?: string | null
+          agency?: string | null
+          bank?: string | null
           cnpj?: string | null
+          cnpj_checked_at?: string | null
+          cnpj_status?: string | null
           email?: string | null
           id?: number
           legal_name?: string | null
+          municipal_reg?: string | null
           nf_notes?: string | null
+          phone?: string | null
+          rep_birth?: string | null
+          rep_cpf?: string | null
+          rep_name?: string | null
+          rep_phone?: string | null
+          tax_regime?: string | null
+          trade_name?: string | null
         }
         Relationships: []
       }
@@ -418,9 +460,16 @@ export type Database = {
           agency: string | null
           bank: string | null
           cnpj: string | null
+          cnpj_checked_at: string | null
+          cnpj_status: string | null
+          company_name: string | null
           cpf: string | null
+          doc_type: string | null
+          municipal_reg: string | null
           pix_key: string | null
+          pix_type: string | null
           rg: string | null
+          trade_name: string | null
           updated_at: string
           user_id: string
         }
@@ -429,9 +478,16 @@ export type Database = {
           agency?: string | null
           bank?: string | null
           cnpj?: string | null
+          cnpj_checked_at?: string | null
+          cnpj_status?: string | null
+          company_name?: string | null
           cpf?: string | null
+          doc_type?: string | null
+          municipal_reg?: string | null
           pix_key?: string | null
+          pix_type?: string | null
           rg?: string | null
+          trade_name?: string | null
           updated_at?: string
           user_id: string
         }
@@ -440,9 +496,16 @@ export type Database = {
           agency?: string | null
           bank?: string | null
           cnpj?: string | null
+          cnpj_checked_at?: string | null
+          cnpj_status?: string | null
+          company_name?: string | null
           cpf?: string | null
+          doc_type?: string | null
+          municipal_reg?: string | null
           pix_key?: string | null
+          pix_type?: string | null
           rg?: string | null
+          trade_name?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -458,6 +521,7 @@ export type Database = {
           email: string
           emergency_name: string | null
           emergency_phone: string | null
+          emergency_relation: string | null
           end_date: string | null
           full_name: string | null
           google_login: boolean
@@ -482,6 +546,7 @@ export type Database = {
           email: string
           emergency_name?: string | null
           emergency_phone?: string | null
+          emergency_relation?: string | null
           end_date?: string | null
           full_name?: string | null
           google_login?: boolean
@@ -506,6 +571,7 @@ export type Database = {
           email?: string
           emergency_name?: string | null
           emergency_phone?: string | null
+          emergency_relation?: string | null
           end_date?: string | null
           full_name?: string | null
           google_login?: boolean
@@ -530,6 +596,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      required_fields: {
+        Row: {
+          doc_type: string | null
+          grp: string
+          key: string
+          label: string
+          required: boolean
+          scope: string
+          since: string
+          sort: number
+        }
+        Insert: {
+          doc_type?: string | null
+          grp: string
+          key: string
+          label: string
+          required?: boolean
+          scope: string
+          since?: string
+          sort?: number
+        }
+        Update: {
+          doc_type?: string | null
+          grp?: string
+          key?: string
+          label?: string
+          required?: boolean
+          scope?: string
+          since?: string
+          sort?: number
+        }
+        Relationships: []
       }
       salary_history: {
         Row: {
@@ -726,6 +825,7 @@ export type Database = {
       }
       digits: { Args: { v: string }; Returns: string }
       effective_month: { Args: { p_when: string }; Returns: string }
+      field_value: { Args: { p_key: string; p_user: string }; Returns: string }
       generate_invoice: {
         Args: { p_month: string }
         Returns: {
@@ -767,6 +867,8 @@ export type Database = {
       }
       mask_text: { Args: { keep?: number; v: string }; Returns: string }
       meta_scale: { Args: { m: string; uid: string }; Returns: number }
+      missing_company_fields: { Args: never; Returns: string[] }
+      missing_user_fields: { Args: { p_user?: string }; Returns: string[] }
       month_end: { Args: { d: string }; Returns: string }
       month_start: { Args: { d: string }; Returns: string }
       month_summary: {
@@ -787,6 +889,7 @@ export type Database = {
           validated: number
         }[]
       }
+      my_pending: { Args: never; Returns: Json }
       notify: {
         Args: {
           p_body: string
@@ -798,6 +901,16 @@ export type Database = {
         Returns: undefined
       }
       param: { Args: { d?: string; k: string }; Returns: number }
+      pending_people: {
+        Args: never
+        Returns: {
+          email: string
+          full_name: string
+          missing: number
+          total: number
+          user_id: string
+        }[]
+      }
       ramp_factor: { Args: { m: string; uid: string }; Returns: number }
       register_sale: {
         Args: {
@@ -812,7 +925,22 @@ export type Database = {
         }
         Returns: Json
       }
+      remind_pending: { Args: { p_user: string }; Returns: number }
       request_access: { Args: { p_area: string }; Returns: string }
+      required_field_stats: {
+        Args: never
+        Returns: {
+          doc_type: string
+          filled_pct: number
+          grp: string
+          key: string
+          label: string
+          required: boolean
+          scope: string
+          since: string
+          sort: number
+        }[]
+      }
       run_validation: { Args: never; Returns: number }
       salary_at: { Args: { m: string; uid: string }; Returns: number }
       seller_caixa: { Args: { m: string; uid: string }; Returns: number }
@@ -827,10 +955,16 @@ export type Database = {
           agency: string
           bank: string
           cnpj: string
+          cnpj_status: string
+          company_name: string
           cpf: string
+          doc_type: string
           filled: boolean
+          municipal_reg: string
           pix_key: string
+          pix_type: string
           rg: string
+          trade_name: string
         }[]
       }
       set_invoice_status: {
@@ -864,6 +998,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      set_required_field: {
+        Args: { p_key: string; p_required: boolean }
+        Returns: undefined
+      }
       set_role: {
         Args: {
           p_role: Database["public"]["Enums"]["app_role"]
@@ -880,6 +1018,9 @@ export type Database = {
       }
       team_multiplier: { Args: { m: string }; Returns: number }
       update_my_profile: { Args: { p: Json }; Returns: undefined }
+      user_doc_type: { Args: { p_user: string }; Returns: string }
+      valid_cnpj: { Args: { v: string }; Returns: boolean }
+      valid_cpf: { Args: { v: string }; Returns: boolean }
       write_log: {
         Args: {
           p_action: string
