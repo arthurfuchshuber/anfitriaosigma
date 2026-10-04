@@ -1,0 +1,81 @@
+/* ============================================================
+   Anfitrião Sigma — Landing v3 (corporativa, base branca)
+   Tudo escopado em .sg para não afetar as páginas de cidade
+   (que ainda usam o tema escuro anterior).
+   ============================================================ */
+
+.sg {
+  position: relative;
+  background: #fff;
+  color: #120a1c;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+.sg *, .sg *::before, .sg *::after { box-sizing: border-box; }
+.sg a { text-decoration: none; color: inherit; }
+.sg h1, .sg h2, .sg h3, .sg h4 { margin: 0; }
+.sg button, .sg input, .sg textarea, .sg select { font-family: inherit; }
+.sg section[id] { scroll-margin-top: 96px; }
+.sg .hd, .sg h1.hd, .sg h2.hd { font-family: "Sora", "DM Sans", sans-serif; }
+
+.sg .gt {
+  background: linear-gradient(115deg, #431171 0%, #7b4dab 55%, #a68cc4 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.sg .gtl {
+  background: linear-gradient(115deg, #fff 0%, #d9cce8 60%, #a68cc4 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.sg .lift {
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s, border-color .5s, background .5s;
+}
+.sg .lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 40px 80px -36px rgba(67,17,113,.4);
+  border-color: #d2c5e3;
+}
+.sg .navlink { transition: color .25s; position: relative; }
+.sg .navlink:hover { color: #431171; }
+.sg .navlink-dark:hover { color: #fff; }
+.sg .btn {
+  position: relative; overflow: hidden;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+}
+.sg .btn:hover { transform: translateY(-2px); box-shadow: 0 22px 44px -18px rgba(67,17,113,.6); }
+.sg .btn::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: skewX(-20deg); transition: left .7s;
+}
+.sg .btn:hover::after { left: 130%; }
+.sg .rail::-webkit-scrollbar { height: 8px; }
+.sg .rail::-webkit-scrollbar-thumb { background: #d2c5e3; border-radius: 8px; }
+
+/* Navbar */
+.sg-nav-links { display: flex; }
+.sg-nav-desktop { display: flex; }
+.sg-menu-btn { display: none; }
+@media (max-width: 960px) {
+  .sg-nav-links, .sg-nav-desktop { display: none !important; }
+  .sg-menu-btn { display: inline-flex; }
+}
+
+@keyframes sgMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes sgFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes sgFloat2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(9px); } }
+@keyframes sgAurora { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,-34px) scale(1.14); } }
+@keyframes sgGrowY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes sgGrowX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sgFadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sgDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sgFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sgPulse { 0% { box-shadow: 0 0 0 0 rgba(255,71,0,.5); } 100% { box-shadow: 0 0 0 12px rgba(255,71,0,0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sg *, .sg *::before, .sg *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
