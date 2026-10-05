@@ -40,7 +40,7 @@ export const weekdaysLeft = (now = new Date()) => {
 };
 
 export const Top = ({ title, back, right }: { title: ReactNode; back?: string; right?: ReactNode }) => (
-  <div className="ix-row ix-between ix-wrapflex" style={{ margin: "28px 0 20px", gap: 14 }}>
+  <div className="ix-row ix-between ix-wrapflex ix-ph" style={{ margin: "28px 0 20px", gap: 14 }}>
     <div className="ix-row" style={{ gap: 10 }}>
       {back && <Link to={back} aria-label="Voltar" className="ix-icon" style={{ width: 40, height: 40 }}><ChevronLeft size={20} /></Link>}
       <h1 className="ix-h2 hd" style={{ fontSize: "clamp(24px, 3vw, 32px)" }}>{title}</h1>

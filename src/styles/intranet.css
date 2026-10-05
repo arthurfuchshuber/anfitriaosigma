@@ -344,3 +344,41 @@ html:has(.sg.ix), body:has(.sg.ix) { background: #fff; }
 .ix-sheet-foot.pills a, .ix-sheet-foot.pills button { height: 44px; border-radius: 999px; justify-content: center; border: 1.5px solid #e1d8ec; background: #fff; color: #120a1c; font-weight: 700; font-size: 14px; padding: 0; }
 .ix-sheet-foot.pills svg { color: #431171; }
 .ix-stat.flat { border: 0; border-radius: 0; box-shadow: none; background: none; animation: none; border-top: 1px solid #efeaf5; }
+
+/* ===== Celular · barra inferior fixa de ponta a ponta + respiro no fim da página ===== */
+@media (max-width: 767px) {
+  .ix-tabbar { left: 0; right: 0; bottom: 0; border-radius: 22px 22px 0 0; border-width: 1px 0 0; padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.97); box-shadow: 0 -18px 40px -24px rgba(67,17,113,.35); }
+  .ix-tabbar a, .ix-tabbar button { flex: 1; min-width: 0; }
+  /* distância de segurança: a última informação nunca fica sob a barra (barra ≈ 76px + safe-area + 28px de folga) */
+  .ix-sticky-pad { padding-bottom: calc(104px + env(safe-area-inset-bottom)) !important; }
+}
+
+/* ===== Celular · tabelas viram cartões de 2 colunas (rótulos vêm do hook use-stack-tables) ===== */
+@media (max-width: 767px) {
+  .ix-table-wrap { border: 0; border-radius: 0; background: none; overflow: visible; }
+  .ix-table, .ix-table tbody { display: block; width: 100%; }
+  .ix-table thead { display: none; }
+  .ix-table tbody { display: grid; gap: 10px; }
+  .ix-table tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: linear-gradient(180deg, #fff, #fdfbff); border: 1px solid #e7e2ee; border-radius: 20px; padding: 6px 2px; box-shadow: 0 18px 34px -26px rgba(67,17,113,.45); animation: ixpop .4s both; }
+  .ix-table td, .ix-table .r { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px 12px; border: 0; text-align: left; min-width: 0; overflow-wrap: anywhere; }
+  .ix-table td[data-l]:not([data-l=""])::before { content: attr(data-l); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8c849c; }
+  .ix-table td:first-child { grid-column: 1 / -1; padding-bottom: 6px; border-bottom: 1px solid #f1ecf6; margin-bottom: 2px; }
+  .ix-table td[data-l=""]:not(:first-child) { grid-column: 1 / -1; align-items: stretch; }
+  .ix-table td:empty { display: none; }
+  .ix-table tbody tr.click:hover td { background: none; }
+  .ix-table td .ix-row { flex-wrap: wrap; }
+}
+
+/* ===== Celular · cabeçalhos de página mais enxutos, campos curtos em 2 colunas ===== */
+@media (max-width: 767px) {
+  .ix-ph { margin: 18px 0 14px !important; gap: 12px !important; }
+  .ix-ph .ix-h1 { font-size: 28px; margin-top: 0; }
+  .ix-ph .ix-sub { font-size: 15px; margin-top: 6px; }
+  .ix-grid.ix-fg { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; }
+  .ix-fg > .ix-fg-m { grid-column: auto !important; }
+  .ix-grid.ix-logf > .ix-field:nth-child(n+3) { grid-column: 1 / -1; }
+  .ix-cards2 .ix-row.ix-between { flex-wrap: wrap; gap: 6px; }
+}
+@media (max-width: 767px) {
+  .ix-table td.r:first-child { grid-column: auto; padding-bottom: 8px; border-bottom: 0; margin-bottom: 0; }
+}

@@ -56,9 +56,9 @@ export const FieldRenderer = ({ f, ctx }: { f: FieldDef; ctx: FieldCtx }) => {
 
 /** Grade de campos: "half" ocupa meia linha (Número+Complemento, Cidade+UF, Agência+Conta). */
 export const FieldGrid = ({ fields, ctx }: { fields: FieldDef[]; ctx: FieldCtx }) => (
-  <div className="ix-grid c2">
+  <div className="ix-grid c2 ix-fg">
     {fields.map((f) => (
-      <div key={f.key} style={f.half ? undefined : { gridColumn: "1 / -1" }}>
+      <div key={f.key} className={f.mhalf ? "ix-fg-m" : undefined} style={f.half ? undefined : { gridColumn: "1 / -1" }}>
         <FieldRenderer f={f} ctx={ctx} />
       </div>
     ))}

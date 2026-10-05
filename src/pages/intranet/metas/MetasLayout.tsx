@@ -9,6 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Avatar } from "@/components/intranet/ui";
 import { ROLE_LABEL } from "@/lib/intranet/areas";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useStackTables } from "@/hooks/use-stack-tables";
 
 const B = "/intranet/metas";
 export const CLOSER_NAV: NavItem[] = [
@@ -76,13 +77,14 @@ const MetasLayout = () => {
   const { isManager } = useAuth();
   const mobile = useMediaQuery("(max-width: 767px)");
   const loc = useLocation();
+  useStackTables(mobile);
   return (
     <div className="sg ix">
       <Helmet><title>Comercial — Intranet Anfitrião Sigma</title><meta name="robots" content="noindex,nofollow" /></Helmet>
       {mobile
         ? <IntranetTop compact="Comercial" />
         : <IntranetTop nav={isManager ? MANAGER_NAV : CLOSER_NAV} back={{ to: "/intranet/areas", label: "Áreas" }} />}
-      <main className={`ix-wrap ${mobile ? "ix-sticky-pad" : ""}`} style={{ paddingBottom: 64 }} key={loc.pathname.split("/").slice(0, 4).join("/")}>
+      <main className={`ix-wrap ${mobile ? "ix-sticky-pad" : ""}`} style={mobile ? undefined : { paddingBottom: 64 }} key={loc.pathname.split("/").slice(0, 4).join("/")}>
         <Outlet />
       </main>
       {mobile && <MobileNav tabs={isManager ? TABS_MANAGER : TABS_CLOSER} items={isManager ? MANAGER_NAV : CLOSER_NAV} />}

@@ -25,7 +25,7 @@ const Log = () => {
   return (
     <>
       <PageHeader eyebrow="Gestor" title="Log" right={<Btn kind="secondary" size="sm" onClick={exportLog} disabled={rows.length === 0}>Exportar relatório</Btn>} />
-      <form className="ix-grid c4" style={{ alignItems: "end" }} onSubmit={(e) => { e.preventDefault(); setApplied(f); }}>
+      <form className="ix-grid c4 ix-cards2 ix-logf" style={{ alignItems: "end" }} onSubmit={(e) => { e.preventDefault(); setApplied(f); }}>
         <Field label="De"><Input type="date" value={f.from} onChange={set("from")} aria-label="De" /></Field>
         <Field label="Até"><Input type="date" value={f.to} onChange={set("to")} aria-label="Até" /></Field>
         <Field label="Pessoa"><Input value={f.actor} onChange={set("actor")} aria-label="Pessoa" /></Field>

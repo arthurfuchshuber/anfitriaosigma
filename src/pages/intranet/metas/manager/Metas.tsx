@@ -39,7 +39,7 @@ const Metas = () => {
       <PageHeader eyebrow="Gestor" title="Metas e ajustes" right={<Btn size="sm" onClick={() => { setMultVal(""); setMultOpen(true); }}>Fixar múltiplo</Btn>} />
       <p className="ix-muted ix-small" style={{ margin: "-12px 0 18px" }}>Meses com meta fechada não podem mudar.</p>
 
-      <div className="ix-grid c2" style={{ marginBottom: 24 }}>
+      <div className="ix-grid c2 ix-cards2" style={{ marginBottom: 24 }}>
         {[[cur, 5] as const, [next, 6] as const].map(([m, i]) => (
           <Card key={m}>
             <div className="ix-row ix-between"><span className="ix-muted">{monthTitle(m)}</span>{lockChip(m)}</div>

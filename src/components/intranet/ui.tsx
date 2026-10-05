@@ -29,7 +29,7 @@ export const Card = ({ children, lilac, lg, style, className = "" }: { children:
 export const IconBox = ({ children }: { children: ReactNode }) => <span className="ix-icon">{children}</span>;
 
 export const PageHeader = ({ eyebrow, title, accent, text, right }: { eyebrow: string; title: ReactNode; accent?: string; text?: ReactNode; right?: ReactNode }) => (
-  <div className="ix-row ix-between ix-wrapflex" style={{ alignItems: "flex-end", margin: "40px 0 28px", gap: 20 }}>
+  <div className="ix-row ix-between ix-wrapflex ix-ph" style={{ alignItems: "flex-end", margin: "40px 0 28px", gap: 20 }}>
     <div>
       <span className="ix-eyebrow">{eyebrow}</span>
       <h1 className="ix-h1 hd">{title}{accent && <> <span className="gt">{accent}</span></>}</h1>

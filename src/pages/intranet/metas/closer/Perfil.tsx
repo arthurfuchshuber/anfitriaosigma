@@ -77,7 +77,7 @@ const Perfil = () => {
           </form>
 
           <Card lilac style={{ marginTop: 16 }}>
-            <div className="ix-grid c3">{RO.map(([l, v]) => <div key={l} className="ix-kpi"><span className="l">{l}</span><b>{v}</b></div>)}</div>
+            <div className="ix-grid c3 ix-cards2">{RO.map(([l, v]) => <div key={l} className="ix-kpi"><span className="l">{l}</span><b>{v}</b></div>)}</div>
           </Card>
 
           <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); saveS.mutate(); }}>

@@ -40,7 +40,7 @@ const Validacao = () => {
     <>
       <PageHeader eyebrow="Gestor" title="Vendas e validação" right={<div className="ix-row ix-wrapflex"><MonthNav month={month} onChange={setMonth} label={monthLabel(month)} /><Btn kind="secondary" size="sm" busy={validate.isPending} onClick={() => validate.mutate()}>Validar agora</Btn></div>} />
       <p className="ix-muted ix-small" style={{ margin: "-12px 0 18px" }}>Vendas validam sozinhas após {params.data?.dias_validar ?? 10} dias.</p>
-      <div className="ix-grid c3" style={{ marginBottom: 6 }}>
+      <div className="ix-grid c3 ix-cards2" style={{ marginBottom: 6 }}>
         <Field label="Status"><Select value={status} onChange={(e) => setStatus(e.target.value)} aria-label="Filtrar por status"><option value="">Todos</option><option value="pending">Pendente</option><option value="validated">Validada</option><option value="cancelled">Cancelada</option></Select></Field>
         <Field label="Vendedor"><Select value={seller} onChange={(e) => setSeller(e.target.value)} aria-label="Filtrar por vendedor"><option value="">Todos</option>{(people.data ?? []).map((p) => <option key={p.id} value={p.id}>{p.nickname || p.full_name || p.email}</option>)}</Select></Field>
       </div>

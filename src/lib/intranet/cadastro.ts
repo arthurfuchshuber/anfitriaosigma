@@ -9,20 +9,20 @@ export type DocType = "pf" | "pj";
 export type Kind = "name" | "company" | "text" | "cpf" | "cnpj" | "rg" | "date" | "phone" | "email" | "cep" | "uf" | "number" | "digits" | "agency" | "account" | "bank" | "relation" | "regime" | "pixtype" | "pixkey";
 
 /** store: p.<coluna do perfil> · a.<chave do endereço do perfil> · ea.<chave do endereço do contato de referência> · s.<coluna sensível> · c.<coluna da empresa> · ca.<chave do endereço da empresa> */
-export interface FieldDef { key: string; label: string; kind: Kind; store: string; docs?: DocType; pjFirst?: boolean; half?: boolean; dateMax?: "today"; dateMin?: string }
+export interface FieldDef { key: string; label: string; kind: Kind; store: string; docs?: DocType; pjFirst?: boolean; half?: boolean; mhalf?: boolean; dateMax?: "today"; dateMin?: string }
 export interface GroupDef { id: string; scope: Scope; title: string; sub: string; icon: "id" | "phone" | "pin" | "alert" | "wallet" | "building" | "user"; fields: FieldDef[] }
 
 export const USER_GROUPS: GroupDef[] = [
   { id: "ident", scope: "user", title: "Identificação", sub: "Escolha como você emite a nota", icon: "id", fields: [
     { key: "u_full_name", label: "Nome completo", kind: "name", store: "p.full_name" },
-    { key: "u_cpf", label: "CPF", kind: "cpf", store: "s.cpf" },
-    { key: "u_rg", label: "RG", kind: "rg", store: "s.rg" },
+    { key: "u_cpf", label: "CPF", kind: "cpf", store: "s.cpf", mhalf: true },
+    { key: "u_rg", label: "RG", kind: "rg", store: "s.rg", mhalf: true },
     { key: "u_cnpj", label: "CNPJ", kind: "cnpj", store: "s.cnpj", docs: "pj", pjFirst: true },
     { key: "u_company_name", label: "Razão social", kind: "company", store: "s.company_name", docs: "pj", pjFirst: true },
     { key: "u_trade_name", label: "Nome fantasia", kind: "company", store: "s.trade_name", docs: "pj", pjFirst: true },
     { key: "u_municipal_reg", label: "Inscrição municipal (opcional)", kind: "digits", store: "s.municipal_reg", docs: "pj", pjFirst: true },
-    { key: "u_birth_date", label: "Data de nascimento", kind: "date", store: "p.birth_date", dateMax: "today", dateMin: "1930-01-01" },
-    { key: "u_nickname", label: "Como quer ser chamado", kind: "text", store: "p.nickname" },
+    { key: "u_birth_date", label: "Data de nascimento", kind: "date", store: "p.birth_date", dateMax: "today", dateMin: "1930-01-01", mhalf: true },
+    { key: "u_nickname", label: "Como quer ser chamado", kind: "text", store: "p.nickname", mhalf: true },
   ] },
   { id: "contato", scope: "user", title: "Contato", sub: "Celular, WhatsApp e e-mail", icon: "phone", fields: [
     { key: "u_phone", label: "Celular", kind: "phone", store: "p.phone" },
@@ -80,8 +80,8 @@ export const COMPANY_GROUPS: GroupDef[] = [
   ] },
   { id: "resp", scope: "company", title: "Responsável legal", sub: "Quem assina pela empresa", icon: "user", fields: [
     { key: "c_rep_name", label: "Nome completo", kind: "name", store: "c.rep_name" },
-    { key: "c_rep_cpf", label: "CPF", kind: "cpf", store: "c.rep_cpf" },
-    { key: "c_rep_birth", label: "Data de nascimento", kind: "date", store: "c.rep_birth", dateMax: "today", dateMin: "1930-01-01" },
+    { key: "c_rep_cpf", label: "CPF", kind: "cpf", store: "c.rep_cpf", mhalf: true },
+    { key: "c_rep_birth", label: "Data de nascimento", kind: "date", store: "c.rep_birth", dateMax: "today", dateMin: "1930-01-01", mhalf: true },
     { key: "c_rep_phone", label: "Celular", kind: "phone", store: "c.rep_phone" },
   ] },
   { id: "banc", scope: "company", title: "Dados bancários", sub: "Usados para repasses e conciliação", icon: "wallet", fields: [
