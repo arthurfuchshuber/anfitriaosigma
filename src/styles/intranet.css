@@ -9,6 +9,8 @@
 
 .ix-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #431171; display: inline-flex; align-items: center; gap: 8px; }
 .ix-eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ff4700; }
+/* etiquetas acima dos títulos ("Gestor", "Intranet"…) removidas na intranet a pedido */
+.ix .ix-eyebrow { display: none; }
 .ix-h1 { font-family: "Sora", sans-serif; font-weight: 600; letter-spacing: -.03em; line-height: 1.08; font-size: clamp(30px, 3.4vw, 44px); margin: 12px 0 0; }
 .ix-h2 { font-family: "Sora", sans-serif; font-weight: 600; letter-spacing: -.02em; font-size: 22px; margin: 0; }
 .ix-h3 { font-family: "Sora", sans-serif; font-weight: 600; font-size: 17px; margin: 0; }
@@ -239,3 +241,16 @@ html:has(.sg.ix), body:has(.sg.ix) { background: #fff; }
   .ix-top.has-nav { flex-wrap: wrap; row-gap: 4px; border-radius: 22px; padding: 8px 10px 6px 12px; }
   .ix-top.has-nav .ix-nav { order: 3; flex: 1 0 100%; justify-content: flex-start; padding: 4px 6px 6px; margin: 0 -4px; }
 }
+
+/* ===== Celular · barra mínima + barra inferior com Menu ☰ ===== */
+.ix-top.ix-top-compact { padding: 8px 10px 8px 12px; border-radius: 999px; }
+.ix-tabbar button { display: flex; flex-direction: column; align-items: center; gap: 3px; font: inherit; font-size: 11px; font-weight: 700; color: #8c849c; padding: 6px 10px; border-radius: 14px; min-width: 60px; background: none; border: 0; cursor: pointer; }
+.ix-tabbar button:active { background: #f2ecf8; color: #431171; }
+.ix-sheet-bg { position: fixed; inset: 0; z-index: 90; background: rgba(26,16,36,.38); display: flex; align-items: flex-end; }
+.ix-sheet { width: 100%; background: #fff; border-radius: 26px 26px 0 0; padding: 18px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow: 0 -30px 60px -30px rgba(42,10,71,.5); }
+.ix-sheet-x { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e6e0ee; background: #fff; display: grid; place-items: center; color: #5f5870; cursor: pointer; }
+.ix-sheet-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 14px; }
+.ix-sheet-list a { padding: 14px 16px; border-radius: 16px; background: #faf8fc; border: 1px solid #ece8f2; font-weight: 600; font-size: 15px; color: #3a3046; }
+.ix-sheet-list a.on { background: #f2ecf8; border-color: #d9c9ec; color: #431171; }
+.ix-sheet-foot { display: flex; justify-content: space-between; border-top: 1px solid #ece8f2; padding-top: 12px; }
+.ix-sheet-foot a, .ix-sheet-foot button { display: inline-flex; align-items: center; gap: 7px; font: inherit; font-weight: 600; font-size: 14.5px; color: #431171; background: none; border: 0; padding: 8px 4px; cursor: pointer; }

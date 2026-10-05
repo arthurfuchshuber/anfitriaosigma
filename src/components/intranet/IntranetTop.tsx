@@ -8,10 +8,22 @@ import { Avatar } from "./ui";
 
 export interface NavItem { to: string; label: string; end?: boolean }
 
-export const IntranetTop = ({ nav, back }: { nav?: NavItem[]; back?: { to: string; label: string } }) => {
+export const IntranetTop = ({ nav, back, compact }: { nav?: NavItem[]; back?: { to: string; label: string }; compact?: string }) => {
   const { profile, role, signOut } = useAuth();
   const go = useNavigate();
   const name = profile?.full_name || profile?.email || "";
+  if (compact !== undefined) {
+    // celular: barra mínima (logo + nome da área + avatar); a navegação fica na barra inferior
+    return (
+      <header className="ix-top ix-top-compact">
+        <Link to="/intranet/areas" className="ix-row" style={{ gap: 10 }} aria-label="Áreas">
+          <SigmaLogo size={30} variant="tile" />
+          <span className="hd" style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-.02em" }}>{compact}</span>
+        </Link>
+        {profile && <Link to="/intranet/metas/perfil" aria-label="Meu perfil" title={name}><Avatar name={name} src={profile.avatar_url} /></Link>}
+      </header>
+    );
+  }
   return (
     <header className={`ix-top ${nav ? "has-nav" : ""}`}>
       <Link to="/intranet/areas" className="ix-row" style={{ gap: 11 }}>
