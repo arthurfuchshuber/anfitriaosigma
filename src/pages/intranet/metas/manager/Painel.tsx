@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AlertTriangle, Lock } from "lucide-react";
-import { Avatar, Banner, Btn, Card, Chip, Empty, ErrorBox, Loading, Modal, MonthNav, PageHeader } from "@/components/intranet/ui";
+import { AlertTriangle, Check, Clock, Coins, Lock, PieChart, Percent, Target } from "lucide-react";
+import { Avatar, Banner, Btn, Card, Chip, Empty, ErrorBox, Loading, Modal, MonthNav, PageHeader, Seg, StatCard } from "@/components/intranet/ui";
 import { confirmGoalLock, getGoalLocks, getParams, listNotices, listSales, monthSummary, resolveNotice } from "@/lib/intranet/api";
 import { addMonths, brl, monthLabel, monthStart, pct } from "@/lib/intranet/format";
 import { commissionRatio } from "@/lib/intranet/calc";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const B = "/intranet/metas";
 const nm = (r: { full_name: string | null; nickname: string | null }) => r.nickname || r.full_name || "—";
@@ -17,6 +18,9 @@ const Kpi = ({ l, v, s }: { l: string; v: string; s?: string }) => (
 
 const Painel = () => {
   const [month, setMonth] = useState(monthStart());
+  const mobile = useMediaQuery("(max-width: 767px)");
+  const [tab, setTab] = useState("vend");
+  const [allRows, setAllRows] = useState(false);
   const go = useNavigate();
   const qc = useQueryClient();
   const [confirmLock, setConfirmLock] = useState(false);
@@ -76,6 +80,49 @@ const Painel = () => {
 
       {sum.isLoading ? <Loading rows={4} /> : sum.error ? <ErrorBox error={sum.error} /> : (
         <>
+          {mobile ? (
+            <>
+              <StatCard style={{ marginBottom: 14 }} items={[
+                { icon: <Target />, l: "Soma das metas", v: brl(goal), s: `${rows.length} ${rows.length === 1 ? "vendedor" : "vendedores"}` },
+                { icon: <PieChart />, l: "Atingimento", v: pct(goal > 0 ? validated / goal : 0), bar: goal > 0 ? validated / goal : 0 },
+                { icon: <Check />, l: "Validado", v: brl(validated) },
+                { icon: <Clock />, l: "Pendente", v: brl(pending) },
+                { icon: <Coins />, l: "Caixa", v: brl(caixa) },
+                { icon: <Percent />, l: "Comissão ÷ caixa", v: ratio === null ? "—" : pct(ratio, 1), s: `Limite ${pct(limit, 1)}` },
+              ]} />
+              <div className="ix-listcard" style={{ marginBottom: 20 }}>
+                <Seg value={tab} onChange={setTab} tabs={[{ id: "vend", label: "Vendedores" }, { id: "av", label: "Avisos", count: (notices.data ?? []).length }]} />
+                {tab === "vend" ? (
+                  rows.length === 0 ? <div className="ix-muted ix-small" style={{ padding: 18, textAlign: "center" }}>Nenhum vendedor ativo neste mês.</div> : (
+                    <>
+                      {(allRows ? rows : rows.slice(0, 4)).map((r) => (
+                        <button key={r.user_id} type="button" className="ix-lr" onClick={() => go(`${B}/vendedor/${r.user_id}`)}>
+                          <span className="a">{nm(r).slice(0, 2).toUpperCase()}</span>
+                          <span className="nm"><b>{nm(r)}</b><span className="ix-mbar"><i style={{ width: `${Math.min(r.attainment, 1) * 100}%` }} /></span></span>
+                          <span className="rv">{brl(r.total_pay)}<small>{pct(r.attainment)} da meta</small></span>
+                        </button>
+                      ))}
+                      {rows.length > 4 && <button type="button" className="ix-more" onClick={() => setAllRows(!allRows)}>{allRows ? "Ver menos" : `Ver todos (${rows.length}) ›`}</button>}
+                    </>
+                  )
+                ) : (
+                  (notices.data ?? []).length === 0 ? <div className="ix-muted ix-small" style={{ padding: 18, textAlign: "center" }}>Nenhum aviso pendente.</div> : (
+                    (notices.data ?? []).map((n) => (
+                      <div key={n.id} className="ix-lr" style={{ cursor: "default", flexWrap: "wrap" }}>
+                        <span className="nm" style={{ flexBasis: "100%" }}><b style={{ whiteSpace: "normal" }}>{n.title}</b>{n.body && <span className="ix-muted ix-small">{n.body}</span>}</span>
+                        <span className="ix-row" style={{ gap: 6 }}>
+                          {n.kind === "access_request" && <Link to={`${B}/pessoas?tab=solicitacoes`}><Btn kind="secondary" size="sm">Ver pedido</Btn></Link>}
+                          {(n.kind === "floor" || n.kind === "duplicate") && <Link to={`${B}/validacao`}><Btn kind="secondary" size="sm">Ver venda</Btn></Link>}
+                          {n.kind !== "access_request" && <Btn kind="ghost" size="sm" onClick={() => resolve.mutate(n.id)} disabled={resolve.isPending}>Resolver</Btn>}
+                        </span>
+                      </div>
+                    ))
+                  )
+                )}
+              </div>
+            </>
+          ) : (
+            <>
           <div className="ix-grid c4" style={{ marginBottom: 20 }}>
             <Kpi l="Soma das metas" v={brl(goal)} s={`${rows.length} ${rows.length === 1 ? "vendedor" : "vendedores"}`} />
             <Kpi l="Validado" v={brl(validated)} />
@@ -87,8 +134,11 @@ const Painel = () => {
             <Kpi l="Comissão ÷ caixa" v={ratio === null ? "—" : pct(ratio, 1)} s={`Limite ${pct(limit, 1)}`} />
           </div>
 
-          <h2 className="ix-h2 hd" style={{ marginBottom: 14 }}>Vendedores</h2>
-          {rows.length === 0 ? <Empty>Nenhum vendedor ativo neste mês.</Empty> : (
+            </>
+          )}
+
+          {!mobile && <h2 className="ix-h2 hd" style={{ marginBottom: 14 }}>Vendedores</h2>}
+          {!mobile && (rows.length === 0 ? <Empty>Nenhum vendedor ativo neste mês.</Empty> : (
             <div className="ix-table-wrap" style={{ marginBottom: 32 }}>
               <table className="ix-table">
                 <thead><tr><th>Vendedor</th><th>Rampa</th><th className="r">Meta</th><th className="r">Validado</th><th className="r">Pendente</th><th style={{ minWidth: 160 }}>Atingimento</th><th className="r">Bônus</th><th className="r">Total</th></tr></thead>
@@ -105,12 +155,13 @@ const Painel = () => {
                 </tbody>
               </table>
             </div>
-          )}
+          ))}
         </>
       )}
 
-      <h2 className="ix-h2 hd" style={{ marginBottom: 14 }}>Avisos</h2>
-      {notices.isLoading ? <Loading rows={2} /> : notices.error ? <ErrorBox error={notices.error} /> : (notices.data ?? []).length === 0 ? <Empty>Nenhum aviso pendente.</Empty> : (
+      {!mobile && <h2 className="ix-h2 hd" style={{ marginBottom: 14 }}>Avisos</h2>}
+      {!mobile && (
+      notices.isLoading ? <Loading rows={2} /> : notices.error ? <ErrorBox error={notices.error} /> : (notices.data ?? []).length === 0 ? <Empty>Nenhum aviso pendente.</Empty> : (
         <div style={{ display: "grid", gap: 10 }}>
           {notices.data!.map((n) => (
             <Card key={n.id} style={{ padding: 16 }}>
@@ -125,7 +176,7 @@ const Painel = () => {
             </Card>
           ))}
         </div>
-      )}
+      ))}
 
       <Modal open={confirmLock} onClose={() => setConfirmLock(false)} title={`Fechar meta de ${nextName}`}
         footer={<><Btn kind="ghost" onClick={() => setConfirmLock(false)}>Cancelar</Btn><Btn busy={lock.isPending} onClick={() => lock.mutate(nextM)}>Confirmar meta fechada</Btn></>}>

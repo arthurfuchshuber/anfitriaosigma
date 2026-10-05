@@ -1,8 +1,9 @@
 import { Fragment, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
-import { Avatar, Card, Empty, ErrorBox, Loading, MonthNav, PageHeader, SaleChip } from "@/components/intranet/ui";
+import { ArrowLeft, Check, Clock, Coins, PieChart } from "lucide-react";
+import { Avatar, Card, Empty, ErrorBox, Loading, MonthNav, PageHeader, SaleChip, StatCard } from "@/components/intranet/ui";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { listMetaOverrides, listProducts, listSales, monthSummary } from "@/lib/intranet/api";
 import { brl, dmy, monthLabel, monthStart, pct } from "@/lib/intranet/format";
 
@@ -11,6 +12,7 @@ const fx = (n: number) => n.toLocaleString("pt-BR", { maximumFractionDigits: 2 }
 
 const Vendedor = () => {
   const { id = "" } = useParams();
+  const mobile = useMediaQuery("(max-width: 767px)");
   const [month, setMonth] = useState(monthStart());
   const sum = useQuery({ queryKey: ["mgr-summary", month], queryFn: () => monthSummary(month) });
   const ov = useQuery({ queryKey: ["meta-overrides"], queryFn: listMetaOverrides });
@@ -42,11 +44,18 @@ const Vendedor = () => {
               ))}
             </div>
           </Card>
+          {mobile ? (
+            <StatCard style={{ marginBottom: 14 }} items={[
+              { icon: <Check />, l: "Validado", v: brl(r.validated) }, { icon: <Clock />, l: "Pendente", v: brl(r.pending) },
+              { icon: <PieChart />, l: "Atingimento", v: pct(r.attainment), bar: r.attainment }, { icon: <Coins />, l: "Bônus", v: brl(r.bonus) },
+            ]} />
+          ) : (
           <div className="ix-grid c4" style={{ marginBottom: 28 }}>
-            {([["Validado", brl(r.validated)], ["Pendente", brl(r.pending)], ["Atingimento", pct(r.attainment)], ["Bônus", brl(r.bonus)]] as const).map(([l, v]) => (
-              <Card key={l}><div className="ix-kpi"><span className="l">{l}</span><span className="v">{v}</span></div></Card>
-            ))}
-          </div>
+              {([["Validado", brl(r.validated)], ["Pendente", brl(r.pending)], ["Atingimento", pct(r.attainment)], ["Bônus", brl(r.bonus)]] as const).map(([l, v]) => (
+                <Card key={l}><div className="ix-kpi"><span className="l">{l}</span><span className="v">{v}</span></div></Card>
+              ))}
+            </div>
+          )}
           <Card style={{ marginBottom: 28 }}><div className="ix-row ix-between"><span className="ix-muted">Total a receber (fixo + bônus)</span><span className="ix-num" style={{ fontSize: 24 }}>{brl(r.total_pay)}</span></div></Card>
         </>
       )}

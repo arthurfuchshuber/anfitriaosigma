@@ -75,7 +75,7 @@ const IntranetAreas = () => {
             </div>
           )}
 
-          <div className="ix-grid c3" style={{ gap: mobile ? 14 : 22 }}>
+          <div className="ix-grid c3 ix-areas" style={{ gap: mobile ? 12 : 22 }}>
             {AREAS.map((a) => {
               const I = ICONS[a.icon];
               const released = a.active && (isManager || access[a.id] === "approved");
@@ -90,8 +90,9 @@ const IntranetAreas = () => {
                 </button>
               );
             })}
+            <div className="ix-area-ghost" aria-hidden="true"><span>+</span>Precisa de outra área?<br />Fale com o gestor.</div>
           </div>
-          <p className="ix-faint ix-small" style={{ textAlign: "center", marginTop: 32 }}>Precisa de outra área? Fale com o gestor.</p>
+          <p className="ix-faint ix-small hide-m" style={{ textAlign: "center", marginTop: 32 }}>Precisa de outra área? Fale com o gestor.</p>
         </main>
       </div>
 

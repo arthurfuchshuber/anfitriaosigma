@@ -11,7 +11,7 @@ const Produtos = () => {
     <div>
       <Top back={BASE} title="Produtos" />
       {list.length === 0 ? <Empty>Nenhum produto.</Empty> : (
-        <div className="ix-grid c3">
+        <div className="ix-grid c3 ix-cards2">
           {list.map((p) => (
             <Card key={p.id}>
               <div className="ix-row ix-between" style={{ alignItems: "flex-start" }}>

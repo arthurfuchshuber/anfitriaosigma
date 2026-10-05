@@ -16,7 +16,7 @@ const Foco = () => {
     <div style={{ maxWidth: 900 }}>
       <Top back={BASE} title="Foco sugerido" right={falta > 0 ? <span className="ix-num" style={{ fontSize: 18, color: "#431171" }}>falta {brl(falta)}</span> : undefined} />
       {cards.length === 0 ? <Empty>Meta batida.</Empty> : (
-        <div className="ix-grid c3">
+        <div className="ix-grid c3 ix-cards2">
           {cards.map((c) => (
             <Card key={c.product.id}>
               <div className="ix-num" style={{ fontSize: 26, color: "#431171" }}>{c.qty}×</div>

@@ -1,11 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Calculator, Home, LayoutDashboard, LogOut, Menu, Plus, Receipt, Target, Users, X } from "lucide-react";
+import { BarChart3, BookUser, Calculator, FileText, Home, LayoutDashboard, Lock, LogOut, Menu, Package, Plus, Receipt, ScrollText, Target, User, Users, X, type LucideIcon } from "lucide-react";
 import "@/styles/sigma.css";
 import "@/styles/intranet.css";
 import { IntranetTop, type NavItem } from "@/components/intranet/IntranetTop";
 import { useAuth } from "@/contexts/AuthContext";
+import { Avatar } from "@/components/intranet/ui";
+import { ROLE_LABEL } from "@/lib/intranet/areas";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 const B = "/intranet/metas";
@@ -19,6 +21,10 @@ export const MANAGER_NAV: NavItem[] = [
   { to: `${B}/metas`, label: "Metas" }, { to: `${B}/cadastros`, label: "Cadastros" }, { to: `${B}/fechamento`, label: "Fechamento" },
   { to: `${B}/log`, label: "Log" }, { to: `${B}/perfil`, label: "Perfil" },
 ];
+const MENU_ICON: Record<string, LucideIcon> = {
+  "Início": Home, Registrar: Plus, Vendas: Receipt, Simulador: Calculator, Foco: Target, Comparar: BarChart3, Produtos: Package, Nota: FileText, Perfil: User,
+  Painel: LayoutDashboard, Pessoas: Users, Metas: Target, Cadastros: BookUser, Fechamento: Lock, Log: ScrollText,
+};
 const TABS_CLOSER = [
   { to: B, label: "Início", I: Home, end: true }, { to: `${B}/registrar`, label: "Registrar", I: Plus }, { to: `${B}/vendas`, label: "Vendas", I: Receipt },
   { to: `${B}/simulador`, label: "Simular", I: Calculator },
@@ -32,7 +38,7 @@ const TABS_MANAGER = [
 /** Celular: barra inferior flutuante (4 atalhos + Menu ☰) e folha com todos os itens, "Áreas" e "Sair". */
 const MobileNav = ({ tabs, items }: { tabs: typeof TABS_CLOSER; items: NavItem[] }) => {
   const [open, setOpen] = useState(false);
-  const { signOut } = useAuth();
+  const { signOut, profile, role } = useAuth();
   const go = useNavigate();
   return (
     <>
@@ -43,16 +49,21 @@ const MobileNav = ({ tabs, items }: { tabs: typeof TABS_CLOSER; items: NavItem[]
       {open && (
         <div className="ix-sheet-bg" onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)} role="dialog" aria-modal="true" aria-label="Menu">
           <div className="ix-sheet">
-            <div className="ix-row ix-between" style={{ marginBottom: 6 }}>
-              <b className="hd" style={{ fontSize: 18 }}>Menu</b>
+            <div className="ix-sheet-grab" />
+            <div className="ix-sheet-who">
+              <Avatar name={profile?.full_name || profile?.email || ""} src={profile?.avatar_url} size={42} />
+              <div style={{ minWidth: 0 }}><b>{profile?.full_name || profile?.email}</b><small>{ROLE_LABEL[role]} · Comercial</small></div>
               <button type="button" className="ix-sheet-x" onClick={() => setOpen(false)} aria-label="Fechar"><X size={18} /></button>
             </div>
-            <div className="ix-sheet-list">
-              {items.map((n) => <NavLink key={n.to} to={n.to} end={n.end} onClick={() => setOpen(false)} className={({ isActive }) => (isActive ? "on" : "")}>{n.label}</NavLink>)}
+            <div className="ix-sheet-lab">Navegar</div>
+            <div className="ix-sheet-list ix-grid4">
+              {items.map((n, i) => { const I = MENU_ICON[n.label] ?? Menu; return (
+                <NavLink key={n.to} to={n.to} end={n.end} onClick={() => setOpen(false)} className={({ isActive }) => (isActive ? "on" : "")} style={{ animationDelay: `${i * 0.035}s` }}><i><I size={19} /></i>{n.label}</NavLink>
+              ); })}
             </div>
-            <div className="ix-sheet-foot">
-              <Link to="/intranet/areas" onClick={() => setOpen(false)}>Áreas</Link>
-              <button type="button" onClick={async () => { await signOut(); go("/intranet"); }}><LogOut size={15} />Sair</button>
+            <div className="ix-sheet-foot pills">
+              <Link to="/intranet/areas" onClick={() => setOpen(false)}><Home size={16} />Áreas</Link>
+              <button type="button" onClick={async () => { await signOut(); go("/intranet"); }}><LogOut size={16} />Sair</button>
             </div>
           </div>
         </div>
