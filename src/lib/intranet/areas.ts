@@ -2,7 +2,7 @@ export interface AreaDef { id: string; title: string; desc: string; icon: "targe
 
 /** Áreas da Intranet. `active: false` mostra "em breve"; ao criar a área, basta virar `true` e ter a rota. */
 export const AREAS: AreaDef[] = [
-  { id: "metas", title: "Comercial", desc: "Acompanhe sua meta, registre vendas, simule resultados e gere a nota fiscal do mês.", icon: "target", active: true, path: "/intranet/metas" },
+  { id: "metas", title: "Comercial", desc: "Em construção.", icon: "target", active: true, path: "/intranet/metas" },
   { id: "operacao", title: "Operação", desc: "Rotinas e acompanhamento dos imóveis.", icon: "home", active: false, path: "/intranet/operacao" },
   { id: "financeiro", title: "Financeiro", desc: "Repasses, notas e conciliação.", icon: "wallet", active: false, path: "/intranet/financeiro" },
 ];

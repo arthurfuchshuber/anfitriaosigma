@@ -120,29 +120,3 @@ export const MonthNav = ({ month, onChange, label }: { month: string; onChange: 
     </div>
   );
 };
-
-/** Card único com vários números em 2 colunas separadas por fios (celular): agrupa a informação em vez de 1 card por número. */
-export type StatItem = { icon?: ReactNode; tip?: ReactNode; l: string; v: ReactNode; s?: ReactNode; bar?: number };
-export const StatCard = ({ items, style, className = "" }: { items: StatItem[]; style?: React.CSSProperties; className?: string }) => (
-  <div className={`ix-stat ${className}`} style={style}>
-    {items.map((it) => (
-      <div key={it.l}>
-        <span className="l">{it.icon}{it.l}{it.tip}</span>
-        <span className="v">{it.v}</span>
-        {it.s && <span className="s">{it.s}</span>}
-        {it.bar !== undefined && <span className="ix-mbar"><i style={{ width: `${Math.min(Math.max(it.bar, 0), 1) * 100}%` }} /></span>}
-      </div>
-    ))}
-  </div>
-);
-
-/** Abas dentro de um card (ex.: Vendedores | Avisos) */
-export const Seg = ({ tabs, value, onChange }: { tabs: { id: string; label: string; count?: number }[]; value: string; onChange: (id: string) => void }) => (
-  <div className="ix-seg" role="tablist">
-    {tabs.map((t) => (
-      <button key={t.id} type="button" role="tab" aria-selected={value === t.id} className={value === t.id ? "on" : ""} onClick={() => onChange(t.id)}>
-        {t.label}{t.count !== undefined && t.count > 0 && <em>{t.count}</em>}
-      </button>
-    ))}
-  </div>
-);

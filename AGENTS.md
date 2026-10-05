@@ -20,3 +20,6 @@ Antes de criar ou alterar qualquer tela, componente ou estilo, leia **`PLAYBOOK-
 7. **Menu da Intranet** (`IntranetTop`): precisa caber na barra em qualquer largura (flex 1 + `min-width:0`), rolar sem cortar item nas bordas (padding 6px + `scroll-padding`) e não pode deixar faixa preta no topo (`.ix{display:flow-root}` + fundo branco).
 8. **Arquivos do Lovable Cloud** (`drizzle/`, `src/integrations/supabase/types.ts` e `previewAuthStorage.ts`, `supabase/config.toml`, `supabase/functions/_shared/cron-auth.ts`) são gerados pela plataforma: não editar à mão. `client.ts` deve continuar exportando `supabase` (sem tipos), `supabaseConfigured` e `COMPANY_DOMAIN`.
 
+
+## Área Comercial (em reconstrução)
+Todas as telas antigas do Comercial foram removidas; `/intranet/metas` mostra só "Em construção". As regras de negócio do sistema anterior estão preservadas em `docs/regras-comercial-anterior/REGRAS.md` (e no banco, em `supabase/migrations`). Não redesenhar nada antes de discutir essas regras com o usuário e validar mockups.

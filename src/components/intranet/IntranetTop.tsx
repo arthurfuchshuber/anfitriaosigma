@@ -20,7 +20,7 @@ export const IntranetTop = ({ nav, back, compact }: { nav?: NavItem[]; back?: { 
           <SigmaLogo size={40} variant="tile" />
           <span className="hd" style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-.02em" }}>{compact}</span>
         </Link>
-        {profile && <Link to="/intranet/metas/perfil" aria-label="Meu perfil" title={name}><Avatar name={name} src={profile.avatar_url} /></Link>}
+        {profile && <Link to="/intranet/areas" aria-label="Áreas" title={name}><Avatar name={name} src={profile.avatar_url} /></Link>}
       </header>
     );
   }
@@ -40,7 +40,7 @@ export const IntranetTop = ({ nav, back, compact }: { nav?: NavItem[]; back?: { 
               <div style={{ fontWeight: 600, fontSize: 14 }}>{firstName(profile)}</div>
               <div className="ix-faint" style={{ fontSize: 12 }}>{ROLE_LABEL[role]}</div>
             </div>
-            <Link to="/intranet/metas/perfil" aria-label="Meu perfil" title={name}><Avatar name={name} src={profile.avatar_url} /></Link>
+            <Link to="/intranet/areas" aria-label="Áreas" title={name}><Avatar name={name} src={profile.avatar_url} /></Link>
           </>
         )}
         <button type="button" aria-label="Sair" className="ix-btn secondary sm ix-out" onClick={async () => { await signOut(); go("/intranet"); }}><LogOut size={16} /><span className="hide-m">Sair</span></button>

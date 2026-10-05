@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Briefcase, GraduationCap, Home, Lock, Target, Wallet } from "lucide-react";
 import { toast } from "sonner";
@@ -69,7 +69,7 @@ const IntranetAreas = () => {
 
           {isManager && (pendingReq.data ?? 0) > 0 && (
             <div style={{ marginBottom: 20 }}>
-              <Banner action={<Link to="/intranet/metas/pessoas?tab=solicitacoes" className="ix-btn primary sm noarrow">Revisar</Link>}>
+              <Banner>
                 {pendingReq.data} pedido(s) de acesso aguardando sua decisão.
               </Banner>
             </div>
