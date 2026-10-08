@@ -96,7 +96,7 @@ const Form = ({ data, id }: { data: PGet; id: string | null }) => {
   });
   const liq = (k: Kind) => prev.data?.find((x) => x.kind === k)?.liquido ?? null;
 
-  const valid = name.trim() !== "" && !!empresa && cobOn.length > 0 && cobOn.every((x) => (cob[x.k].bruto ?? 0) > 0) && fmOn.length > 0;
+  const valid = name.trim() !== "" && !!empresa && cobOn.length > 0 && cobOn.every((x) => (cob[x.k].bruto ?? 0) > 0) && (!gera || fmOn.length > 0);
   const save = useMutation({
     mutationFn: () => cm("cm_product_save", { p: { id, empresa_id: empresa, name: name.trim(), gera_caixa: gera, fidelidade: fid, periodo_min: periodo, active, cobrancas: body.cobrancas, formas: body.formas } }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["cm"] }); go("/intranet/produtos"); },

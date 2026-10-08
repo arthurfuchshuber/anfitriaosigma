@@ -178,21 +178,24 @@ const Sidebar = ({ active }: { active: NavKey }) => {
 };
 /** Responsivo: <768 coluna mobile (430px) · ≥768 coluna larga (720px) · ≥1100 menu lateral + coluna (860px). */
 const RESP_CSS = `
-.cm-root{display:flex;justify-content:center;min-height:100vh;background:#eee9f4}
+.cm-root{--z:1;display:flex;justify-content:center;min-height:100vh;background:#eee9f4}
 .cm-col{width:100%;max-width:430px;min-height:100vh;background:#fff;display:flex;flex-direction:column;box-sizing:border-box}
 .cm-side{display:none}
 .cm-bnav{display:flex}
 @media(min-width:768px){
+  .cm-root{--z:1.1;zoom:var(--z)}
+  .cm-root,.cm-col{min-height:calc(100vh / var(--z))}
   .cm-col{max-width:720px}
   .cm-in{padding-left:48px!important;padding-right:48px!important}
   .cm-col [style*="14px 24px 20px"]{padding-left:48px!important;padding-right:48px!important}
 }
 @media(min-width:1100px){
-  .cm-root{gap:24px;padding:0 24px}
-  .cm-side{display:block;width:216px;flex:none;position:sticky;top:0;align-self:flex-start;height:100vh;box-sizing:border-box;padding:20px 12px;background:#fff;border-left:1px solid ${LINE2};border-right:1px solid ${LINE2}}
+  .cm-root{--z:1.25;gap:24px;padding:0 24px}
+  .cm-side{display:block;width:216px;flex:none;position:sticky;top:0;align-self:flex-start;height:calc(100vh / var(--z));box-sizing:border-box;padding:20px 12px;background:#fff;border-left:1px solid ${LINE2};border-right:1px solid ${LINE2}}
   .cm-bnav{display:none}
-  .cm-col{max-width:860px}
+  .cm-col{max-width:880px}
 }
+@media(min-width:1800px){ .cm-root{--z:1.4} }
 `;
 
 /** Moldura: coluna mobile (até 430px), cabeçalho 60px com voltar, corpo, rodapé e navegação inferior. */

@@ -45,7 +45,15 @@ export type Database = {
           status?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "area_access_user_id_profiles_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       audit_log: {
         Row: {
@@ -89,6 +97,535 @@ export type Database = {
           id?: never
           location?: string | null
           meta?: Json | null
+        }
+        Relationships: []
+      }
+      cm_adjustments: {
+        Row: {
+          bonus_antes: number | null
+          bonus_depois: number | null
+          decided_at: string
+          decided_by: string | null
+          decision: string
+          id: string
+          month: string
+          motivo: string | null
+          pontos_antes: number | null
+          pontos_depois: number | null
+          review_pending: boolean
+          sale_id: string
+          seller_id: string
+        }
+        Insert: {
+          bonus_antes?: number | null
+          bonus_depois?: number | null
+          decided_at?: string
+          decided_by?: string | null
+          decision: string
+          id?: string
+          month: string
+          motivo?: string | null
+          pontos_antes?: number | null
+          pontos_depois?: number | null
+          review_pending?: boolean
+          sale_id: string
+          seller_id: string
+        }
+        Update: {
+          bonus_antes?: number | null
+          bonus_depois?: number | null
+          decided_at?: string
+          decided_by?: string | null
+          decision?: string
+          id?: string
+          month?: string
+          motivo?: string | null
+          pontos_antes?: number | null
+          pontos_depois?: number | null
+          review_pending?: boolean
+          sale_id?: string
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_adjustments_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "cm_sales"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cm_adjustments_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "cm_sellers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_cobrancas: {
+        Row: {
+          bruto: number
+          id: string
+          kind: string
+          liquido: number | null
+          product_id: string
+        }
+        Insert: {
+          bruto: number
+          id?: string
+          kind: string
+          liquido?: number | null
+          product_id: string
+        }
+        Update: {
+          bruto?: number
+          id?: string
+          kind?: string
+          liquido?: number | null
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_cobrancas_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "cm_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_drafts: {
+        Row: {
+          month: string
+          rules: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          month: string
+          rules: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          month?: string
+          rules?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      cm_empresas: {
+        Row: {
+          id: string
+          linha: string
+          name: string
+          peso: number
+          sort: number
+        }
+        Insert: {
+          id?: string
+          linha: string
+          name: string
+          peso?: number
+          sort?: number
+        }
+        Update: {
+          id?: string
+          linha?: string
+          name?: string
+          peso?: number
+          sort?: number
+        }
+        Relationships: []
+      }
+      cm_freezes: {
+        Row: {
+          frozen_at: string
+          month: string
+          rows: Json
+        }
+        Insert: {
+          frozen_at?: string
+          month: string
+          rows: Json
+        }
+        Update: {
+          frozen_at?: string
+          month?: string
+          rows?: Json
+        }
+        Relationships: []
+      }
+      cm_months: {
+        Row: {
+          month: string
+          published_at: string
+          published_by: string | null
+          rules: Json
+          unlocked: boolean
+        }
+        Insert: {
+          month: string
+          published_at?: string
+          published_by?: string | null
+          rules: Json
+          unlocked?: boolean
+        }
+        Update: {
+          month?: string
+          published_at?: string
+          published_by?: string | null
+          rules?: Json
+          unlocked?: boolean
+        }
+        Relationships: []
+      }
+      cm_product_formas: {
+        Row: {
+          forma: string
+          max_parcelas: number
+          parcela: boolean
+          product_id: string
+          taxa: number
+        }
+        Insert: {
+          forma: string
+          max_parcelas?: number
+          parcela?: boolean
+          product_id: string
+          taxa?: number
+        }
+        Update: {
+          forma?: string
+          max_parcelas?: number
+          parcela?: boolean
+          product_id?: string
+          taxa?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_product_formas_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "cm_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_products: {
+        Row: {
+          active: boolean
+          created_at: string
+          empresa_id: string
+          fidelidade: boolean
+          gera_caixa: boolean
+          id: string
+          name: string
+          periodo_min: number
+          sort: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          empresa_id: string
+          fidelidade?: boolean
+          gera_caixa?: boolean
+          id?: string
+          name: string
+          periodo_min?: number
+          sort?: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          empresa_id?: string
+          fidelidade?: boolean
+          gera_caixa?: boolean
+          id?: string
+          name?: string
+          periodo_min?: number
+          sort?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_products_empresa_id_fkey"
+            columns: ["empresa_id"]
+            isOneToOne: false
+            referencedRelation: "cm_empresas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_sale_payments: {
+        Row: {
+          bruto: number
+          first_date: string
+          forma: string
+          id: string
+          liquido: number
+          paid_at: string | null
+          parcelas: number
+          sale_id: string
+          sort: number
+        }
+        Insert: {
+          bruto: number
+          first_date: string
+          forma: string
+          id?: string
+          liquido: number
+          paid_at?: string | null
+          parcelas?: number
+          sale_id: string
+          sort?: number
+        }
+        Update: {
+          bruto?: number
+          first_date?: string
+          forma?: string
+          id?: string
+          liquido?: number
+          paid_at?: string | null
+          parcelas?: number
+          sale_id?: string
+          sort?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_sale_payments_sale_id_fkey"
+            columns: ["sale_id"]
+            isOneToOne: false
+            referencedRelation: "cm_sales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_sales: {
+        Row: {
+          cancel_reason: string | null
+          cancelavel_ate: string | null
+          cancelled_at: string | null
+          cancelled_by: string | null
+          cliente: string
+          cobranca_id: string
+          comprovante: string | null
+          confirmed_by: string | null
+          created_at: string
+          created_by: string | null
+          first_payment_at: string | null
+          id: string
+          month: string
+          prazo_dias: number | null
+          product_id: string
+          registered_at: string
+          seller_id: string
+          status: string
+          validada_em: string | null
+        }
+        Insert: {
+          cancel_reason?: string | null
+          cancelavel_ate?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
+          cliente: string
+          cobranca_id: string
+          comprovante?: string | null
+          confirmed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          first_payment_at?: string | null
+          id?: string
+          month: string
+          prazo_dias?: number | null
+          product_id: string
+          registered_at?: string
+          seller_id: string
+          status?: string
+          validada_em?: string | null
+        }
+        Update: {
+          cancel_reason?: string | null
+          cancelavel_ate?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
+          cliente?: string
+          cobranca_id?: string
+          comprovante?: string | null
+          confirmed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          first_payment_at?: string | null
+          id?: string
+          month?: string
+          prazo_dias?: number | null
+          product_id?: string
+          registered_at?: string
+          seller_id?: string
+          status?: string
+          validada_em?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_sales_cobranca_id_fkey"
+            columns: ["cobranca_id"]
+            isOneToOne: false
+            referencedRelation: "cm_cobrancas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cm_sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "cm_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cm_sales_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "cm_sellers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_seller_log: {
+        Row: {
+          at: string
+          by_user: string | null
+          field: string
+          id: number
+          new_value: string | null
+          old_value: string | null
+          seller_id: string
+        }
+        Insert: {
+          at?: string
+          by_user?: string | null
+          field: string
+          id?: never
+          new_value?: string | null
+          old_value?: string | null
+          seller_id: string
+        }
+        Update: {
+          at?: string
+          by_user?: string | null
+          field?: string
+          id?: never
+          new_value?: string | null
+          old_value?: string | null
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_seller_log_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "cm_sellers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_sellers: {
+        Row: {
+          active: boolean
+          created_at: string
+          effective_from: string
+          end_date: string | null
+          id: string
+          name: string
+          salary_override: number | null
+          seniority_id: string
+          start_date: string
+          user_id: string | null
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          effective_from: string
+          end_date?: string | null
+          id?: string
+          name: string
+          salary_override?: number | null
+          seniority_id: string
+          start_date: string
+          user_id?: string | null
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          effective_from?: string
+          end_date?: string | null
+          id?: string
+          name?: string
+          salary_override?: number | null
+          seniority_id?: string
+          start_date?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cm_sellers_seniority_id_fkey"
+            columns: ["seniority_id"]
+            isOneToOne: false
+            referencedRelation: "cm_seniorities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cm_seniorities: {
+        Row: {
+          id: string
+          name: string
+          salary: number
+          sort: number
+          weight: number
+        }
+        Insert: {
+          id?: string
+          name: string
+          salary: number
+          sort?: number
+          weight: number
+        }
+        Update: {
+          id?: string
+          name?: string
+          salary?: number
+          sort?: number
+          weight?: number
+        }
+        Relationships: []
+      }
+      cm_unlock_requests: {
+        Row: {
+          decided_at: string | null
+          decided_by: string | null
+          id: string
+          month: string
+          requested_at: string
+          requested_by: string
+          status: string
+        }
+        Insert: {
+          decided_at?: string | null
+          decided_by?: string | null
+          id?: string
+          month: string
+          requested_at?: string
+          requested_by: string
+          status?: string
+        }
+        Update: {
+          decided_at?: string | null
+          decided_by?: string | null
+          id?: string
+          month?: string
+          requested_at?: string
+          requested_by?: string
+          status?: string
         }
         Relationships: []
       }
@@ -519,6 +1056,7 @@ export type Database = {
           birth_date: string | null
           created_at: string
           email: string
+          emergency_address: Json
           emergency_name: string | null
           emergency_phone: string | null
           emergency_relation: string | null
@@ -544,6 +1082,7 @@ export type Database = {
           birth_date?: string | null
           created_at?: string
           email: string
+          emergency_address?: Json
           emergency_name?: string | null
           emergency_phone?: string | null
           emergency_relation?: string | null
@@ -569,6 +1108,7 @@ export type Database = {
           birth_date?: string | null
           created_at?: string
           email?: string
+          emergency_address?: Json
           emergency_name?: string | null
           emergency_phone?: string | null
           emergency_relation?: string | null
@@ -754,7 +1294,15 @@ export type Database = {
           total_value?: number
           validated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "sales_seller_id_profiles_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -791,6 +1339,155 @@ export type Database = {
         Returns: string
       }
       close_month: { Args: { p_month: string }; Returns: undefined }
+      cm_apply_sugestao: {
+        Args: { p_month: string; p_scenario: string }
+        Returns: undefined
+      }
+      cm_assert_manager: { Args: never; Returns: undefined }
+      cm_assert_sale_access: { Args: { p_seller: string }; Returns: undefined }
+      cm_calc: { Args: { p_month?: string; p_seller?: string }; Returns: Json }
+      cm_calc_sim: {
+        Args: { p_month?: string; p_qtds?: Json; p_seller?: string }
+        Returns: Json
+      }
+      cm_calendar: { Args: { m: string }; Returns: Json }
+      cm_cancel_preview: { Args: { p_sale: string }; Returns: Json }
+      cm_cancel_sale: {
+        Args: { p_decision?: string; p_motivo?: string; p_sale: string }
+        Returns: undefined
+      }
+      cm_cob_label: {
+        Args: { gera_caixa: boolean; kind: string }
+        Returns: string
+      }
+      cm_cobranca_liquido: {
+        Args: { p_cob: string; p_valores?: Json }
+        Returns: number
+      }
+      cm_confirm_payment: {
+        Args: { p_date?: string; p_payment?: string; p_sale: string }
+        Returns: undefined
+      }
+      cm_decide_unlock: {
+        Args: { p_approve: boolean; p_month: string }
+        Returns: undefined
+      }
+      cm_distribution: { Args: { m: string; p_rules?: Json }; Returns: Json }
+      cm_draft_save: {
+        Args: { p_months: string[]; p_rules: Json }
+        Returns: undefined
+      }
+      cm_eff_start: {
+        Args: { s: Database["public"]["Tables"]["cm_sellers"]["Row"] }
+        Returns: string
+      }
+      cm_fator: {
+        Args: { att: number; gat: number; rules: Json }
+        Returns: number
+      }
+      cm_forma_label: {
+        Args: { f: string; parcelado: boolean }
+        Returns: string
+      }
+      cm_freeze_at: { Args: { m: string }; Returns: string }
+      cm_gatilho: {
+        Args: {
+          m: string
+          rules: Json
+          s: Database["public"]["Tables"]["cm_sellers"]["Row"]
+        }
+        Returns: number
+      }
+      cm_house_label: { Args: { n: number }; Returns: string }
+      cm_house_month: {
+        Args: {
+          m: string
+          s: Database["public"]["Tables"]["cm_sellers"]["Row"]
+        }
+        Returns: number
+      }
+      cm_hub: { Args: never; Returns: Json }
+      cm_lock_day: { Args: { m: string }; Returns: string }
+      cm_locked: { Args: { m: string }; Returns: boolean }
+      cm_me: { Args: never; Returns: Json }
+      cm_month_status: { Args: { m: string }; Returns: string }
+      cm_months_list: { Args: never; Returns: Json }
+      cm_my_seller: { Args: never; Returns: string }
+      cm_now: { Args: never; Returns: string }
+      cm_pay_taxa: {
+        Args: { p_forma: string; p_product: string }
+        Returns: number
+      }
+      cm_payment_points: { Args: { p_pay: string }; Returns: Json }
+      cm_preview: { Args: { p_month: string; p_rules: Json }; Returns: Json }
+      cm_product_get: { Args: { p_id: string }; Returns: Json }
+      cm_product_preview: { Args: { p: Json }; Returns: Json }
+      cm_product_save: { Args: { p: Json }; Returns: string }
+      cm_products_list: { Args: never; Returns: Json }
+      cm_products_options: { Args: never; Returns: Json }
+      cm_projecao: {
+        Args: { p_months: string[]; p_rules?: Json }
+        Returns: Json
+      }
+      cm_publish: { Args: { p_months: string[] }; Returns: undefined }
+      cm_ref_taxa: { Args: { p_product: string }; Returns: number }
+      cm_refresh_sale: { Args: { p_sale: string }; Returns: undefined }
+      cm_register_sale: { Args: { p: Json }; Returns: string }
+      cm_request_unlock: { Args: { p_month: string }; Returns: undefined }
+      cm_role: { Args: never; Returns: string }
+      cm_rules: { Args: { m: string }; Returns: Json }
+      cm_rules_get: { Args: { p_months: string[] }; Returns: Json }
+      cm_run_daily: { Args: never; Returns: undefined }
+      cm_sale_get: { Args: { p_sale: string }; Returns: Json }
+      cm_sale_points: { Args: { p_sale: string }; Returns: Json }
+      cm_sale_preview: { Args: { p: Json }; Returns: Json }
+      cm_sales_list: {
+        Args: { p_month?: string; p_seller?: string; p_todos?: boolean }
+        Returns: Json
+      }
+      cm_save_payments: {
+        Args: {
+          p_data: string
+          p_formas: Json
+          p_pago: boolean
+          p_product: string
+          p_sale: string
+        }
+        Returns: undefined
+      }
+      cm_seed_rules: { Args: never; Returns: Json }
+      cm_seller_get: { Args: { p_id: string }; Returns: Json }
+      cm_seller_history: { Args: { p_id: string }; Returns: Json }
+      cm_seller_in_month: {
+        Args: {
+          m: string
+          s: Database["public"]["Tables"]["cm_sellers"]["Row"]
+        }
+        Returns: boolean
+      }
+      cm_seller_month: { Args: { m: string; p_seller: string }; Returns: Json }
+      cm_seller_salary: {
+        Args: {
+          rules: Json
+          s: Database["public"]["Tables"]["cm_sellers"]["Row"]
+        }
+        Returns: number
+      }
+      cm_seller_save: { Args: { p: Json }; Returns: string }
+      cm_seller_weight: {
+        Args: {
+          rules: Json
+          s: Database["public"]["Tables"]["cm_sellers"]["Row"]
+        }
+        Returns: number
+      }
+      cm_sellers_list: { Args: { p_active?: boolean }; Returns: Json }
+      cm_sugestao: { Args: { p_month?: string }; Returns: Json }
+      cm_sugestao_pct: { Args: { m: string }; Returns: Json }
+      cm_team_confirmed: { Args: { m: string }; Returns: number }
+      cm_today: { Args: never; Returns: string }
+      cm_update_sale: { Args: { p: Json; p_sale: string }; Returns: undefined }
+      cm_validate_rules: { Args: { r: Json }; Returns: undefined }
       compute_month: {
         Args: { m: string }
         Returns: {
@@ -1007,6 +1704,10 @@ export type Database = {
           p_role: Database["public"]["Enums"]["app_role"]
           p_user: string
         }
+        Returns: undefined
+      }
+      sync_company_from_manager: {
+        Args: { p_user: string }
         Returns: undefined
       }
       team_average: {

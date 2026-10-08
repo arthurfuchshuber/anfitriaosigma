@@ -261,3 +261,21 @@ describe("RPCs das telas (fumaça: nenhuma pode falhar)", () => {
     await as(null);
   });
 });
+
+describe("produto sem caixa (sem formas de pagamento obrigatórias)", () => {
+  it("salva sem formas, aparece com formas padrão nas opções e aceita venda", async () => {
+    await today("2026-12-10"); await as(GESTOR);
+    const emp = (await one(`select id from public.cm_empresas where linha = 'Gestão'`)).id;
+    const pid = await j(`public.cm_product_save('${JSON.stringify({ empresa_id: emp, name: "Teste Sem Caixa", gera_caixa: false, cobrancas: [{ kind: "integral", bruto: 500 }], formas: [] })}'::jsonb)`);
+    const opt = (await j(`public.cm_products_options()`)).products.find((x: any) => x.id === pid);
+    expect(opt.formas.map((f: any) => f.forma)).toEqual(["cartao", "pix", "boleto"]);
+    await expect(j(`public.cm_product_save('${JSON.stringify({ empresa_id: emp, name: "Com Caixa", gera_caixa: true, cobrancas: [{ kind: "integral", bruto: 500 }], formas: [] })}'::jsonb)`)).rejects.toThrow(/forma de pagamento/);
+    const cob = (await one(`select id from public.cm_cobrancas where product_id='${pid}'`)).id;
+    await as(U_ANA);
+    const sid = await reg(U_ANA, saleOf(ANA, pid, cob, "Cliente Sem Caixa", 500, "2026-12-10"));
+    expect(sid).toBeTruthy();
+    await as(null);
+    await db.exec(`delete from public.cm_sales where id='${sid}'; delete from public.cm_cobrancas where product_id='${pid}'; delete from public.cm_products where id='${pid}'`);
+    await today("2026-10-10");
+  });
+});
