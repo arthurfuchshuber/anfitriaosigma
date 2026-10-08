@@ -21,5 +21,10 @@ Antes de criar ou alterar qualquer tela, componente ou estilo, leia **`PLAYBOOK-
 8. **Arquivos do Lovable Cloud** (`drizzle/`, `src/integrations/supabase/types.ts` e `previewAuthStorage.ts`, `supabase/config.toml`, `supabase/functions/_shared/cron-auth.ts`) são gerados pela plataforma: não editar à mão. `client.ts` deve continuar exportando `supabase` (sem tipos), `supabaseConfigured` e `COMPANY_DOMAIN`.
 
 
-## Área Comercial (em reconstrução)
-Todas as telas antigas do Comercial foram removidas; `/intranet/metas` mostra só "Em construção". As regras de negócio do sistema anterior estão preservadas em `docs/regras-comercial-anterior/REGRAS.md` (e no banco, em `supabase/migrations`). Não redesenhar nada antes de discutir essas regras com o usuário e validar mockups.
+## Área Comercial (Comercial v2)
+Sistema reconstruído a partir de mockups aprovados em 08/10/2026. **Fonte de regras: `docs/comercial/DECISOES.md` (decisões 1–44)**; as regras do sistema antigo seguem em `docs/regras-comercial-anterior/REGRAS.md` só como histórico.
+- **Banco** (`supabase/migrations/20261008000001_comercial_v2.sql`): todas as regras vivem em funções `cm_*` (security definer); tabelas `cm_*` só com policy de SELECT, escrita somente via RPC. Relógio de teste via GUCs `cm.today`/`cm.now`. Testes SQL: `src/test/comercial.sql.test.ts` (PGlite).
+- **Front**: `src/pages/comercial/*` (telas), `src/components/comercial/*` (kit visual `kit.tsx` + views), `src/lib/comercial/*` (RPC `cm()` e formatadores). O front só exibe o que as RPCs devolvem; não reimplementar regra no cliente.
+- Rotas em `src/pages/intranet/intranetRoutes.tsx` (`/intranet/metas` = Hub). Telas de gestão exigem `RequireManager`; o vendedor usa Vendas, Registrar Venda e Calculadora.
+- Fidelidade visual: mobile-first (coluna de até 430px), estilos transliterados dos mockups. Não alterar layout sem validar com o usuário.
+- Ainda sem desenho (não criar sem pedir): Fechamento do Mês, Painéis, detalhe de venda Validada/Cancelada.

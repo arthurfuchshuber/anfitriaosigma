@@ -23,7 +23,7 @@ export const RequireArea = ({ area, children }: { area: string; children: ReactN
 
 export const RequireManager = ({ children }: { children: ReactNode }) => {
   const { isManager } = useAuth();
-  if (!isManager) return <Navigate to="/intranet/metas" replace />;
+  if (!isManager) return <Navigate to="/intranet/vendas" replace />;
   return <>{children}</>;
 };
 
