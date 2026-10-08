@@ -50,6 +50,13 @@
       "when": 1791483267891,
       "tag": "0006_comercial_v2",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791494200725,
+      "tag": "0007_produto_sem_caixa",
+      "breakpoints": true
     }
   ]
 }
