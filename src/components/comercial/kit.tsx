@@ -132,16 +132,19 @@ const NAVI: { n: NavKey; p: ReactNode | null; to: string }[] = [
   { n: "Perfil", to: "/intranet/cadastro", p: <><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6" /></> },
   { n: "Menu", to: "/intranet/metas", p: null },
 ];
+const useNavItems = () => {
+  const { isManager } = useAuth();
+  return NAVI.map((i) => ({ ...i, to: i.n === "Menu" && !isManager ? "/intranet/areas" : i.to }));
+};
 export const BottomNav = ({ active }: { active: NavKey }) => {
   const go = useNavigate();
-  const { isManager } = useAuth();
+  const items = useNavItems();
   return (
-    <div style={{ position: "sticky", bottom: 0, height: 78, boxSizing: "border-box", borderTop: `1px solid ${LINE}`, background: "#fff", display: "flex", justifyContent: "space-between", padding: "12px 12px 0", zIndex: 5 }}>
-      {NAVI.map(({ n, p, to }) => {
+    <div className="cm-bnav" style={{ position: "sticky", bottom: 0, height: 78, boxSizing: "border-box", borderTop: `1px solid ${LINE}`, background: "#fff", justifyContent: "space-between", padding: "12px 12px 0", zIndex: 5 }}>
+      {items.map(({ n, p, to }) => {
         const on = n === active; const c = on ? PU : "#6b6379";
-        const dest = n === "Menu" && !isManager ? "/intranet/areas" : to;
         return (
-          <div key={n} onClick={() => go(dest)} style={{ width: 64, display: "flex", flexDirection: "column", alignItems: "center", gap: 5, fontSize: 11, color: c, fontWeight: on ? 600 : undefined, cursor: "pointer" }}>
+          <div key={n} onClick={() => go(to)} style={{ width: 64, display: "flex", flexDirection: "column", alignItems: "center", gap: 5, fontSize: 11, color: c, fontWeight: on ? 600 : undefined, cursor: "pointer" }}>
             {p === null
               ? <svg width="22" height="22" viewBox="0 0 24 24" fill={c}><circle cx="5" cy="12" r="1.3" /><circle cx="12" cy="12" r="1.3" /><circle cx="19" cy="12" r="1.3" /></svg>
               : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{p}</svg>}
@@ -152,6 +155,45 @@ export const BottomNav = ({ active }: { active: NavKey }) => {
     </div>
   );
 };
+/** Navegação lateral (telas largas): mesmos 5 destinos da barra inferior. */
+const Sidebar = ({ active }: { active: NavKey }) => {
+  const go = useNavigate();
+  const items = useNavItems();
+  return (
+    <aside className="cm-side">
+      <div style={{ fontFamily: SORA, fontWeight: 600, fontSize: 17, letterSpacing: "-0.03em", padding: "8px 12px 20px" }}>Comercial</div>
+      {items.map(({ n, p, to }) => {
+        const on = n === active; const c = on ? PU : "#6b6379";
+        return (
+          <div key={n} onClick={() => go(to)} style={{ height: 44, borderRadius: 14, padding: "0 12px", display: "flex", alignItems: "center", gap: 12, fontSize: 14, color: c, fontWeight: on ? 600 : undefined, background: on ? "#f2ecf8" : undefined, cursor: "pointer", marginBottom: 4 }}>
+            {p === null
+              ? <svg width="22" height="22" viewBox="0 0 24 24" fill={c}><circle cx="5" cy="12" r="1.3" /><circle cx="12" cy="12" r="1.3" /><circle cx="19" cy="12" r="1.3" /></svg>
+              : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{p}</svg>}
+            {n}
+          </div>
+        );
+      })}
+    </aside>
+  );
+};
+/** Responsivo: <768 coluna mobile (430px) · ≥768 coluna larga (720px) · ≥1100 menu lateral + coluna (860px). */
+const RESP_CSS = `
+.cm-root{display:flex;justify-content:center;min-height:100vh;background:#eee9f4}
+.cm-col{width:100%;max-width:430px;min-height:100vh;background:#fff;display:flex;flex-direction:column;box-sizing:border-box}
+.cm-side{display:none}
+.cm-bnav{display:flex}
+@media(min-width:768px){
+  .cm-col{max-width:720px}
+  .cm-in{padding-left:48px!important;padding-right:48px!important}
+  .cm-col [style*="14px 24px 20px"]{padding-left:48px!important;padding-right:48px!important}
+}
+@media(min-width:1100px){
+  .cm-root{gap:24px;padding:0 24px}
+  .cm-side{display:block;width:216px;flex:none;position:sticky;top:0;align-self:flex-start;height:100vh;box-sizing:border-box;padding:20px 12px;background:#fff;border-left:1px solid ${LINE2};border-right:1px solid ${LINE2}}
+  .cm-bnav{display:none}
+  .cm-col{max-width:860px}
+}
+`;
 
 /** Moldura: coluna mobile (até 430px), cabeçalho 60px com voltar, corpo, rodapé e navegação inferior. */
 export const Shell = ({ title, back, nav = "Menu", pad = "4px 24px 0", children, footer, noNav, right }: {
@@ -160,14 +202,16 @@ export const Shell = ({ title, back, nav = "Menu", pad = "4px 24px 0", children,
   const go = useNavigate(); const loc = useLocation();
   const doBack = () => (typeof back === "function" ? back() : back ? go(back) : window.history.length > 1 && loc.key !== "default" ? go(-1) : go("/intranet/metas"));
   return (
-    <div style={{ background: "#eee9f4", minHeight: "100vh", display: "flex", justifyContent: "center", fontFamily: "'DM Sans',system-ui,sans-serif", color: "#120a1c" }}>
+    <div className="cm-root" style={{ fontFamily: "'DM Sans',system-ui,sans-serif", color: "#120a1c" }}>
+      <style>{RESP_CSS}</style>
       <Helmet><title>{typeof title === "string" ? `${title} — Comercial` : "Comercial"}</title><meta name="robots" content="noindex,nofollow" /></Helmet>
-      <div style={{ width: "100%", maxWidth: 430, minHeight: "100vh", background: "#fff", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
+      {!noNav && <Sidebar active={nav} />}
+      <div className="cm-col">
         <div style={{ height: 60, flex: "none", boxSizing: "border-box", padding: "0 20px", display: "flex", alignItems: "center", gap: 10, borderBottom: `1px solid ${LINE2}` }}>
           {back !== null && <div onClick={doBack} style={{ width: 40, height: 40, borderRadius: 20, background: "#f2ecf8", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}><IBack /></div>}
           <div style={{ fontFamily: SORA, fontWeight: 600, fontSize: 17, letterSpacing: "-0.03em", flex: 1 }}>{title}</div>{right}
         </div>
-        <div style={{ flex: 1, padding: pad }}>{children}</div>
+        <div style={{ flex: 1 }}><div className="cm-in" style={{ padding: pad }}>{children}</div></div>
         {footer}
         {!noNav && <BottomNav active={nav} />}
       </div>
