@@ -45,7 +45,15 @@ export type Database = {
           status?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "area_access_user_id_profiles_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       audit_log: {
         Row: {
@@ -519,6 +527,7 @@ export type Database = {
           birth_date: string | null
           created_at: string
           email: string
+          emergency_address: Json
           emergency_name: string | null
           emergency_phone: string | null
           emergency_relation: string | null
@@ -544,6 +553,7 @@ export type Database = {
           birth_date?: string | null
           created_at?: string
           email: string
+          emergency_address?: Json
           emergency_name?: string | null
           emergency_phone?: string | null
           emergency_relation?: string | null
@@ -569,6 +579,7 @@ export type Database = {
           birth_date?: string | null
           created_at?: string
           email?: string
+          emergency_address?: Json
           emergency_name?: string | null
           emergency_phone?: string | null
           emergency_relation?: string | null
@@ -754,7 +765,15 @@ export type Database = {
           total_value?: number
           validated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "sales_seller_id_profiles_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -1007,6 +1026,10 @@ export type Database = {
           p_role: Database["public"]["Enums"]["app_role"]
           p_user: string
         }
+        Returns: undefined
+      }
+      sync_company_from_manager: {
+        Args: { p_user: string }
         Returns: undefined
       }
       team_average: {
