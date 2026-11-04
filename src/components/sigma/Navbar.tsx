@@ -44,8 +44,8 @@ export const Navbar = () => {
   }, []);
 
   const dark = scrolled || open;
-  const textColor = dark ? "#E9E1F4" : "#5F5870";
-  const brandColor = dark ? "#fff" : "#120A1C";
+  const textColor = dark ? "#f4e1f1" : "#695f67";
+  const brandColor = dark ? "#fff" : "#1c0a19";
 
   const header = css(
     `position:fixed;left:50%;transform:translateX(-50%);z-index:50;
@@ -54,10 +54,10 @@ export const Navbar = () => {
      display:flex;align-items:center;justify-content:space-between;gap:16px;
      padding:${isMobile ? "8px 8px 8px 14px" : dark ? "8px 10px 8px 18px" : "10px 12px 10px 20px"};
      border-radius:${isMobile ? 15 : 999}px;
-     background:${dark ? "rgba(18,10,28,.82)" : "rgba(255,255,255,.72)"};
+     background:${dark ? "rgba(28,10,25,.82)" : "rgba(255,255,255,.72)"};
      backdrop-filter:blur(${dark ? 24 : 20}px) saturate(1.5);-webkit-backdrop-filter:blur(${dark ? 24 : 20}px) saturate(1.5);
-     border:1px solid ${dark ? "rgba(255,255,255,.12)" : "rgba(67,17,113,.10)"};
-     box-shadow:${dark ? "0 24px 60px -24px rgba(18,10,28,.7)" : "0 20px 50px -28px rgba(67,17,113,.35)"};
+     border:1px solid ${dark ? "rgba(255,255,255,.12)" : "rgba(215,0,166,.10)"};
+     box-shadow:${dark ? "0 24px 60px -24px rgba(28,10,25,.7)" : "0 20px 50px -28px rgba(215,0,166,.35)"};
      transition:all .45s cubic-bezier(.2,.8,.2,1)`.replace(/\s*\n\s*/g, ""),
   );
 
@@ -83,22 +83,22 @@ export const Navbar = () => {
               <button
                 type="button"
                 style={css(
-                  `display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:transparent;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14.5px;color:${dark ? "#fff" : "#120A1C"};border:1px solid ${dark ? "rgba(255,255,255,.28)" : "#D2C5E3"};transition:all .3s`,
+                  `display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:transparent;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14.5px;color:${dark ? "#fff" : "#1c0a19"};border:1px solid ${dark ? "rgba(255,255,255,.28)" : "#e3c5dd"};transition:all .3s`,
                 )}
               >
                 Entrar <ChevronDown size={15} />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" sideOffset={10} style={css("min-width:210px;border-radius:16px;padding:6px;background:#fff;border:1px solid #E7E2EE;box-shadow:0 24px 50px -20px rgba(67,17,113,.45);font-family:'DM Sans',sans-serif")}>
+            <DropdownMenuContent align="end" sideOffset={10} style={css("min-width:210px;border-radius:16px;padding:6px;background:#fff;border:1px solid #eee2ec;box-shadow:0 24px 50px -20px rgba(215,0,166,.45);font-family:'DM Sans',sans-serif")}>
               {ACCESS.map((a) => (
                 <DropdownMenuItem
                   key={a.label}
                   disabled={!a.enabled}
                   onSelect={() => a.enabled && a.href && navigate(a.href)}
-                  style={css("display:flex;justify-content:space-between;gap:16px;padding:11px 12px;border-radius:10px;font-size:14.5px;font-weight:600;color:#120A1C")}
+                  style={css("display:flex;justify-content:space-between;gap:16px;padding:11px 12px;border-radius:10px;font-size:14.5px;font-weight:600;color:#1c0a19")}
                 >
                   {a.label}
-                  {!a.enabled && <span style={css("font-size:11px;font-weight:600;color:#8C849C")}>em breve</span>}
+                  {!a.enabled && <span style={css("font-size:11px;font-weight:600;color:#958b93")}>em breve</span>}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -108,7 +108,7 @@ export const Navbar = () => {
             className="btn"
             href="#cta"
             style={css(
-              `background:${dark ? "#fff" : "#d700a6"};color:${dark ? "#431171" : "#fff"};font-weight:600;font-size:14.5px;padding:11px 22px;border-radius:999px;transition:background .3s,color .3s`,
+              `background:${dark ? "#fff" : "#d700b0"};color:${dark ? "#d700a6" : "#fff"};font-weight:600;font-size:14.5px;padding:11px 22px;border-radius:999px;transition:background .3s,color .3s`,
             )}
           >
             Análise gratuita
@@ -129,10 +129,10 @@ export const Navbar = () => {
 
       {open && (
         <div
-          style={css("position:fixed;z-index:49;left:12px;right:12px;top:72px;background:rgba(18,10,28,.97);backdrop-filter:blur(20px);border-radius:15px;padding:14px 18px 18px;color:#fff;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)")}
+          style={css("position:fixed;z-index:49;left:12px;right:12px;top:72px;background:rgba(28,10,25,.97);backdrop-filter:blur(20px);border-radius:15px;padding:14px 18px 18px;color:#fff;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)")}
         >
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={css("display:block;padding:13px 4px;font-weight:500;font-size:17px;color:#E9E1F4;border-bottom:1px solid rgba(255,255,255,.07)")}>
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={css("display:block;padding:13px 4px;font-weight:500;font-size:17px;color:#f4e1f1;border-bottom:1px solid rgba(255,255,255,.07)")}>
               {l.label}
             </a>
           ))}
@@ -150,7 +150,7 @@ export const Navbar = () => {
               ) : (
                 <span
                   key={a.label}
-                  style={css(`display:flex;justify-content:space-between;align-items:center;padding:12px 4px;font-weight:600;font-size:16px;color:#8F7FA6;${i < ACCESS.length - 1 ? "border-bottom:1px solid rgba(255,255,255,.07)" : ""}`)}
+                  style={css(`display:flex;justify-content:space-between;align-items:center;padding:12px 4px;font-weight:600;font-size:16px;color:#9a8b97;${i < ACCESS.length - 1 ? "border-bottom:1px solid rgba(255,255,255,.07)" : ""}`)}
                 >
                   {a.label}
                   <span style={css("font-size:11px;font-weight:600")}>em breve</span>
@@ -158,7 +158,7 @@ export const Navbar = () => {
               ),
             )}
           </div>
-          <a className="btn" href="#cta" onClick={() => setOpen(false)} style={css("margin-top:12px;display:flex;align-items:center;justify-content:center;background:#fff;color:#431171;font-weight:600;font-size:16.5px;height:54px;border-radius:999px")}>
+          <a className="btn" href="#cta" onClick={() => setOpen(false)} style={css("margin-top:12px;display:flex;align-items:center;justify-content:center;background:#fff;color:#d700a6;font-weight:600;font-size:16.5px;height:54px;border-radius:999px")}>
             Análise gratuita
           </a>
         </div>

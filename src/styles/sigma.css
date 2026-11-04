@@ -7,7 +7,7 @@
 .sg {
   position: relative;
   background: #fff;
-  color: #120a1c;
+  color: #1c0a19;
   font-family: "DM Sans", system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.6;
@@ -22,17 +22,12 @@
 .sg .hd, .sg h1.hd, .sg h2.hd { font-family: "Sora", "DM Sans", sans-serif; }
 
 .sg .gt {
-  background: linear-gradient(115deg, #431171 0%, #7b4dab 55%, #a68cc4 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-}
-.sg .gtb {
-  background: linear-gradient(90deg, #eb5429 0%, #e43e3c 25%, #de3063 50%, #8f1f67 75%, #47156c 100%);
+  background: linear-gradient(115deg, #d700a6 0%, #ab4d9a 55%, #c48cba 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
 .sg .gtl {
-  background: linear-gradient(115deg, #fff 0%, #d9cce8 60%, #a68cc4 100%);
+  background: linear-gradient(115deg,#d700b0 0%,#8c0072 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
@@ -41,17 +36,17 @@
 }
 .sg .lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 40px 80px -36px rgba(67,17,113,.4);
-  border-color: #d2c5e3;
+  box-shadow: 0 40px 80px -36px rgba(215,0,166,.4);
+  border-color: #e3c5dd;
 }
 .sg .navlink { transition: color .25s; position: relative; }
-.sg .navlink:hover { color: #431171; }
+.sg .navlink:hover { color: #d700a6; }
 .sg .navlink-dark:hover { color: #fff; }
 .sg .btn {
   position: relative; overflow: hidden;
   transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
 }
-.sg .btn:hover { transform: translateY(-2px); box-shadow: 0 22px 44px -18px rgba(67,17,113,.6); }
+.sg .btn:hover { transform: translateY(-2px); box-shadow: 0 22px 44px -18px rgba(215,0,166,.6); }
 .sg .btn::after {
   content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
@@ -59,7 +54,7 @@
 }
 .sg .btn:hover::after { left: 130%; }
 .sg .rail::-webkit-scrollbar { height: 8px; }
-.sg .rail::-webkit-scrollbar-thumb { background: #d2c5e3; border-radius: 8px; }
+.sg .rail::-webkit-scrollbar-thumb { background: #e3c5dd; border-radius: 8px; }
 
 /* Navbar */
 .sg-nav-links { display: flex; }
