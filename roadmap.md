@@ -1,3 +1,3 @@
-- [ ] Remapear cores da landing desktop/mobile e theme-color sem alterar estrutura.
-- [ ] Aplicar faixas leves, textos, superfícies, cards e rodapés do mockup aprovado.
-- [ ] Conferir cores restantes e aparência/interações desktop/mobile; listar arquivos alterados.
+- [x] Remapear cores da landing desktop/mobile e theme-color sem alterar estrutura.
+- [x] Aplicar faixas leves, textos, superfícies, cards e rodapés do mockup aprovado.
+- [x] Conferir cores restantes e aparência/interações desktop/mobile; listar arquivos alterados.
