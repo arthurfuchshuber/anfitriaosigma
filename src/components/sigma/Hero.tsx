@@ -33,12 +33,12 @@ export const Hero = () => {
 <span style={css('width:8px;height:8px;border-radius:50%;background:#FF4700;animation:sgPulse 2s infinite')}></span>
 Gestão de hospedagem de alta performance
 </div>
-<h1 className="hd" style={css('margin: 30px auto 0; max-width: 1176px; text-align: center; font-weight: 600; font-size: clamp(40px, 6vw, 80px); line-height: 1.02; letter-spacing: -0.045em; animation: sgFadeUp .9s .1s both')}>Seu imóvel gerenciado como <span className="gt">um ativo de alta receita.</span></h1>
+<h1 className="hd" style={css('margin: 30px auto 0; max-width: 1176px; text-align: center; font-weight: 600; font-size: clamp(40px, 6vw, 80px); line-height: 1.02; letter-spacing: -0.045em; animation: sgFadeUp .9s .1s both')}>Seu imóvel gerenciado como <span className="gtb">um ativo de alta receita.</span></h1>
 <p style={css('margin:30px auto 0;max-width:640px;font-size:20px;line-height:1.65;color:#5F5870;animation:sgFadeUp .9s .2s both')}>
 Operação completa, padrão hoteleiro e precificação dinâmica. Você acompanha os resultados — nós cuidamos de tudo em Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.
 </p>
 <div style={css('margin-top:40px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;animation:sgFadeUp .9s .3s both')}>
-<a className="btn" href="#cta" style={css('display:inline-flex;align-items:center;gap:12px;background:#431171;color:#fff;font-weight:600;font-size:17px;padding:17px 18px 17px 30px;border-radius:999px;box-shadow:0 18px 40px -18px rgba(67,17,113,.7)')}>
+<a className="btn" href="#cta" style={css('display:inline-flex;align-items:center;gap:12px;background:#d700a6;color:#fff;font-weight:600;font-size:17px;padding:17px 18px 17px 30px;border-radius:999px;box-shadow:0 18px 40px -18px rgba(215,0,166,.55)')}>
 Quero maximizar meu imóvel
 <span style={css('width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center')}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
 </a>

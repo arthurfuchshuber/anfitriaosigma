@@ -26,6 +26,11 @@
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
+.sg .gtb {
+  background: linear-gradient(90deg, #eb5429 0%, #e43e3c 25%, #de3063 50%, #8f1f67 75%, #47156c 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
 .sg .gtl {
   background: linear-gradient(115deg, #fff 0%, #d9cce8 60%, #a68cc4 100%);
   -webkit-background-clip: text; background-clip: text;
