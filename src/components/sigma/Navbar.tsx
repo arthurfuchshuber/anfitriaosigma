@@ -108,7 +108,7 @@ export const Navbar = () => {
             className="btn"
             href="#cta"
             style={css(
-              `background:${dark ? "#fff" : "#431171"};color:${dark ? "#431171" : "#fff"};font-weight:600;font-size:14.5px;padding:11px 22px;border-radius:999px;transition:background .3s,color .3s`,
+              `background:${dark ? "#fff" : "#d700a6"};color:${dark ? "#431171" : "#fff"};font-weight:600;font-size:14.5px;padding:11px 22px;border-radius:999px;transition:background .3s,color .3s`,
             )}
           >
             Análise gratuita
