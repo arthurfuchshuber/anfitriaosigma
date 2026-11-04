@@ -17,7 +17,7 @@ export const Hero = () => {
 <div style={css('position:absolute;inset:0;background-image:linear-gradient(rgba(215,0,166,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(215,0,166,.07) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 60% 55% at 50% 30%,#000 10%,transparent 78%);mask-image:radial-gradient(ellipse 60% 55% at 50% 30%,#000 10%,transparent 78%)')}></div>
 <div style={css(`position:absolute;inset:0;background:${spot};pointer-events:none`)}></div>
 <div style={css('position:absolute;left:50%;top:-220px;margin-left:-480px;width:960px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(160,56,141,.22),transparent 68%);filter:blur(30px);animation:sgAurora 16s ease-in-out infinite')}></div>
-<div style={css('position:absolute;right:-160px;top:180px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(215,0,176,.10),transparent 68%);filter:blur(40px);animation:sgAurora 22s ease-in-out infinite reverse')}></div>
+<div style={css('position:absolute;right:-160px;top:180px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(215,0,166,.10),transparent 68%);filter:blur(40px);animation:sgAurora 22s ease-in-out infinite reverse')}></div>
 
 <div style={css('position:absolute;left:0;right:0;bottom:0;height:440px;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 40%,#000 68%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 40%,#000 68%,transparent 100%)')}>
 <svg width="100%" height="100%" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice">
@@ -38,7 +38,7 @@ Gestão de hospedagem de alta performance
 Operação completa, padrão hoteleiro e precificação dinâmica. Você acompanha os resultados — nós cuidamos de tudo em Foz do Iguaçu, Gramado, Balneário Camboriú e Curitiba.
 </p>
 <div style={css('margin-top:40px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;animation:sgFadeUp .9s .3s both')}>
-<a className="btn" href="#cta" style={css('display:inline-flex;align-items:center;gap:12px;background:#d700b0;color:#fff;font-weight:600;font-size:17px;padding:17px 18px 17px 30px;border-radius:999px;box-shadow:0 18px 40px -18px rgba(215,0,176,.55)')}>
+<a className="btn" href="#cta" style={css('display:inline-flex;align-items:center;gap:12px;background:#d700a6;color:#fff;font-weight:600;font-size:17px;padding:17px 18px 17px 30px;border-radius:999px;box-shadow:0 18px 40px -18px rgba(215,0,166,.55)')}>
 Quero maximizar meu imóvel
 <span style={css('width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center')}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
 </a>

@@ -10,7 +10,7 @@ export const Care = () => {
 <div style={css('font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#d700a6')}>Segurança e cuidado constante</div>
 <h2 className="hd" style={css('margin: 16px 0 0; font-weight: 600; font-size: clamp(32px,3.8vw,52px); line-height: 1.06; letter-spacing: -0.045em; width: 493px')}>Seu imóvel sob <span className="gt">cuidado constante.</span></h2>
 <p style={css('margin: 20px 0 0; color: #695f67; font-size: 18px; max-width: 460px; width: 486px')}>Tratamos cada imóvel como patrimônio: limpeza, manutenção e reposição sempre em dia, para que ele esteja impecável a cada hóspede e valorizado a cada mês.</p>
-<div style={css('margin-top:34px;background:#d700b0;color:#fff;border-radius:26px;padding:26px 28px;position:relative;overflow:hidden')}>
+<div style={css('margin-top:34px;background:#d700a6;color:#fff;border-radius:26px;padding:26px 28px;position:relative;overflow:hidden')}>
 <div style={css('position:absolute;right:-60px;top:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(196,140,186,.4),transparent 70%)')}></div>
 <div style={css('position:relative;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#d6b1cf')}>Rotina do seu imóvel</div>
 <div style={css('position:relative;margin-top:16px;display:flex;flex-direction:column')}>

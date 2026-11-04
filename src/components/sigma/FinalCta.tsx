@@ -6,7 +6,7 @@ export const FinalCta = () => {
   const { form, setForm, set, sugg, show, setShow, error, onAddress, pick, submit } = useLeadForm();
   return (
 <>
-<section id="cta" style={css('position:relative;overflow:hidden;color:#2b0a25;background:linear-gradient(180deg,#ffffff 0.0%,#ffffff 2.2%,#ffffff 4.4%,#fffeff 6.5%,#fffcfe 8.7%,#fef9fd 10.9%,#fef6fd 13.1%,#fdf2fb 15.3%,#fcedf9 17.5%,#fbe8f7 19.6%,#fbe2f6 21.8%,#fadcf4 24.0%,#f9d6f3 26.2%,#f8d0f1 28.4%,#f7cbef 30.5%,#f6c6ed 32.7%,#f5c1eb 34.9%,#f5beeb 37.1%,#f5bbea 39.3%,#f4bae9 41.5%,#f4b8e9 43.6%,#f4b8e9 45.8%,#f4b8e9 48.0%,#f4b8e9 100%);padding:clamp(300px,38vw,560px) 24px 120px')}>
+<section id="cta" style={css('position:relative;overflow:hidden;color:#2b0a25;background:linear-gradient(180deg,#ffffff 0.0%,#ffffff 2.2%,#ffffff 4.4%,#fffeff 6.5%,#fffcfe 8.7%,#fef9fd 10.9%,#fef6fd 13.1%,#fdf2fb 15.3%,#fcedf9 17.5%,#fbe8f7 19.6%,#fbe2f6 21.8%,#fadcf4 24.0%,#f9d6f3 26.2%,#f8d0f1 28.4%,#f7cbef 30.5%,#f6c6ed 32.7%,#f5c1eb 34.9%,#f5beeb 37.1%,#f5bbea 39.3%,#f4bae9 41.5%,#f4b8e6 43.6%,#f4b8e6 45.8%,#f4b8e6 48.0%,#f4b8e6 100%);padding:clamp(300px,38vw,560px) 24px 120px')}>
 <div style={css('max-width:1240px;margin:0 auto;padding:0 64px;display:flex;flex-wrap:wrap;gap:56px;align-items:center')}>
 <div style={css('position:absolute;left:-140px;bottom:-220px;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(160,56,141,.85),transparent 68%);animation:sgAurora 18s ease-in-out infinite')}></div>
 <div style={css('position:absolute;right:-80px;top:22%;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(196,140,186,.3),transparent 68%);animation:sgAurora 24s ease-in-out infinite reverse')}></div>

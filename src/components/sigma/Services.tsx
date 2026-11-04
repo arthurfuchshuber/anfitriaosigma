@@ -16,7 +16,7 @@ export const Services = () => {
 <h2 className="hd" style={css('margin:18px 0 0;font-weight:600;font-size:clamp(34px,4.4vw,62px);line-height:1.04;letter-spacing:-0.045em')}>Escolha como você quer <span className="gt">aumentar sua receita.</span></h2>
 </div>
 <div style={css('margin-top:80px;display:flex;flex-wrap:wrap;gap:28px;align-items:stretch')}>
-<div className="lift" style={css('flex:1 1 480px;min-width:0;background:linear-gradient(150deg,#e84bcb,#d700b0);color:#fff;border-radius:36px;padding:56px;position:relative;overflow:hidden;border:1px solid #d700b0;display:flex;flex-direction:column')}>
+<div className="lift" style={css('flex:1 1 480px;min-width:0;background:linear-gradient(150deg,#e84bc2,#d700a6);color:#fff;border-radius:36px;padding:56px;position:relative;overflow:hidden;border:1px solid #d700a6;display:flex;flex-direction:column')}>
 <div style={css('position:absolute;right:-80px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(196,140,186,.4),transparent 70%)')}></div>
 <div style={css('position:relative;font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#d6b1cf')}>01 · Gestão completa</div>
 <h3 className="hd" style={css('position:relative;margin:20px 0 0;font-weight:600;font-size:38px;line-height:1.1;letter-spacing:-0.045em')}>Você não faz nada. <span className="gtl">Nós fazemos tudo.</span></h3>

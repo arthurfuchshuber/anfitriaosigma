@@ -45,7 +45,7 @@ const Index = () => {
     <Helmet>
       <title>Anfitrião Sigma — Maximize a receita do seu imóvel</title>
       <meta name="description" content="Gestão completa e mentoria premium para anfitriões. Transforme seu imóvel em uma máquina de renda com a Anfitrião Sigma. Análise gratuita." />
-      <meta name="theme-color" content="#d700b0" />
+      <meta name="theme-color" content="#d700a6" />
       <link rel="canonical" href="https://anfitriaosigma.com.br/" />
       <meta property="og:url" content="https://anfitriaosigma.com.br/" />
     </Helmet>

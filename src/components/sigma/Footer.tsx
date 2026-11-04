@@ -4,7 +4,7 @@ import { css } from "@/lib/css";
 export const Footer = () => {
   return (
 <>
-<footer style={css('background:linear-gradient(180deg,#f9d0f1 0%,#ee8fdd 100%);color:#6b2a5e;padding:0 32px 56px;position:relative')}>
+<footer style={css('background:linear-gradient(180deg,#f9d0ee 0%,#ee8fd6 100%);color:#6b2a5e;padding:0 32px 56px;position:relative')}>
 <div style={css('max-width:1240px;margin:0 auto;padding-top:56px;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between')}>
 <div style={css('flex:1 1 320px;max-width:400px')}>
 <div style={css('display:flex;align-items:center;gap:12px')}><SigmaLogo size={38} variant="tile" /><span className="hd" style={css('font-weight:600;font-size:18px;color:#2b0a25;letter-spacing:-0.02em')}>Anfitrião Sigma</span></div>

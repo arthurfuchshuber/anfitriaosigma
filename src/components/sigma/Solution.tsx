@@ -10,7 +10,7 @@ export const Solution = () => {
 <p style={css('margin:20px 0 0;color:#695f67;font-size:19px')}>Mais rentável, mais seguro e livre de esforço.</p>
 </div>
 <div style={css('margin-top:56px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px')}>
-<div className="lift" style={css('grid-column:span 7;min-width:0;background:linear-gradient(150deg,#e84bcb,#d700b0);color:#fff;border-radius:32px;padding:42px;position:relative;overflow:hidden;border:1px solid #d700b0')}>
+<div className="lift" style={css('grid-column:span 7;min-width:0;background:linear-gradient(150deg,#e84bc2,#d700a6);color:#fff;border-radius:32px;padding:42px;position:relative;overflow:hidden;border:1px solid #d700a6')}>
 <div style={css('position:absolute;right:-80px;top:-100px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(196,140,186,.4),transparent 70%)')}></div>
 <span style={css('position:relative;width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center')}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17l6-6 4 4 8-9"></path><path d="M15 6h6v6"></path></svg></span>
 <div className="hd" style={css('position: relative; margin-top: 24px; font-weight: 600; font-size: 28px; line-height: 1.12; letter-spacing: -0.04em; max-width: 430px; width: 566px')}>Otimização inteligente de preço</div>
