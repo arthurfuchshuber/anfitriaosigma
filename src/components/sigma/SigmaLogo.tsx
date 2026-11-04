@@ -8,7 +8,7 @@ export const SigmaLogo = ({ size = 36, radius = 10, variant = "color" }: { size?
     <span
       role="img"
       aria-label="Anfitrião Sigma"
-      style={{ width: size, height: size, borderRadius: radius, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(145deg,#5A2394,#2A0A47)" }}
+      style={{ width: size, height: size, borderRadius: radius, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(145deg,#d700a6,#470a3c)" }}
     >
       <img src="/logo-sigma-mark.png" alt="" width={size * 0.42} style={{ width: size * 0.42, height: "auto", display: "block" }} />
     </span>

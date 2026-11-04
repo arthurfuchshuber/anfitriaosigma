@@ -45,7 +45,7 @@ const Index = () => {
     <Helmet>
       <title>Anfitrião Sigma — Maximize a receita do seu imóvel</title>
       <meta name="description" content="Gestão completa e mentoria premium para anfitriões. Transforme seu imóvel em uma máquina de renda com a Anfitrião Sigma. Análise gratuita." />
-      <meta name="theme-color" content="#ffffff" />
+      <meta name="theme-color" content="#d700a6" />
       <link rel="canonical" href="https://anfitriaosigma.com.br/" />
       <meta property="og:url" content="https://anfitriaosigma.com.br/" />
     </Helmet>
@@ -102,7 +102,7 @@ const Index = () => {
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
       className="btn"
-      style={css("position:fixed;bottom:20px;right:20px;z-index:50;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#5A2394,#2A0A47);color:#fff;box-shadow:0 18px 40px -14px rgba(67,17,113,.7)")}
+      style={css("position:fixed;bottom:20px;right:20px;z-index:50;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#d700a6,#470a3c);color:#fff;box-shadow:0 18px 40px -14px rgba(215,0,166,.7)")}
     >
       <MessageCircle size={24} />
     </a>
