@@ -20,6 +20,8 @@ Antes de criar ou alterar qualquer tela, componente ou estilo, leia **`PLAYBOOK-
 7. **Menu da Intranet** (`IntranetTop`): precisa caber na barra em qualquer largura (flex 1 + `min-width:0`), rolar sem cortar item nas bordas (padding 6px + `scroll-padding`) e não pode deixar faixa preta no topo (`.ix{display:flow-root}` + fundo branco).
 8. **Arquivos do Lovable Cloud** (`drizzle/`, `src/integrations/supabase/types.ts` e `previewAuthStorage.ts`, `supabase/config.toml`, `supabase/functions/_shared/cron-auth.ts`) são gerados pela plataforma: não editar à mão. `client.ts` deve continuar exportando `supabase` (sem tipos), `supabaseConfigured` e `COMPANY_DOMAIN`.
 
+9. **Funções SECURITY DEFINER**: toda função nova `security definer` nasce SEM acesso (`revoke execute ... from public, anon, authenticated`) e só ganha `grant execute ... to authenticated` se for uma RPC chamada pelo front ou helper de policy RLS — e então precisa validar quem chama (`is_manager()`, `cm_assert_*`, `auth.uid()`). Helper interno nunca fica exposto em `/rest/v1/rpc` (já vazou CPF/PIX e permitiu regravar pagamentos de outros). Atualize a lista em `supabase/migrations/20261126000002_revoga_rpcs_internas.sql` e o teste "auditoria v11". `anon` não tem nenhum privilégio no schema `public`.
+
 
 ## Área Comercial (Comercial v2)
 Sistema reconstruído a partir de mockups aprovados em 08/10/2026. **Fonte de regras: `docs/comercial/DECISOES.md` (decisões 1–44)**; as regras do sistema antigo seguem em `docs/regras-comercial-anterior/REGRAS.md` só como histórico.

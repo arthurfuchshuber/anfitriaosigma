@@ -12,6 +12,8 @@ const GESTOR = "00000000-0000-0000-0000-0000000000a2";
 const U_ANA = "00000000-0000-0000-0000-0000000000b2";
 const U_BRUNO = "00000000-0000-0000-0000-0000000000b3";
 
+let SEEDJ = "";
+const SEED = () => `'${SEEDJ}'::jsonb`;
 const as = async (uid: string | null) => {
   await db.exec(`reset role; select set_config('request.jwt.claim.sub', '${uid ?? ""}', false);`);
   if (uid) await db.exec(`set role authenticated`);
@@ -43,6 +45,9 @@ beforeAll(async () => {
   await db.exec(`grant select, insert, update, delete on all tables in schema public to authenticated;
                  revoke insert, update, delete on public.cm_sellers, public.cm_sales, public.cm_sale_payments, public.cm_months, public.cm_freezes from authenticated;
                  grant execute on all functions in schema public to authenticated;`);
+  // reaplica a revogação das funções internas (o grant em massa acima é só conveniência do ambiente de teste)
+  await db.exec(readFileSync(`${DIR}/20261126000002_revoga_rpcs_internas.sql`, "utf8"));
+  SEEDJ = JSON.stringify((await db.query<{ r: unknown }>(`select public.cm_seed_rules() as r`)).rows[0].r);
   const ins = (id: string, email: string) => db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${id}', '${email}', '{"full_name":"${email.split("@")[0]}"}')`);
   await ins(ADMIN, "sigma@anfitriaosigma.com.br"); await ins(GESTOR, "gestor@anfitriaosigma.com.br");
   await ins(U_ANA, "ana@anfitriaosigma.com.br"); await ins(U_BRUNO, "bruno@anfitriaosigma.com.br");
@@ -226,22 +231,23 @@ describe("permissões", () => {
   });
   it("só o admin autoriza alterar mês travado", async () => {
     await today("2026-10-10"); await as(GESTOR);
-    expect((await j(`public.cm_locked('2026-10-01')`))).toBe(true);
-    await expect(db.exec(`select public.cm_draft_save(array['2026-10-01'::date], public.cm_seed_rules())`)).rejects.toThrow(/travado/);
+    await as(null); const lockedAntes = await j(`public.cm_locked('2026-10-01')`); await as(GESTOR);
+    expect(lockedAntes).toBe(true);
+    await expect(db.exec(`select public.cm_draft_save(array['2026-10-01'::date], ${SEED()})`)).rejects.toThrow(/travado/);
     await db.exec(`select public.cm_request_unlock('2026-10-01')`);
     await expect(db.exec(`select public.cm_decide_unlock('2026-10-01', true)`)).rejects.toThrow(/só o admin/);
     await as(ADMIN); await db.exec(`select public.cm_decide_unlock('2026-10-01', true)`);
-    expect(await j(`public.cm_locked('2026-10-01')`)).toBe(false);
     await as(null);
+    expect(await j(`public.cm_locked('2026-10-01')`)).toBe(false);
   });
   it("Novembro (travado só a partir de 28/10) aceita rascunho e publicação; pesos precisam fechar 100%", async () => {
     await today("2026-10-10"); await as(GESTOR);
-    await db.exec(`select public.cm_draft_save(array['2026-11-01'::date,'2026-12-01'::date], jsonb_set(public.cm_seed_rules(), '{pct}', '1.05'))`);
+    await db.exec(`select public.cm_draft_save(array['2026-11-01'::date,'2026-12-01'::date], jsonb_set(${SEED()}, '{pct}', '1.05'))`);
     await db.exec(`select public.cm_publish(array['2026-11-01'::date,'2026-12-01'::date])`);
+    await expect(db.exec(`select public.cm_draft_save(array['2027-01-01'::date], jsonb_set(${SEED()}, '{pesos}', '{}')); select public.cm_publish(array['2027-01-01'::date])`)).rejects.toThrow(/100/);
+    await as(null);
     expect((await j(`public.cm_distribution('2026-12-01')`)).objetivo).toBe(31500);
     expect(await j(`public.cm_month_status('2026-11-01')`)).toBe("programado");
-    await expect(db.exec(`select public.cm_draft_save(array['2027-01-01'::date], jsonb_set(public.cm_seed_rules(), '{pesos}', '{}')); select public.cm_publish(array['2027-01-01'::date])`)).rejects.toThrow(/100/);
-    await as(null);
   });
 });
 
@@ -256,6 +262,23 @@ describe("auditoria v11", () => {
     const r = await j(`public.cm_calc('2026-10-01', null)`);
     await as(null);
     expect(r).toMatchObject({ sem_vendedor: true, sellers: [], months: [] });
+  });
+  it("usuário comum não executa funções internas SECURITY DEFINER (PII, pagamentos, salários)", async () => {
+    await as(U_ANA);
+    await expect(db.query(`select public.field_value('u_cpf', '${GESTOR}')`)).rejects.toThrow(/permission denied/);
+    await expect(db.query(`select public.cm_seller_month('${BRUNO}', '2026-10-01')`)).rejects.toThrow(/permission denied/);
+    await expect(db.query(`select public.cm_distribution('2026-10-01')`)).rejects.toThrow(/permission denied/);
+    await expect(db.query(`select public.cm_save_payments(gen_random_uuid(), gen_random_uuid(), '[]'::jsonb, false, null)`)).rejects.toThrow(/permission denied/);
+    // e o que o front usa continua funcionando
+    expect((await j(`public.cm_calc('2026-10-01', null)`)).seller.id).toBe(ANA);
+    await as(null);
+  });
+  it("nenhuma função SECURITY DEFINER fora da lista fica executável por authenticated", async () => {
+    const r = await q<{ proname: string }>(`select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+      where n.nspname='public' and p.prosecdef and has_function_privilege('authenticated', p.oid, 'EXECUTE')
+        and (p.proname like 'cm\\_%' or p.proname in ('field_value','user_doc_type','sync_company_from_manager'))
+        and p.proname not in ('cm_my_seller') and p.proname !~ '^cm_(apply_sugestao|calc|calc_sim|cancel_preview|cancel_sale|confirm_payment|decide_unlock|draft_save|hub|me|months_list|preview|product_get|product_preview|product_save|products_list|products_options|projecao|publish|register_sale|request_unlock|rules_get|sale_get|sale_preview|sales_list|seller_get|seller_history|seller_save|sellers_list|sugestao|update_sale|validate_rules)$'`);
+    expect(r.map((x) => x.proname)).toEqual([]);
   });
   it("mês congelado usa fator e bônus congelados, não as regras vivas", async () => {
     await today("2026-11-05"); await as(null);
