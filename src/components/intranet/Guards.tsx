@@ -28,12 +28,20 @@ export const RequireManager = ({ children }: { children: ReactNode }) => {
 };
 
 /** BLOQUEIO: enquanto houver campo obrigatório vazio (colaborador; empresa para gestor/admin), só a tela de Cadastro abre.
- *  A lista de pendências vem do banco (my_pending). Se a consulta falhar (ex.: migration ainda não aplicada), NÃO bloqueia. */
+ *  A lista de pendências vem do banco (my_pending). Se a consulta falhar, NÃO libera as telas: mostra erro com "Tentar novamente" (fail-closed). */
 export const RequireComplete = ({ children }: { children: ReactNode }) => {
   const { profile } = useAuth();
   const loc = useLocation();
   const q = useQuery({ queryKey: [PENDING_KEY, profile?.id], queryFn: getMyPending, enabled: !!profile?.id, retry: false, refetchOnMount: "always" });
   if (!profile) return <>{children}</>;
+  if (q.isError) {
+    return (
+      <div style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, padding: 24, textAlign: "center", color: "#1a1020" }}>
+        <div style={{ fontWeight: 600 }}>Não foi possível verificar seu cadastro.</div>
+        <button onClick={() => q.refetch()} style={{ height: 44, padding: "0 20px", borderRadius: 14, border: 0, background: "#431171", color: "#fff", fontWeight: 600, cursor: "pointer" }}>Tentar novamente</button>
+      </div>
+    );
+  }
   const has = (q.data?.user?.length ?? 0) > 0 || (q.data?.company?.length ?? 0) > 0;
   if (q.isLoading || (q.isFetching && has)) return <GateLoading />;
   if (has) return <Navigate to="/intranet/cadastro" replace state={{ from: loc.pathname }} />;

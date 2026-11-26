@@ -245,6 +245,26 @@ describe("permissões", () => {
   });
 });
 
+describe("auditoria v11", () => {
+  it("anon não tem nenhum privilégio no schema public", async () => {
+    expect(await q(`select 1 from information_schema.role_table_grants where grantee='anon' and table_schema='public'`)).toHaveLength(0);
+    expect(await j(`has_function_privilege('anon', 'public.cm_calc(date,uuid)', 'EXECUTE')`)).toBe(false);
+  });
+  it("cm_calc sem vendedor devolve o contrato completo (sellers/months vazios)", async () => {
+    await db.exec(`reset role; insert into auth.users (id, email) values ('99999999-9999-4999-8999-999999999999', 'semvendedor@anfitriaosigma.com.br') on conflict do nothing`);
+    await as("99999999-9999-4999-8999-999999999999");
+    const r = await j(`public.cm_calc('2026-10-01', null)`);
+    await as(null);
+    expect(r).toMatchObject({ sem_vendedor: true, sellers: [], months: [] });
+  });
+  it("mês congelado usa fator e bônus congelados, não as regras vivas", async () => {
+    await today("2026-11-05"); await as(null);
+    await db.exec(`reset role; update public.cm_freezes set rows = (select jsonb_agg(j || jsonb_build_object('fator', 0.5, 'bonus', 123.45)) from jsonb_array_elements(rows) j) where month='2026-10-01'`);
+    const r = await j(`public.cm_seller_month('${ANA}', '2026-10-01')`);
+    expect(r).toMatchObject({ fator: 0.5, bonus: 123.45, congelado: true });
+  });
+});
+
 describe("RPCs das telas (fumaça: nenhuma pode falhar)", () => {
   it("gestor consegue abrir todas as telas de gestão e a lista/detalhe de vendas", async () => {
     await today("2026-10-10"); await as(GESTOR);

@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await supabase.auth.signOut();
       return;
     }
+    try {
     const [p, r, a] = await Promise.all([
       supabase.from("profiles").select("*").eq("id", s.user.id).maybeSingle(),
       supabase.from("user_roles").select("role").eq("user_id", s.user.id).maybeSingle(),
@@ -52,6 +53,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setProfile((p.data as Profile) ?? null);
     setRole(((r.data as { role: Role } | null)?.role ?? "closer") as Role);
     setAccess(Object.fromEntries(((a.data ?? []) as { area: string; status: AccessStatus }[]).map((x) => [x.area, x.status])));
+    } catch (e) {
+      console.error("Auth: falha ao carregar perfil/acessos", e);
+      setProfile(null); setAccess({}); setRole("closer");
+    }
   }, []);
 
   useEffect(() => {
@@ -61,12 +66,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!alive) return;
       setSession(data.session);
       await load(data.session);
-      setLoading(false);
-    });
+    }).catch((e) => console.error("Auth: falha ao carregar sessão", e)).finally(() => { if (alive) setLoading(false); });
     const { data: sub } = supabase.auth.onAuthStateChange((evt, s) => {
       setSession(s);
       // fora do callback para não travar o cliente do Supabase
-      setTimeout(() => { load(s).finally(() => setLoading(false)); if (evt === "SIGNED_IN" && s) logEvent("login", "Entrou na Intranet"); }, 0);
+      setTimeout(() => { load(s).catch((e) => console.error("Auth: falha ao carregar perfil", e)).finally(() => setLoading(false)); if (evt === "SIGNED_IN" && s) logEvent("login", "Entrou na Intranet"); }, 0);
     });
     return () => { alive = false; sub.subscription.unsubscribe(); };
   }, [load]);

@@ -101,7 +101,7 @@ export const Editor = ({ etapa, months, rg, list }: { etapa: Etapa; months: stri
         ? <DefinirLock label={mesLabel(months[0])} />
         : <Definir opts={opts} value={months} onChange={async (ms) => { try { await saveDraft(); nav(`/intranet/parametros/${etapa}?meses=${ms.join(",")}`); } catch (x) { setFail((x as Error).message); } }} />}
       <StepTabs active={step} onGo={(s) => go(SLUG[s])} />
-      {ro && <TravadoStrip desde={`${rg.locked_since.slice(8, 10)}/${rg.locked_since.slice(5, 7)}`} />}
+      {ro && <TravadoStrip desde={rg.locked_since ? `${rg.locked_since.slice(8, 10)}/${rg.locked_since.slice(5, 7)}` : "—"} />}
       {prev.error && <ErrorBox e={prev.error} />}
       {etapa === "meta" && <MetaStep {...p} prev={prev.data} />}
       {etapa === "pesos" && <PesosStep {...p} prev={prev.data} rg={rg} onVariacoes={() => nav("/intranet/produtos")} />}

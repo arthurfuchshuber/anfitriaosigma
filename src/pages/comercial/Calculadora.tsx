@@ -9,7 +9,7 @@ import { useDebounced } from "@/components/comercial/gestao/hooks";
 type Prod = { cobranca_id: string; produto: string; tipo: string; peso: number; pts: number; qtd: number };
 type Calc = {
   month: string; status: string; sem_vendedor?: boolean;
-  months: { month: string; status: string }[]; sellers: { id: string; name: string }[]; seller: { id: string; name: string };
+  months?: { month: string; status: string }[]; sellers?: { id: string; name: string }[]; seller: { id: string; name: string };
   meta: number; realizado: number; falta: number; gatilho: number; gatilho_pts: number; salario: number; peso_total: number; produtos: Prod[];
 };
 type Sim = { pontos: number; atingimento: number; fator: number; bonus: number; abaixo_gatilho: boolean };
@@ -144,7 +144,8 @@ export default function Calculadora() {
   const meses = d?.months ?? [];
   const idx = d ? meses.findIndex((m) => m.month === d.month) : -1;
   const step = (n: number) => { const m = meses[idx + n]; if (m) setMonth(m.month); };
-  const canPick = (d?.sellers.length ?? 0) > 1;
+  const sellers = d?.sellers ?? [];
+  const canPick = !d?.sem_vendedor && sellers.length > 1;
 
   return (
     <Shell title="Calculadora de Meta" back="/intranet/metas" nav="Calculadora" pad="16px 24px 0">
@@ -165,7 +166,7 @@ export default function Calculadora() {
             <div onClick={canPick ? () => { setQ(""); setPop(pop === "vend" ? null : "vend"); } : undefined} style={{ height: 52, display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 14, cursor: canPick ? "pointer" : "default" }}>
               Vendedor
               <span style={{ display: "flex", alignItems: "center", gap: 4, color: PU, fontWeight: 600 }}>
-                {d.sem_vendedor ? "—" : d.seller.name}
+                {d.sem_vendedor || !d.seller ? "—" : d.seller.name}
                 {canPick && (pop === "vend" ? <Icon d={<path d="M6 15l6-6 6 6" />} /> : <IChev />)}
               </span>
             </div>
@@ -189,7 +190,7 @@ export default function Calculadora() {
             {pop === "vend" && (
               <Pop top={122} onClose={close}>
                 <SearchBox value={q} onChange={setQ} placeholder="Buscar vendedor" />
-                {d.sellers.filter((s) => s.name.toLowerCase().includes(q.toLowerCase())).map((s) => {
+                {sellers.filter((s) => s.name.toLowerCase().includes(q.toLowerCase())).map((s) => {
                   const on = s.id === d.seller?.id;
                   return (
                     <PopItem key={s.id} on={on} onClick={() => { setSeller(s.id); close(); }} avatar={<Ini name={s.name} sz={30} fs={11} one={false} on={on} />}>{s.name}</PopItem>
@@ -199,8 +200,8 @@ export default function Calculadora() {
             )}
           </div>
 
-          {d.sem_vendedor
-            ? <Empty>Nenhum vendedor ativo neste mês.</Empty>
+          {d.sem_vendedor || !d.seller
+            ? <Empty>Seu usuário ainda não está cadastrado como vendedor neste mês.</Empty>
             : <Simulacao key={`${d.month}|${d.seller.id}`} d={d} dim={calc.isPlaceholderData} />}
           <div style={{ height: 28 }} />
         </>
