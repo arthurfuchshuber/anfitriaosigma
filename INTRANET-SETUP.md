@@ -36,7 +36,7 @@ A tela "Fazer login com o Google" é controlada pelo Google Cloud: **APIs e serv
 `index.html` usa `og:image` apontando para um serviço de screenshot (microlink) que fotografa o topo de `https://anfitriaosigma.com.br` na hora. Sem imagem anexada. Observações: LinkedIn/WhatsApp guardam cache do preview (o LinkedIn por até ~7 dias — use o *Post Inspector* para forçar a atualização); o plano gratuito do microlink tem limite de requisições — se o tráfego crescer, assine um plano ou hospede uma função de screenshot própria.
 
 ## 5. Fluxo de acesso
-Login Google → **/intranet/areas** → ao clicar numa área sem permissão: *Solicitar acesso* → e-mail ao gestor → **Aguardando aprovação** → gestor aprova/nega em *Metas e Vendas → Pessoas → Solicitações* → a área libera. Para ativar outra área ("em breve"), mude `active: true` em `src/lib/intranet/areas.ts` e crie a rota.
+Login Google → **/intranet/areas** → ao clicar numa área sem permissão: *Solicitar acesso* → e-mail ao gestor → **Aguardando aprovação** → gestor aprova/nega em *Comercial → Menu → Equipe → Pessoas → Solicitações* (`/intranet/pessoas`; o link do e-mail abre direto essa aba) → a área libera. Para ativar outra área ("em breve"), mude `active: true` em `src/lib/intranet/areas.ts` e crie a rota.
 
 ## 6. Premissas assumidas (confira)
 - Venda validada = `data da venda + 10 dias`. Atingimento e bônus usam só vendas **validadas**; pendentes aparecem separadas.
@@ -63,3 +63,9 @@ Login Google → **/intranet/areas** → ao clicar numa área sem permissão: *S
 - **Representante legal (PJ)**: CPF, RG, e-mail pessoal, celular e endereço completo — com a chavezinha **"Usar os dados da empresa"** (copia telefone/e-mail e endereço da etapa da empresa).
 - **Contato de referência**: nome completo, relacionamento, telefone e endereço (todos obrigatórios, exceto complemento).
 - **Inscrição municipal** não é obrigatória (PF/PJ nem empresa).
+
+
+## Pessoas (papéis e acessos)
+- `/intranet/pessoas` (gestor/admin): abas **Solicitações** (Aprovar / Negar com motivo opcional) e **Equipe** (papel, acesso, vínculo de vendedor). `/intranet/pessoas/:id` = ficha: trocar **Papel** (só admin), **Revogar Acesso**, **Cadastrar como Vendedor** (abre o cadastro com a pessoa já selecionada).
+- Backend: `cm_people_list`, `decide_access`, `set_role` (migration `20261126000004_pessoas.sql`).
+- O e-mail `sigma@anfitriaosigma.com.br` é o admin principal: não perde o papel de admin nem pode ter o acesso negado (RPC + trigger `guard_main_admin`). Também não é possível negar o próprio acesso nem remover o último admin.

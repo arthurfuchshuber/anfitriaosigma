@@ -10,7 +10,7 @@ declare
   allow text[] := array[
     -- Comercial v2 (chamadas pelo front)
     'cm_apply_sugestao','cm_calc','cm_calc_sim','cm_cancel_preview','cm_cancel_sale','cm_confirm_payment','cm_decide_unlock','cm_draft_save',
-    'cm_hub','cm_me','cm_months_list','cm_preview','cm_product_get','cm_product_preview','cm_product_save','cm_products_list','cm_products_options',
+    'cm_hub','cm_me','cm_people_list','cm_months_list','cm_preview','cm_product_get','cm_product_preview','cm_product_save','cm_products_list','cm_products_options',
     'cm_projecao','cm_publish','cm_register_sale','cm_request_unlock','cm_rules_get','cm_sale_get','cm_sale_preview','cm_sales_list','cm_seller_get',
     'cm_seller_history','cm_seller_save','cm_sellers_list','cm_sugestao','cm_update_sale','cm_validate_rules',
     -- usadas em policies RLS / auto-consulta

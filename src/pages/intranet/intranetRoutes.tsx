@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ReactNode } from "react";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate, Route, useLocation } from "react-router-dom";
 import { RequireArea, RequireAuth, RequireComplete, RequireManager } from "@/components/intranet/Guards";
 import { GateLoading } from "@/components/intranet/ui";
 
@@ -16,11 +16,16 @@ const Produtos = L(() => import("../comercial/Produtos"));
 const ProdutoForm = L(() => import("../comercial/ProdutoForm"));
 const Vendedores = L(() => import("../comercial/Vendedores"));
 const Vendedor = L(() => import("../comercial/Vendedor"));
+const Pessoas = L(() => import("../comercial/Pessoas"));
+const Pessoa = L(() => import("../comercial/Pessoa"));
 const Vendas = L(() => import("../comercial/Vendas"));
 const RegistrarVenda = L(() => import("../comercial/RegistrarVenda"));
 const Venda = L(() => import("../comercial/Venda"));
 const CancelarVenda = L(() => import("../comercial/CancelarVenda"));
 const Painel = L(() => import("../comercial/Painel"));
+
+/** Link antigo do e-mail de pedido de acesso (/intranet/metas/pessoas?tab=...). */
+const PessoasLegado = () => <Navigate to={`/intranet/pessoas${useLocation().search}`} replace />;
 
 const S = ({ children }: { children: ReactNode }) => <Suspense fallback={<GateLoading />}>{children}</Suspense>;
 
@@ -46,6 +51,9 @@ export const intranetRoutes = (
     <Route path="/intranet/vendas/:id" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><Venda /></RequireArea></RequireComplete></RequireAuth></S>} />
     <Route path="/intranet/vendas/:id/cancelar" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><CancelarVenda /></RequireArea></RequireComplete></RequireAuth></S>} />
     <Route path="/intranet/painel" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><Painel /></RequireArea></RequireComplete></RequireAuth></S>} />
+    <Route path="/intranet/pessoas" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><RequireManager><Pessoas /></RequireManager></RequireArea></RequireComplete></RequireAuth></S>} />
+    <Route path="/intranet/pessoas/:id" element={<S><RequireAuth><RequireComplete><RequireArea area="metas"><RequireManager><Pessoa /></RequireManager></RequireArea></RequireComplete></RequireAuth></S>} />
+    <Route path="/intranet/metas/pessoas" element={<PessoasLegado />} />
     <Route path="/intranet/metas/*" element={<Navigate to="/intranet/metas" replace />} />
   </>
 );

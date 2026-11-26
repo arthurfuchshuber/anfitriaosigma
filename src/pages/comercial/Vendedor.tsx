@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cm } from "@/lib/comercial/api";
 import { dmy, mesLabel, n0, pc, rs, rsc } from "@/lib/comercial/format";
@@ -69,8 +69,10 @@ const Form = ({ data, id }: { data: Ficha; id: string | null }) => {
   const go = useNavigate();
   const qc = useQueryClient();
   const s = data.seller;
-  const [name, setName] = useState(s?.name ?? "");
-  const [userId, setUserId] = useState<string | null>(s?.user_id ?? null);
+  const [sp] = useSearchParams();
+  const pre = s ? undefined : data.users.find((u) => u.id === sp.get("user")); // vindo de Pessoas → Cadastrar como Vendedor
+  const [name, setName] = useState(s?.name ?? pre?.name ?? "");
+  const [userId, setUserId] = useState<string | null>(s?.user_id ?? pre?.id ?? null);
   const [sen, setSen] = useState(s?.seniority_id ?? "");
   const [start, setStart] = useState(s?.start_date ?? "");
   const [end, setEnd] = useState(s?.end_date ?? "");

@@ -7,7 +7,7 @@ import { Cap11 as Cap, FootBox } from "@/components/comercial/gestao/shared";
 import { useMe } from "@/components/comercial/gestao/hooks";
 
 type Etapa = { key: "produtos" | "vendedores" | "sugestao" | "parametros" | "meses"; label: string; value: string; done: boolean; state: "done" | "now" | "todo" };
-type HubData = { proximo: string; concluidas: number; total: number; etapas: Etapa[]; atual: string; vendas_pts: number };
+type HubData = { proximo: string; concluidas: number; total: number; etapas: Etapa[]; atual: string; vendas_pts: number; pessoas_pend?: number };
 
 const ROTA: Record<Etapa["key"], string> = {
   produtos: "/intranet/produtos",
@@ -27,6 +27,7 @@ export default function Hub() {
   if (me.data && !isMgr) return <Navigate to="/intranet/vendas" replace />;
   const d = hub.data;
   const now = d?.etapas.find((e) => e.state === "now");
+  const pend = d?.pessoas_pend ?? 0;
 
   return (
     <Shell title="Comercial" back={null} nav="Menu" pad="4px 24px 0"
@@ -69,6 +70,15 @@ export default function Hub() {
             <div onClick={() => go("/intranet/vendas")} style={{ height: 64, display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
               <div style={{ flex: 1, fontSize: 14 }}>Vendas</div>
               <span style={{ color: PU, fontWeight: 600, fontSize: 14 }}>{n0(d.vendas_pts)} pts</span>
+              <IChevG />
+            </div>
+          </div>
+
+          <Sec t="Equipe" />
+          <div style={{ ...BOX_S, padding: "0 16px" }}>
+            <div onClick={() => go(pend > 0 ? "/intranet/pessoas" : "/intranet/pessoas?tab=equipe")} style={{ height: 64, display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
+              <div style={{ flex: 1, fontSize: 14 }}>Pessoas</div>
+              <span style={{ color: PU, fontWeight: 600, fontSize: 14 }}>{pend > 0 ? `${pend} ${pend === 1 ? "Pendente" : "Pendentes"}` : "Em Dia"}</span>
               <IChevG />
             </div>
           </div>

@@ -277,7 +277,7 @@ describe("auditoria v11", () => {
     const r = await q<{ proname: string }>(`select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace
       where n.nspname='public' and p.prosecdef and has_function_privilege('authenticated', p.oid, 'EXECUTE')
         and (p.proname like 'cm\\_%' or p.proname in ('field_value','user_doc_type','sync_company_from_manager'))
-        and p.proname not in ('cm_my_seller') and p.proname !~ '^cm_(apply_sugestao|calc|calc_sim|cancel_preview|cancel_sale|confirm_payment|decide_unlock|draft_save|hub|me|months_list|preview|product_get|product_preview|product_save|products_list|products_options|projecao|publish|register_sale|request_unlock|rules_get|sale_get|sale_preview|sales_list|seller_get|seller_history|seller_save|sellers_list|sugestao|update_sale|validate_rules)$'`);
+        and p.proname not in ('cm_my_seller') and p.proname !~ '^cm_(apply_sugestao|calc|calc_sim|cancel_preview|cancel_sale|confirm_payment|decide_unlock|draft_save|hub|me|months_list|people_list|preview|product_get|product_preview|product_save|products_list|products_options|projecao|publish|register_sale|request_unlock|rules_get|sale_get|sale_preview|sales_list|seller_get|seller_history|seller_save|sellers_list|sugestao|update_sale|validate_rules)$'`);
     expect(r.map((x) => x.proname)).toEqual([]);
   });
   it("mês congelado usa fator e bônus congelados, não as regras vivas", async () => {
@@ -320,5 +320,55 @@ describe("produto sem caixa (sem formas de pagamento obrigatórias)", () => {
     await as(null);
     await db.exec(`delete from public.cm_sales where id='${sid}'; delete from public.cm_cobrancas where product_id='${pid}'; delete from public.cm_products where id='${pid}'`);
     await today("2026-10-10");
+  });
+});
+
+describe("pessoas (solicitações, equipe e papéis)", () => {
+  const U_NOVO = "00000000-0000-0000-0000-0000000000c1";
+  const people = async () => (await j(`public.cm_people_list()`)) as { is_admin: boolean; me: string; people: any[] };
+  it("somente gestor/admin abre a lista; pendentes vêm primeiro; quem nunca pediu acesso não aparece", async () => {
+    await as(null);
+    await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${U_NOVO}', 'novo@anfitriaosigma.com.br', '{"full_name":"Novo Closer"}'), ('00000000-0000-0000-0000-0000000000c2', 'semPedido@anfitriaosigma.com.br', '{}');
+      insert into public.area_access (user_id, area, status) values ('${U_NOVO}', 'metas', 'pending')`);
+    await as(U_ANA);
+    await expect(db.query(`select public.cm_people_list()`)).rejects.toThrow(/sem permissão/);
+    await as(GESTOR);
+    const r = await people();
+    await as(null);
+    expect(r.is_admin).toBe(false);
+    expect(r.people[0]).toMatchObject({ id: U_NOVO, access: "pending", role: "closer", seller_id: null });
+    expect(r.people.find((x) => x.id === ADMIN)).toMatchObject({ role: "admin", access: "approved", protegido: true });
+    expect(r.people.find((x) => x.id === U_ANA)).toMatchObject({ access: "approved", seller_id: ANA });
+    expect(r.people.some((x) => x.email === "sempedido@anfitriaosigma.com.br")).toBe(false);
+  });
+  it("o menu do Comercial informa as solicitações pendentes", async () => {
+    await today("2026-10-10"); await as(GESTOR);
+    const h = await j(`public.cm_hub()`);
+    await as(null);
+    expect(h.pessoas_pend).toBe(1);
+  });
+  it("aprovar e negar acesso; o admin principal e o próprio usuário não podem ser negados", async () => {
+    await as(GESTOR);
+    await db.exec(`select public.decide_access('${U_NOVO}', 'metas', false, '  fora do time  ')`);
+    expect((await people()).people.find((x) => x.id === U_NOVO)).toMatchObject({ access: "denied", note: "fora do time" });
+    await db.exec(`select public.decide_access('${U_NOVO}', 'metas', true)`);
+    expect((await people()).people.find((x) => x.id === U_NOVO)).toMatchObject({ access: "approved" });
+    await expect(db.query(`select public.decide_access('${ADMIN}', 'metas', false)`)).rejects.toThrow(/não pode ser negado/);
+    await expect(db.query(`select public.decide_access('${GESTOR}', 'metas', false)`)).rejects.toThrow(/não pode ser negado/);
+    await as(U_ANA);
+    await expect(db.query(`select public.decide_access('${U_NOVO}', 'metas', false)`)).rejects.toThrow(/sem permissão/);
+    await as(null);
+  });
+  it("papéis: só admin troca; o admin principal fica admin sempre", async () => {
+    await as(GESTOR);
+    await expect(db.query(`select public.set_role('${U_ANA}', 'gestor')`)).rejects.toThrow(/somente admin/);
+    await as(ADMIN);
+    await db.exec(`select public.set_role('${U_ANA}', 'gestor')`);
+    expect((await people()).people.find((x) => x.id === U_ANA)).toMatchObject({ role: "gestor" });
+    await db.exec(`select public.set_role('${U_ANA}', 'closer')`);
+    await expect(db.query(`select public.set_role('${ADMIN}', 'closer')`)).rejects.toThrow(/admin principal/);
+    await as(null);
+    await expect(db.query(`update public.user_roles set role = 'gestor' where user_id = '${ADMIN}'`)).rejects.toThrow(/admin principal/);
+    expect(await j(`(select role::text from public.user_roles where user_id = '${ADMIN}')`)).toBe("admin");
   });
 });

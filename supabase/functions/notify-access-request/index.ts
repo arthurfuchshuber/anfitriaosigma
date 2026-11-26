@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
     const site = Deno.env.get("SITE_URL") ?? "https://anfitriaosigma.com.br";
     const name = prof?.full_name ?? prof?.email ?? user.email ?? "";
     const areaName = AREA_NAMES[area] ?? area;
-    const link = `${site}/intranet/metas/pessoas?tab=solicitacoes`;
+    const link = `${site}/intranet/pessoas?tab=solicitacoes`;
     const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;color:#120A1C">
       <h2 style="color:#431171;margin:0 0 12px">Pedido de acesso — ${esc(areaName)}</h2>
       <p><b>${esc(name)}</b> (${esc(prof?.email ?? user.email ?? "")}) pediu acesso à área <b>${esc(areaName)}</b> da Intranet.</p>
