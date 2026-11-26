@@ -2,6 +2,6 @@ import { Shell, Empty } from "@/components/comercial/kit";
 
 /** Painel: ainda não desenhado (Painéis ficam para uma próxima etapa). */
 const Painel = () => (
-  <Shell title="Painel" back={null} nav="Painel"><Empty>Em construção.</Empty></Shell>
+  <Shell title="Painel" back={null} nav="Painel"><Empty>O Painel ainda está sendo desenhado e chega em breve.</Empty></Shell>
 );
 export default Painel;

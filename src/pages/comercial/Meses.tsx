@@ -18,7 +18,7 @@ export default function Meses() {
   const alvo = d.rows.find((r) => r.status === "sem_regras" && !r.locked) ?? d.rows.find((r) => !r.locked) ?? d.rows[d.rows.length - 1];
   const foot = (
     <div style={{ marginTop: 24, borderTop: `1px solid ${LINE}`, padding: "14px 24px 20px" }}>
-      <div onClick={() => open(alvo.month)} style={{ height: 48, borderRadius: 14, background: PU, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 600, cursor: "pointer" }}>Programar Meses</div>
+      <div onClick={() => open((alvo?.month ?? d.atual) as string)} style={{ height: 48, borderRadius: 14, background: PU, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 600, cursor: "pointer" }}>Programar Meses</div>
       <div onClick={() => go("/intranet/metas")} style={{ marginTop: 12, textAlign: "center", fontSize: 13.5, fontWeight: 600, color: PU, cursor: "pointer", minHeight: 24 }}>Voltar ao Menu</div>
     </div>
   );
@@ -31,7 +31,7 @@ export default function Meses() {
       <Sec t="Meses" />
       <Box style={{ padding: "0 16px" }}>
         {d.rows.map((r, k) => {
-          const st = ST[r.status];
+          const st = ST[r.status as keyof typeof ST] ?? ST.sem_regras;
           const tile = r.status === "em_vigor" ? { background: PU, color: "#fff" } : r.status === "programado" ? { background: "#f2ecf8", color: PU } : { background: "#faf8fc", border: "1px dashed #d2c5e3", color: GR2, boxSizing: "border-box" as const };
           return (
             <div key={r.month} onClick={() => open(r.month)} style={{ height: 68, display: "flex", alignItems: "center", gap: 12, borderBottom: k === d.rows.length - 1 ? undefined : "1px solid #ece7f2", cursor: "pointer" }}>

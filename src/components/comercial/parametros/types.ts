@@ -9,7 +9,7 @@ export type Rules = {
 };
 export type MonthStatus = "em_vigor" | "encerrado" | "programado" | "sem_regras";
 export type RulesGet = {
-  month: string; rules: Rules; draft: boolean; locked: boolean; locked_since: string; pending_unlock: boolean;
+  month: string; rules: Rules; draft: boolean; locked: boolean; locked_since: string | null; pending_unlock: boolean;
   months: { month: string; status: MonthStatus; locked: boolean; draft: boolean }[];
   calendar: { month: string; dias_uteis: number; feriados: { dia: string; nome: string }[] }[];
   empresas: { id: string; name: string; linha: string }[];
